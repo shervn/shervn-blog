@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    volumes: 
+      - ./data/db/:/var/lib/postgresql/data
+
+  backend:
+    build: shervn-backend/.
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes: 
+      - ./data/media/:/backend/media/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build: shervn-frontend/.
+    command: npm run start
+    ports:
+      - "3000:3000"  
+    links:
+      - backend
