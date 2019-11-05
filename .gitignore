@@ -1,4 +1,5 @@
 data/*
+*.pyc
 
 shervn/frontend/build
 shervn/frontend/node_modules
