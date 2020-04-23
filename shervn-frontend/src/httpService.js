@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://127.0.0.1/api';
+const API_URL = 'http://172.105.77.78/api';
 
 export default class PostService{
 
