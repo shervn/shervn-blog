@@ -1,15 +1,10 @@
 FROM node:10
 
-# Create app directory
-WORKDIR /front
+WORKDIR /frontend/
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json /front/
+COPY package*.json ./
 RUN npm install --quiet
 
-COPY . /front/
+COPY . .
 
-EXPOSE 3000
-# CMD [ "node", "server.js" ]
+CMD [ "yarn", "run", "build" ]

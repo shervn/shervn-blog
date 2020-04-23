@@ -3,23 +3,44 @@ version: '3'
 services:
   db:
     image: postgres:latest
+    container_name: shervn-blog_database
     volumes: 
-      - ./data/db/:/var/lib/postgresql/data
-
+      - ./shervn-database/db/:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+      
   backend:
     build: shervn-backend/.
-    command: python3 manage.py runserver 0.0.0.0:8000
-    volumes: 
-      - ./data/media/:/backend/media/
-    ports:
-      - "8000:8000"
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:3000"
     depends_on:
       - db
+    volumes: 
+      - ./shervn-database/media/:/backend/media/
+    ports:
+      - 3000:3000
 
   frontend:
     build: shervn-frontend/.
-    command: npm run start
+    # command: npm run start
+    volumes:
+      - ./shervn-frontend/:/frontend/
+    depends_on:
+      - backend
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./shervn-nginx/Dockerfile
     ports:
-      - "3000:3000"  
+      - "80:80"
+    volumes:
+      - ./shervn-database/media/:/media/
+    depends_on:
+      - frontend
+      - backend
     links:
       - backend

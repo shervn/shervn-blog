@@ -79,8 +79,9 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
+        'NAME': 'db',
+        'USER': 'user',
+        'PASSWORD': 'pass',
         'HOST': 'db',
         'PORT': 5432,
     }
@@ -127,3 +128,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
+

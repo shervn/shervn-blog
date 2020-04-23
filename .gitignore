@@ -1,5 +1,8 @@
 data/*
 *.pyc
 
-shervn/frontend/build
-shervn/frontend/node_modules
+shervn-frontend/build
+shervn-frontend/node_modules
+shervn-database
+shervn-frontend/.DS_Store
+.DS_Store
