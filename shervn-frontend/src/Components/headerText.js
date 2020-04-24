@@ -31,7 +31,7 @@ export default class HeaderText extends Component {
         <Header className='headerText'
           as='h2'
           content='Shervin Dehghani.'
-          subheader='Trying to solve the world, and failing.'
+          subheader='Because the sky is blue, it makes me cry.'
         />
       </div>
     )
