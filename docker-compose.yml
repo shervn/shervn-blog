@@ -44,6 +44,7 @@ services:
       dockerfile: ./shervn-nginx/Dockerfile
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /mnt/shervn-blog/media/:/media/
     depends_on:
