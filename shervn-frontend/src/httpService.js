@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'https://172.105.77.78/api';
+const API_URL = 'https://shervn.com/api';
 
 export default class PostService{
 

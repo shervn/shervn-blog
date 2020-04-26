@@ -7,9 +7,11 @@ ARG POSTGRES_DB
 ENV POSTGRES_USER=$POSTGRES_USER
 ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 ENV POSTGRES_DB=$POSTGRES_DB
+ENV DJANGO_ENV=prod
 
 WORKDIR /backend
 COPY requirements.txt .
+COPY certs/* certs/
 RUN pip install -r requirements.txt
 
-COPY . /backend/
+COPY . .
