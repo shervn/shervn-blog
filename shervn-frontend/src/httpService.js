@@ -6,7 +6,7 @@ export default class PostService{
     constructor(){}
 
     getPosts(type) {
-        const url = `${API_URL}/${type}/`;
+        const url = `${API_URL}/${type}`;
         return axios.post(url).then(response => response.data);
     }
 

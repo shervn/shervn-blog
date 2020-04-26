@@ -10,8 +10,8 @@ ENV POSTGRES_DB=$POSTGRES_DB
 ENV DJANGO_ENV=prod
 
 WORKDIR /backend
+
 COPY requirements.txt .
-COPY certs/* certs/
 RUN pip install -r requirements.txt
 
 COPY . .
