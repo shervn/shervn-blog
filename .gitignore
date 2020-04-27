@@ -7,3 +7,5 @@ shervn-database
 shervn-frontend/.DS_Store
 .DS_Store
 .env
+shervn-nginx/certs/*
+./*/.DS_Store
