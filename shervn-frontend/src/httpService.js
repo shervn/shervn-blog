@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://172.105.77.78/api';
+const API_URL = 'https://shervn.com/api';
 
 export default class PostService{
 
@@ -11,12 +11,12 @@ export default class PostService{
     }
 
     getPost(type, pk) {
-        const url = `${API_URL}/${type}/${pk}`;
+        const url = `${API_URL}/${type}/${pk}/`;
         return axios.post(url).then(response => response.data);
     }
 
     getPostsByURL(link){
-        const url = `${API_URL}${link}`;
+        const url = `${API_URL}${link}/`;
         return axios.post(url).then(response => response.data);
     }
 }

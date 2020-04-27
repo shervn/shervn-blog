@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     container_name: shervn-blog_database
     volumes: 
-      - ./shervn-database/db/:/var/lib/postgresql/data
+      - /mnt/shervn-blog/db2/:/var/lib/postgresql/data
     env_file:
       - .env
     environment:
@@ -22,13 +22,16 @@ services:
         - POSTGRES_USER=$POSTGRES_USER
         - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
         - POSTGRES_DB=$POSTGRES_DB
-    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:3000"
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && ls && pip install gunicorn && gunicorn --certfile=certs/fullchain.pem --keyfile=certs/privkey.pem blog.wsgi:application --bind 0.0.0.0:443"
     depends_on:
       - db
     volumes: 
-      - ./shervn-database/media/:/backend/media/
+      - /mnt/shervn-blog/media/:/backend/media/
+      - ./shervn-nginx/certs/:/backend/certs/  
     env_file:
       - .env
+    expose:
+      - 443
 
   frontend:
     build: shervn-frontend/.
@@ -44,6 +47,7 @@ services:
       dockerfile: ./shervn-nginx/Dockerfile
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /mnt/shervn-blog/media/:/media/
     depends_on:
