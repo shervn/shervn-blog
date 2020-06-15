@@ -45,7 +45,6 @@ render() {
     <Router>
         <div className="mainPageWithMenu">
           <Menu className='menu' fluid borderless widths={4}>
-            {/* <Menu.Item name='about me' active={activeItem === 'about me'} onClick={this.handleItemClick} /> */}
             <Menu.Item as={Link} to={'/reviews'}  name='reviews' active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} to={'/blog'}  name='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} to={'/recordings'}  name='recordings' active={this.state.activeItem === 'recordings'} onClick={this.handleItemClick}/>
