@@ -6,19 +6,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 from .serializers import *
 
-@api_view(['POST', 'GET']])
+@api_view(['POST', 'GET'])
 def text_posts_list(request):
 
     text_posts = TextPost.objects.all().order_by('-order')
     return get_all_objects(request, TextPostSerializer, text_posts, "txt_posts")
 
-@api_view(['POST', 'GET']])
+@api_view(['POST', 'GET'])
 def music_posts_list(request):
 
     text_posts = SoundCloudPost.objects.all().order_by('-order')
     return get_all_objects(request, SoundCloudPostSerializer, text_posts, "sc_posts")
 
-@api_view(['POST', 'GET']])
+@api_view(['POST', 'GET'])
 def academic_posts_list(request):
 
     text_posts = AcademicPost.objects.all().order_by('-order')
