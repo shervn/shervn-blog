@@ -8,11 +8,6 @@ export default class Blog extends Component {
 
   constructor(props){
     super(props);
-    this.state  = {
-        posts: [],
-        nextPageURL:  '',
-        prevPageURL: ''
-    };
 
     this.nextPage  =  this.nextPage.bind(this);
     this.prevPage  =  this.prevPage.bind(this);
@@ -28,20 +23,19 @@ export default class Blog extends Component {
   }
 
   nextPage(){
-    httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
+    httpService.getPostsByURL(this.state.nextPageURL).then((result) => 
         this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
-    });
+    );
   }
   
   prevPage(){
-      httpService.getPostsByURL(this.state.prevPageURL).then((result) => {
+      httpService.getPostsByURL(this.state.prevPageURL).then((result) => 
         this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
-    });
+    );
   }
 
   render() {
-    const posts = this.state.posts;
-    const t = posts.map(element =>
+    const t = this.state.posts.map(element =>
       <li key={element.pk}>
         <br />
         <Container text className={element.className}>

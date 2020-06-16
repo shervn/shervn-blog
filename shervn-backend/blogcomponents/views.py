@@ -34,7 +34,6 @@ def get_all_objects(request, Serializer, all_objects, object_type):
     
     object_in_one_page = 6 if(object_type == 'rv_posts') else 5
 
-
     data = []
     nextPage = 1
     previousPage = 1
