@@ -32,7 +32,7 @@ def review_posts_list(request):
 
 def get_all_objects(request, Serializer, all_objects, object_type):
     
-    object_in_one_page = 6 if(object_type == 'rv_posts') else 5
+    object_in_one_page = 12 if(object_type == 'rv_posts') else 15
 
     data = []
     nextPage = 1
