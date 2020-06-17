@@ -3,8 +3,6 @@ const API_URL = 'https://shervn.com/api';
 
 export default class PostService{
 
-    constructor(){}
-
     getPosts(type) {
         const url = `${API_URL}/${type}/`;
         return axios.post(url).then(response => response.data);

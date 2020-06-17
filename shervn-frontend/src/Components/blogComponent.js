@@ -9,6 +9,11 @@ export default class Blog extends Component {
   constructor(props){
     super(props);
 
+    this.state  = {
+      posts: [],
+      nextPageURL:  ''
+  };
+  
     this.nextPage  =  this.nextPage.bind(this);
     this.prevPage  =  this.prevPage.bind(this);
   };
