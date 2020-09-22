@@ -46,7 +46,7 @@ render(){
       <Container text>
         <Header as='h3' className={element.className}>{element.title}</Header>
         {element.body.split('\n').map(x => <p className={element.className}>{x}</p>)}
-        <iframe width="100%" height={element.playlist === true ? 350 : 150} scrolling="no" frameborder="no" allow="autoplay" src={element.soundCloudLink}></iframe>
+        <iframe title={element.title} width="100%" height={element.playlist === true ? 350 : 150} scrolling="no" frameborder="no" allow="autoplay" src={element.soundCloudLink}></iframe>
       </Container>
       <Divider />
     </div>

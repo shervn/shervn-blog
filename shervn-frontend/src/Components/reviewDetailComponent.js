@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Image, Icon, Modal, Header } from 'semantic-ui-react'
+import { Image, Modal, Header } from 'semantic-ui-react'
 
 export default class ReviewDetail extends Component {
 

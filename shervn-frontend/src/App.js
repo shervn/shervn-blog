@@ -16,7 +16,7 @@ import Reviews from './Components/reviewsComponent.js'
 
 import { Menu } from 'semantic-ui-react'
 
-const coverPhoto = require('./images/coverVI.jpg')
+const coverPhoto = require('./images/coverV.jpg')
 function validatePathName(t){ return t.substring(1) in ['blog', 'academia', 'recordings', 'review'] ? t.substring(1) : 'blog'};
 
 export default class App extends Component {
