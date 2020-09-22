@@ -8,3 +8,5 @@ shervn-frontend/.DS_Store
 shervn-nginx/certs/*
 .DS_Store
 .env
+shervn-nginx/certs
+./*/.DS_Store
