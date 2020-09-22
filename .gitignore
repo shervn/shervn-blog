@@ -1,12 +1,12 @@
 data/*
 *.pyc
 
-shervn-frontend/build
-shervn-frontend/node_modules
-shervn-database
+shervn-frontend/build/
+shervn-frontend/node_modules/
+shervn-database/
 shervn-frontend/.DS_Store
 shervn-nginx/certs/*
 .DS_Store
 .env
-shervn-nginx/certs
+shervn-nginx/certs/
 ./*/.DS_Store
