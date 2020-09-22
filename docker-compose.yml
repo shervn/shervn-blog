@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     container_name: shervn-blog_database
     volumes: 
-      - /mnt/shervn-blog/db2/:/var/lib/postgresql/data
+      - /mnt/blog/db/:/var/lib/postgresql/data
     env_file:
       - .env
     environment:
@@ -26,7 +26,7 @@ services:
     depends_on:
       - db
     volumes: 
-      - /mnt/shervn-blog/media/:/backend/media/
+      - /mnt/blog/media/:/backend/media/
       - ./shervn-nginx/certs/:/backend/certs/  
     env_file:
       - .env
@@ -49,7 +49,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /mnt/shervn-blog/media/:/media/
+      - /mnt/blog/media/:/media/
+      - ./shervn-nginx/certs/:/certs/  
     depends_on:
       - frontend
       - backend
