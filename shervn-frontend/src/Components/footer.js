@@ -16,7 +16,7 @@ const Footer = () => (
       <li><a href="https://open.spotify.com/user/shervind?si=Z87lZaxQQLOv8Zx7RT7_rA"><Icon name='spotify' /></a></li>
       <li><a href="mailto:shervin.dehghani@gmail.com"><Icon name='mail' /></a></li>
     </ul>
-    <h5 >© shervn 2019</h5>
+    <h5 >© shervn 2020</h5>
   </div>
 )
 
