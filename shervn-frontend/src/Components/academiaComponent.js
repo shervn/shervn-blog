@@ -56,7 +56,7 @@ export default class Academia extends Component {
       <Container text>
         <br />
         <p className='nicep post'>
-          I'm currently studying my Masters in Informatics. I'm currently writing my thesis. You can find my CV <a className="cv" href="https://www.dropbox.com/s/n93tdnvyw2ban9u/CV.pdf?dl=0">here</a>.
+          I'm currently studying my Masters in Informatics and about to submit my thesis. You can find my CV <a className="cv" href="https://www.dropbox.com/s/n93tdnvyw2ban9u/CV.pdf?dl=0">here</a>.
     </p>
         <p className="post">
           Here is a list of the most exciting projects that I have been working on lately:
