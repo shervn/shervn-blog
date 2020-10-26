@@ -11,13 +11,14 @@ import Music from './Components/musicComponent'
 import Blog from './Components/blogComponent'
 import Academia from './Components/academiaComponent.js'
 import Reviews from './Components/reviewsComponent.js'
+import Video from './Components/videosComponent.js'
 
 // import AboutMe from './Components/aboutMeComponent'
 
 import { Menu } from 'semantic-ui-react'
 
-const coverPhoto = require('./images/coverV.jpg')
-function validatePathName(t){ return t.substring(1) in ['blog', 'academia', 'recordings', 'review'] ? t.substring(1) : 'blog'};
+const coverPhoto = require('./images/coverVI.jpg')
+function validatePathName(t){ return ['blog', 'academia', 'recordings', 'videos', 'review'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
 
@@ -35,7 +36,7 @@ render() {
     <div>
   <Helmet>
     <title>Shervin Dehghani *</title>
-    <meta name="description" content="This is the personal webpage of Shervin Dehghani. شروین دهقانی" />
+    <meta name="description" content="This is the personal webpage of Shervin Dehghani.   شروین دهقانی. صفحه شخصی." />
   </Helmet>
   <div id="mainContainer">
     <div id="header" bordered>
@@ -44,10 +45,11 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu className='menu' fluid borderless widths={4}>
+          <Menu className='menu' fluid borderless widths={5}>
             <Menu.Item as={Link} to={'/reviews'}  name='reviews' active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} to={'/blog'}  name='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} to={'/recordings'}  name='recordings' active={this.state.activeItem === 'recordings'} onClick={this.handleItemClick}/>
+            <Menu.Item as={Link} to={'/videos'} name='videos' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} to={'/academia'} name='academia' active={this.state.activeItem === 'academia'} onClick={this.handleItemClick}/>
           </Menu>
         </div>
@@ -55,6 +57,7 @@ render() {
           <Route path='/reviews' component={Reviews} />
           <Route path='/blog' component={Blog} />
           <Route path='/recordings' component={Music} />
+          <Route path='/videos' component={Video} />
           <Route path='/academia' component={Academia} />
           <Route path='/' component={Blog} />
         </Switch>
