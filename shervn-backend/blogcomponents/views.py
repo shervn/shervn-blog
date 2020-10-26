@@ -33,7 +33,7 @@ def review_posts_list(request):
 @api_view(['POST', 'GET'])
 def video_posts_list(request):
 
-    video_posts = ReviewPost.objects.all().order_by('-order')
+    video_posts = VideoPost.objects.all().order_by('-order')
     return get_all_objects(request, VideoPostSerializer, video_posts, "vid_posts")
 
 def get_all_objects(request, Serializer, all_objects, object_type):
