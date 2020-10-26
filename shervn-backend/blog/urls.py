@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^api/sc_posts/$', views.music_posts_list),
     url(r'^api/ac_posts/$', views.academic_posts_list),
     url(r'^api/rv_posts/$', views.review_posts_list),
+    url(r'^api/vid_posts/$', views.video_posts_list),
 
     path('admin/', admin.site.urls)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

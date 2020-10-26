@@ -30,9 +30,15 @@ def review_posts_list(request):
     text_posts = ReviewPost.objects.all().order_by('-order')
     return get_all_objects(request, ReviewPostSerializer, text_posts, "rv_posts")
 
+@api_view(['POST', 'GET'])
+def video_posts_list(request):
+
+    video_posts = ReviewPost.objects.all().order_by('-order')
+    return get_all_objects(request, VideoPostSerializer, video_posts, "vid_posts")
+
 def get_all_objects(request, Serializer, all_objects, object_type):
     
-    object_in_one_page = 12 if(object_type == 'rv_posts') else 15
+    object_in_one_page = 9
 
     data = []
     nextPage = 1

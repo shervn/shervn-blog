@@ -24,3 +24,9 @@ class ReviewPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReviewPost 
         fields = ('pk','title', 'titleLong', 'date', 'body','createdAt', 'className', 'imageUrl', 'bandName')
+
+class VideoPostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VideoPost 
+        fields = ('pk','title', 'description', 'date', 'body', 'className', 'createdAt','youtubeLink')

@@ -44,6 +44,7 @@ class AcademicPost(models.Model):
         return self.title
 
 class ReviewPost(models.Model):
+    
     order = models.IntegerField(default=0)
     title = models.TextField()
     titleLong = models.TextField()
@@ -53,6 +54,20 @@ class ReviewPost(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
     imageUrl = models.ImageField(upload_to="review_images/")
     bandName = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
+
+class VideoPost(models.Model):
+
+    order = models.IntegerField(default=0)
+    title = models.TextField()
+    description = models.TextField(blank=True, null=True)
+    date = models.CharField(max_length=50)
+    body = models.TextField()
+    className = models.CharField(max_length=20, default="farsiPost")
+    createdAt = models.DateTimeField(auto_now_add=True)
+    youtubeLink = models.URLField()
 
     def __str__(self):
         return self.title
