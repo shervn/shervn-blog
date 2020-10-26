@@ -47,6 +47,7 @@ render(){
       <Container text>
         <Header as='h3' className={element.className}>{element.title}</Header>
         {element.body.split('\n').map(x => <p className={element.className}>{x}</p>)}
+        <Header as='h3' subheader={'- ' + element.date} className={element.className} />
         <iframe title={element.title} width="100%" height={400} scrolling="no" frameborder="no" allow="autoplay" src={element.youtubeLink}></iframe>
       </Container>
       <Divider />
