@@ -18,7 +18,7 @@ import Video from './Components/videosComponent.js'
 import { Menu } from 'semantic-ui-react'
 
 const coverPhoto = require('./images/coverVI.jpg')
-function validatePathName(t){ return ['blog', 'academia', 'recordings', 'videos', 'review'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
+function validatePathName(t){ return ['blog', 'academia', 'recordings', 'videos', 'reviews'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
 
@@ -40,7 +40,7 @@ render() {
   </Helmet>
   <div id="mainContainer">
     <div id="header" bordered>
-      <HeaderImage image={coverPhoto} border="True"/>
+      <HeaderImage image={coverPhoto} alt="Shervin Dehghani cover" border="True"/>
       <HeaderText/>
     </div>
     <Router>
