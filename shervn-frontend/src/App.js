@@ -17,7 +17,7 @@ import Video from './Components/videosComponent.js'
 
 import { Menu } from 'semantic-ui-react'
 
-const coverPhoto = require('./images/coverVI.jpg')
+const coverPhoto = require('./images/header2-min.jpeg')
 function validatePathName(t){ return ['blog', 'academia', 'recordings', 'videos', 'reviews'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
@@ -45,7 +45,7 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu className='menu' fluid borderless widths={5}>
+          <Menu className='menu' borderless widths={5} stackable>
             <Menu.Item as={Link} to={'/reviews'}  name='reviews' active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} to={'/blog'}  name='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} to={'/recordings'}  name='recordings' active={this.state.activeItem === 'recordings'} onClick={this.handleItemClick}/>

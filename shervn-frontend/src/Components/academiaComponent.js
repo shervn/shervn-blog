@@ -60,7 +60,7 @@ export default class Academia extends Component {
       <Container text>
         <br />
         <p className='nicep post'>
-          I'm a research assistant in Klinikum rechts der Isar der Technischen Universität München. I'm pursuing my PhD on Image Guided Micro Robotics.
+          I'm a research assistant in <em>Klinikum rechts der Isar der Technischen Universität München</em>. I'm pursuing my PhD on Image Guided Micro Robotics.
     </p>
         <p className="post">
           Here is a list of the most recent projects that I have been working on:
