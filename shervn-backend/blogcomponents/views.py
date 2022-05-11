@@ -59,7 +59,7 @@ def get_all_objects(request, Serializer, all_objects, object_type):
 
     serializer = Serializer(data, context={'request': request} , many=True)
 
-    return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink':  '/{}/?page='.format(object_type) + str(nextPage), 'prevlink': '/{}/?page='.format(object_type) + str(previousPage)})
+    return Response({'data': serializer.data , 'currentpage': page, 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink':  '/{}/?page='.format(object_type) + str(nextPage).replace('/', ''), 'prevlink': '/{}/?page='.format(object_type) + str(previousPage).replace('/', '')})
 
 
 # @api_view(['GET'])
