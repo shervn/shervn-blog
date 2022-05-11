@@ -19,7 +19,9 @@ constructor(props){
 
   this.nextPage  =  this.nextPage.bind(this);
   this.prevPage  =  this.prevPage.bind(this);
+  console.log(this.state.nextPageURL);
 };
+
 
 componentDidMount() {
   httpService.getPosts('rv_posts').then(function (result) {
@@ -47,7 +49,7 @@ render()
   var t = reviews.map(review => <Review review={review} className="farsiCard"/>);
 return(
   <Container className="cardsContainer">
-      <Card.Group itemsPerRow={3}>
+      <Card.Group centered itemsPerRow={3}>
       {t}
       </Card.Group>
       <Divider />

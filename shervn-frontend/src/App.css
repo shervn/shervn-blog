@@ -232,8 +232,3 @@ a:hover {
 .farsiCard:hover{
   cursor: pointer;
 }
-
-.ui.three.cards{
-  width: 90%;
-  direction: rtl;
-}
