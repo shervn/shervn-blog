@@ -172,12 +172,18 @@ a:hover {
 
 .blogList{
   list-style: none;
+  padding: 0;
 }
 
 .farsiPost{
   text-align: justify;
   direction: rtl;
   font-family: 'farsi';
+  line-height: 1.6;
+}
+
+.farsiPost::selection {
+  background: #e6e6cc; /* WebKit/Blink Browsers */
 }
 
 .ui.big.header.farsiTitleWhite{

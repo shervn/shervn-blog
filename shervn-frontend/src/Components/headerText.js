@@ -27,7 +27,7 @@ export default class HeaderText extends Component {
             </Button>
           </Modal.Actions>
         </Modal>
-        <Image floated='left' src={require('../images/profile.jpeg')} id="profilepix" size='tiny' circular />
+        <Image floated='left' src={require('../images/profile1.jpg')} id="profilepix" size='tiny' circular />
         <Header className='headerText'
           as='h2'
           content='Shervin Dehghani.'
