@@ -1,6 +1,6 @@
 data/*
 *.pyc
-
+..files
 shervn-frontend/build/
 shervn-frontend/node_modules/
 shervn-database/

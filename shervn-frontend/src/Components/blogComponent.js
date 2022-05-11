@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Header, Divider, Button } from 'semantic-ui-react'
+import { Container, Header, Divider, Button, Image, Segment } from 'semantic-ui-react'
 
 import  HTTPService  from  '../httpService';
 const  httpService  =  new  HTTPService();
@@ -43,12 +43,15 @@ export default class Blog extends Component {
     const t = this.state.posts.map(element =>
       <li key={element.pk}>
         <br />
-        <Container text className={element.className}>
+        <Segment text className={element.className}>
           <Header as='h3' content={element.title} className={element.className} />
+         {element.image ? <Image src={element.image} floated='left' size='small'/> : ''}
+          {console.log(element.image)}
           {element.body.split('\n').map(x => <p className={element.className}>{x}</p>)}
+          
           <Header as='h3' subheader={'- ' + element.date} className={element.className} />
-          <Divider />
-        </Container>
+
+        </Segment>
       </li>
     );
 

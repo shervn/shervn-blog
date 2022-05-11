@@ -57,9 +57,9 @@ render(){
 return(
   <Container text>
     <br />
-    <p className='nicep post'>Here are some of my music collages, a combination of playing multiple instruments, which are all based
-    on improvisation.</p>
-    <Divider />
+    {/* <p className='nicep post'>Here are some of my music collages, a combination of playing multiple instruments, which are all based
+    on improvisation.</p> */}
+    {/* <Divider /> */}
     {t}
     <div className="buttons">
           <Button icon='chevron left' onClick=  {  this.prevPage  } />
