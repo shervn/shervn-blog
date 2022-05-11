@@ -7,7 +7,7 @@ services:
     volumes: 
       - ..files/db/:/var/lib/postgresql/data
     env_file:
-      - ../files/.env
+      - .env
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -29,7 +29,7 @@ services:
       - ../files/media/:/backend/media/
       - ./shervn-nginx/certs/:/backend/certs/  
     env_file:
-      - ../files/.env
+      - .env
     expose:
       - 443
 
