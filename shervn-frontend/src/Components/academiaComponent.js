@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Container, Header, Divider, Button } from 'semantic-ui-react'
-
+import { Container, Header, Divider, Button, Label } from 'semantic-ui-react'
+import { toFarsi } from '../util.js';
 import  HTTPService  from  '../httpService';
+
 const  httpService  =  new  HTTPService();
 
 export default class Academia extends Component {
@@ -10,7 +11,8 @@ export default class Academia extends Component {
     super(props);
     this.state  = {
         posts: [],
-        nextPageURL:  ''
+        nextPageURL:  '',
+        currentPage: 1
     };
     this.nextPage  =  this.nextPage.bind(this);
     this.prevPage  =  this.prevPage.bind(this);
@@ -24,15 +26,17 @@ export default class Academia extends Component {
               }.bind(this));
               }
 
+
+
   nextPage(){
     httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
+        this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink, currentPage: result.currentpage})
     });
   }
-
+  
   prevPage(){
-    httpService.getPostsByURL(this.state.prevPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
+    httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
+        this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink, currentPage: result.currentpage})
     });
   }
 
@@ -67,8 +71,10 @@ export default class Academia extends Component {
         </ul>
 
         <div className="buttons">
-          <Button icon='chevron left' onClick=  {  this.prevPage  } />
-          <Button icon='chevron right' onClick=  {  this.nextPage  }/>
+        <Button icon='chevron left' onClick=  {  this.prevPage  } />
+        <Label as='a' basic>
+        <h4 className="farsiPost">{toFarsi(this.state.currentPage)}</h4></Label>
+        <Button icon='chevron right' onClick=  {  this.nextPage  }/>
         </div>
 
       </Container>

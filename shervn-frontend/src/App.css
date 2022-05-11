@@ -205,9 +205,18 @@ a:hover {
 
 .buttons{
   /* position: ; */
-  margin: auto;
+  margin: 0;
   margin-top: 10px;
-  justify-content: center;
+  /* justify-content: center; */
+  text-align: center;
+  align-items: center;
+}
+
+.ui.icon.button{
+  /* position: ; */
+  margin: 0;
+  margin-right: 0px;
+  /* justify-content: center; */
   text-align: center;
   align-items: center;
 }

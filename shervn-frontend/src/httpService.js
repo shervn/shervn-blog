@@ -9,12 +9,13 @@ export default class PostService{
     }
 
     getPost(type, pk) {
-        const url = `${API_URL}/${type}/${pk}/`;
+        const url = `${API_URL}/${type}/${pk}`;
         return axios.post(url).then(response => response.data);
     }
 
     getPostsByURL(link){
-        const url = `${API_URL}${link}/`;
+        const url = `${API_URL}${link}`;
         return axios.post(url).then(response => response.data);
     }
+    
 }

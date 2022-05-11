@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-import { Divider, Container, Header, Button } from 'semantic-ui-react'
-
+import { Divider, Container, Header, Button, Label } from 'semantic-ui-react'
+import { toFarsi } from '../util.js';
 import  HTTPService  from  '../httpService';
 const  httpService  =  new  HTTPService();
-
 
 export default class Music extends Component {
 
@@ -11,6 +10,7 @@ constructor(props){
   super(props);
   this.state  = {
       posts: [],
+      currentPage: 1,
       nextPageURL:  ''
     };
 
@@ -63,8 +63,10 @@ return(
     {t}
     <div className="buttons">
           <Button icon='chevron left' onClick=  {  this.prevPage  } />
+          <Label as='a' basic>
+          <h4 className="farsiPost">{toFarsi(this.state.currentPage)}</h4></Label>
           <Button icon='chevron right' onClick=  {  this.nextPage  }/>
-        </div>
+    </div>
   </Container>
   )
 }

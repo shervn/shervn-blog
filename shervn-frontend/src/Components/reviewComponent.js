@@ -32,15 +32,16 @@ componentDidMount() {
 
 nextPage(){
   httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink})
+      this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink, currentPage: result.currentpage})
   });
 }
 
 prevPage(){
   httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
+      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink, currentPage: result.currentpage})
   });
 }
+
 
 handleShow = () => (this.setState({active: true}))
 handleHide = () => (this.setState({active: false}))

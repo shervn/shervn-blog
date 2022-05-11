@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Divider, Container, Header, Button } from 'semantic-ui-react'
-
+import { Divider, Container, Header, Button, Label } from 'semantic-ui-react'
+import { toFarsi } from '../util.js';
 import  HTTPService  from  '../httpService';
-const  httpService  =  new  HTTPService();
 
+const  httpService  =  new  HTTPService();
 
 export default class Music extends Component {
 
@@ -11,6 +11,7 @@ constructor(props){
   super(props);
   this.state  = {
       posts: [],
+      currentPage: 1,
       nextPageURL:  ''
     };
 
@@ -28,13 +29,13 @@ componentDidMount() {
 
 nextPage(){
   httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink})
+      this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink, currentPage: result.currentpage})
   });
 }
 
 prevPage(){
   httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
+      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink, currentPage: result.currentpage})
   });
 }
 
@@ -63,11 +64,13 @@ return(
     </ul>
     <p>They probably lack many quality standards but I still like to continue recording, at least for a while.</p> */}
     {t}
-    
+
     <div className="buttons">
           <Button icon='chevron left' onClick=  {  this.prevPage  } />
+          <Label as='a' basic>
+          <h4 className="farsiPost">{toFarsi(this.state.currentPage)}</h4></Label>
           <Button icon='chevron right' onClick=  {  this.nextPage  }/>
-        </div>
+    </div>
   </Container>
   )
 }

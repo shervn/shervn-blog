@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Container, Card, Button, Divider } from 'semantic-ui-react'
-
+import { Container, Card, Button, Divider, Label } from 'semantic-ui-react'
 import Review from './reviewComponent'
-
 import  HTTPService  from  '../httpService';
+import { toFarsi } from '../util.js';
+
 const  httpService  =  new  HTTPService();
 
 
@@ -14,12 +14,12 @@ constructor(props){
   this.state  = {
       posts: [],
       nextPageURL:  '',
+      currentPage: 1,
       prevPageURL: ''
     };
 
   this.nextPage  =  this.nextPage.bind(this);
   this.prevPage  =  this.prevPage.bind(this);
-  console.log(this.state.nextPageURL);
 };
 
 
@@ -33,13 +33,13 @@ componentDidMount() {
 
 nextPage(){
   httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink})
+      this.setState({ posts:  result.data, prevPageURL: this.state.nextPageURL, nextPageURL:  result.nextlink, currentPage: result.currentpage})
   });
 }
 
 prevPage(){
   httpService.getPostsByURL(this.state.nextPageURL).then((result) => {
-      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink})
+      this.setState({ posts:  result.data, prevPageURL: result.prevlink, nextPageURL:  result.nextlink, currentPage: result.currentpage})
   });
 }
 
@@ -56,6 +56,8 @@ return(
       <Divider />
       <div className="buttons">
           <Button icon='chevron left' onClick=  {  this.prevPage  } />
+          <Label as='a' basic>
+          <h4 className="farsiPost">{toFarsi(this.state.currentPage)}</h4></Label>
           <Button icon='chevron right' onClick=  {  this.nextPage  }/>
       </div>
   </Container>)};
