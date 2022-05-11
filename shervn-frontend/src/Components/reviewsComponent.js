@@ -49,15 +49,15 @@ render()
   var t = reviews.map(review => <Review review={review} className="farsiCard"/>);
 return(
   <Container className="cardsContainer">
-      <Card.Group centered itemsPerRow={3}>
+      <Card.Group centered>
       {t}
       </Card.Group>
+      <br/>
       <Divider />
       <div className="buttons">
           <Button icon='chevron left' onClick=  {  this.prevPage  } />
           <Button icon='chevron right' onClick=  {  this.nextPage  }/>
       </div>
-
   </Container>)};
 
   }

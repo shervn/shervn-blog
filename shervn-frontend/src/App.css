@@ -223,10 +223,9 @@ a:hover {
 }
 
 .farsiCard{
-  padding: 0.5em;
-  padding-bottom: 1em;
-  padding-top: 5%;
-  float: right;
+  /* padding: 0.5em; */
+  padding: 40px 0 0 0;
+  margin: 5px;
 }
 
 .farsiCard:hover{
