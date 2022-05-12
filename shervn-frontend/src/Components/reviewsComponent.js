@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Container, Card, Button, Divider, Label } from 'semantic-ui-react'
+import { Container, Card, Button, Label } from 'semantic-ui-react'
 import Review from './reviewComponent'
 import  HTTPService  from  '../httpService';
 import { toFarsi } from '../util.js';
@@ -53,7 +53,6 @@ return(
       {t}
       </Card.Group>
       <br/>
-      <Divider />
       <div className="buttons">
           <Button icon='chevron left' onClick=  {  this.prevPage  } />
           <Label as='a' basic>

@@ -203,6 +203,11 @@ a:hover {
   color: rgb(34, 30, 30);
 }
 
+.menuFarsi{
+  font-family: 'farsi';
+  color: rgb(34, 30, 30);
+}
+
 .modalBandName.header{
   font-family: 'farsi';
   color: rgb(100, 100, 100);

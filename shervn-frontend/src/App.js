@@ -13,8 +13,6 @@ import Academia from './Components/academiaComponent.js'
 import Reviews from './Components/reviewsComponent.js'
 import Video from './Components/videosComponent.js'
 
-// import AboutMe from './Components/aboutMeComponent'
-
 import { Menu } from 'semantic-ui-react'
 
 const coverPhoto = require('./images/header2-min.jpeg')
@@ -45,12 +43,12 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu className='menu' borderless widths={5} stackable>
-            <Menu.Item as={Link} to={'/reviews'}  name='reviews' active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
-            <Menu.Item as={Link} to={'/blog'}  name='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
-            <Menu.Item as={Link} to={'/recordings'}  name='recordings' active={this.state.activeItem === 'recordings'} onClick={this.handleItemClick}/>
-            <Menu.Item as={Link} to={'/videos'} name='videos' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
-            <Menu.Item as={Link} to={'/academia'} name='academia' active={this.state.activeItem === 'academia'} onClick={this.handleItemClick}/>
+          <Menu  className='menu' widths={5} stackable>
+            <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews  |  نقد" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
+            <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog  |  بلاگ' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
+            <Menu.Item as={Link} className="menuFarsi" to={'/music'}  name="music" content='music  |  موسیقی' active={this.state.activeItem === 'music'} onClick={this.handleItemClick}/>
+            <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos  |  ویدیو' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
+            <Menu.Item as={Link} className="menuFarsi" to={'/academia'} name="academia" content='academia  |  دانشگاه' active={this.state.activeItem === 'academia'} onClick={this.handleItemClick}/>
           </Menu>
         </div>
         <Switch>
