@@ -49,7 +49,7 @@ render()
   var t = reviews.map(review => <Review review={review} className="farsiCard"/>);
 return(
   <Container className="cardsContainer">
-      <Card.Group centered>
+      <Card.Group centered id="cardsR2L">
       {t}
       </Card.Group>
       <br/>

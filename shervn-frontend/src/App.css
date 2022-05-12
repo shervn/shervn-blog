@@ -237,6 +237,10 @@ a:hover {
   height: 10em;
 }
 
+#cardsR2L {
+  flex-direction: row-reverse;
+}
+
 .farsiCard{
   /* padding: 0.5em; */
   padding: 40px 0 0 0;
