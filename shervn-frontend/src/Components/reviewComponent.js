@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { Dimmer, Card, Image, Icon, Header } from 'semantic-ui-react'
+import * as rdd from 'react-device-detect';
 
 
 import ReviewDetail from './reviewDetailComponent'
@@ -13,7 +14,7 @@ export default class Review extends Component {
 constructor(props){
   super(props);
   this.state  = {
-      active: false,
+      active: false || rdd.isMobile,
       activeModal: false,
       pageUrl:  this.props.review.pageUrl
     };
@@ -43,8 +44,8 @@ prevPage(){
 }
 
 
-handleShow = () => (this.setState({active: true}))
-handleHide = () => (this.setState({active: false}))
+handleShow = () => (this.setState({active: true || rdd.isMobile}))
+handleHide = () => (this.setState({active: false || rdd.isMobile}))
 changeActiveModal = () => (this.setState({activeModal: !this.setState.activeModal}))
 closeModal = () => (this.setState({activeModal: false}))
 
