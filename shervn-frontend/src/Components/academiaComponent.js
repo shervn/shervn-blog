@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Header, Divider, Button, Label } from 'semantic-ui-react'
-import { toFarsi } from '../util.js';
+import { toEnglish } from '../util.js';
 import  HTTPService  from  '../httpService';
 
 const  httpService  =  new  HTTPService();
@@ -62,8 +62,8 @@ export default class Academia extends Component {
         <p className='nicep post'>
           I'm a research assistant in <em>Klinikum rechts der Isar der Technischen Universität München</em>. I'm pursuing my PhD on Image Guided Micro Robotics.
     </p>
-        <p className="post">
-          Here is a list of the most recent projects that I have been working on:
+      <p className="post">
+          
       </p>
         <br />
         <ul>
@@ -73,7 +73,7 @@ export default class Academia extends Component {
         <div className="buttons">
         <Button icon='chevron left' onClick=  {  this.prevPage  } />
         <Label as='a' basic>
-        <h4 className="farsiPost">{toFarsi(this.state.currentPage)}</h4></Label>
+        <h4 className="">{toEnglish(this.state.currentPage)}</h4></Label>
         <Button icon='chevron right' onClick=  {  this.nextPage  }/>
         </div>
 
