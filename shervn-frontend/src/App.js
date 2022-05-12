@@ -54,7 +54,7 @@ render() {
         <Switch>
           <Route path='/reviews' component={Reviews} />
           <Route path='/blog' component={Blog} />
-          <Route path='/recordings' component={Music} />
+          <Route path='/music' component={Music} />
           <Route path='/videos' component={Video} />
           <Route path='/academia' component={Academia} />
           <Route path='/' component={Blog} />
