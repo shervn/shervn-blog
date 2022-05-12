@@ -71,10 +71,10 @@ export default class Academia extends Component {
         </ul>
 
         <div className="buttons">
-        <Button icon='chevron left' onClick=  {  this.prevPage  } />
-        <Label as='a' basic>
+        <Button circular compact icon='chevron left' onClick=  {  this.prevPage  } />
+        <Label basic>
         <h4 className="">{toEnglish(this.state.currentPage)}</h4></Label>
-        <Button icon='chevron right' onClick=  {  this.nextPage  }/>
+        <Button circular compact icon='chevron right' onClick=  {  this.nextPage  }/>
         </div>
 
       </Container>

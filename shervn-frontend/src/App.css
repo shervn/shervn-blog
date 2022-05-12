@@ -233,7 +233,7 @@ a:hover {
 }
 
 .farsiModal{
-  direction: rtl;
+  /* direction: rtl; */
 }
 
 .modalImage{
@@ -244,6 +244,12 @@ a:hover {
 
 #cardsR2L {
   flex-direction: row-reverse;
+}
+
+.ui.basic.label{
+  text-align: center;
+  border: none;
+  margin: auto;
 }
 
 .farsiCard{
