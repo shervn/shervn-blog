@@ -262,3 +262,10 @@ a:hover {
 .farsiCard:hover{
   cursor: pointer;
 }
+
+.crt-logo.crt-tag,
+article[aria-label="Instagram post by Curator.io Powered by Curator.io "] {
+  position: absolute;
+  visibility:hidden;
+  display:none;
+}
