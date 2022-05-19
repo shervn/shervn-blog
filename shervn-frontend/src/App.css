@@ -263,9 +263,22 @@ a:hover {
   cursor: pointer;
 }
 
+.crt-post-share,
 .crt-logo.crt-tag,
 article[aria-label="Instagram post by Curator.io Powered by Curator.io "] {
   position: absolute;
   visibility:hidden;
   display:none;
+}
+
+.crt-load-more{
+  height: 80px;
+  /* line-height: 80px;   */
+  width: 80px;  
+  /* font-weight: bold; */
+  border-radius: 50%;
+  /* background-color: #4CAF50; */
+  color: white;
+  cursor: pointer;
+  padding: 0 !important;
 }
