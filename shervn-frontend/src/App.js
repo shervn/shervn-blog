@@ -12,11 +12,12 @@ import Blog from './Components/blogComponent'
 import Academia from './Components/academiaComponent.js'
 import Reviews from './Components/reviewsComponent.js'
 import Video from './Components/videosComponent.js'
+import Insta from './Components/instaComponent.js'
 
 import { Menu } from 'semantic-ui-react'
 
 const coverPhoto = require('./images/header2-min.jpeg')
-function validatePathName(t){ return ['blog', 'academia', 'recordings', 'videos', 'reviews'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
+function validatePathName(t){ return ['blog', 'insta', 'academia', 'recordings', 'videos', 'reviews'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
 
@@ -43,8 +44,9 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu  className='menu' widths={5} stackable>
+          <Menu  className='menu' widths={6} stackable>
             <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews  |  نقد" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
+            <Menu.Item as={Link} className="menuFarsi" to={'/insta'}  name="insta" content="instagram  |  اینستاگرام" active={this.state.activeItem === 'insta'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog  |  بلاگ' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} className="menuFarsi" to={'/music'}  name="music" content='music  |  موسیقی' active={this.state.activeItem === 'music'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos  |  ویدیو' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
@@ -53,6 +55,7 @@ render() {
         </div>
         <Switch>
           <Route path='/reviews' component={Reviews} />
+          <Route path='/insta' component={Insta} />
           <Route path='/blog' component={Blog} />
           <Route path='/music' component={Music} />
           <Route path='/videos' component={Video} />
