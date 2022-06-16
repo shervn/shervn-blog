@@ -263,9 +263,7 @@ a:hover {
   cursor: pointer;
 }
 
-.crt-post-share,
-.crt-logo.crt-tag,
-article[aria-label="Instagram post by Curator.io Powered by Curator.io "] {
+article[aria-label="Image posted by curator_io to instagram"] {
   position: absolute;
   visibility:hidden;
   display:none;
