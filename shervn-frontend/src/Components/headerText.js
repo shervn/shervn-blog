@@ -17,9 +17,9 @@ export default class HeaderText extends Component {
           onClose={this.handleClose}
           basic
           size='small'>
-          <Header icon='paint brush' color='white' content='Jeremy Geddes' />
+          <Header icon='asterisk' color='white' content='F. Fozouni' />
           <Modal.Content>
-            <Image src={require('../images/ascent.jpg')} />
+            <Image src={require('../images/fozouni.jpg')} />
           </Modal.Content>
           <Modal.Actions>
             <Button color='red' onClick={this.handleClose} inverted>
