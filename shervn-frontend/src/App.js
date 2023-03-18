@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet'
 
 
@@ -54,7 +54,7 @@ render() {
             <Menu.Item as={Link} className="menuFarsi" to={'/academia'} name="academia" content='academia  |  دانشگاه' active={this.state.activeItem === 'academia'} onClick={this.handleItemClick}/>
           </Menu>
         </div>
-        <Routes>
+        <Switch>
           <Route path='/reviews' component={Reviews} />
           <Route path='/insta' component={Insta} />
           <Route path='/blog' component={Blog} />
@@ -62,7 +62,7 @@ render() {
           <Route path='/videos' component={Video} />
           <Route path='/academia' component={Academia} />
           <Route path='/' component={Blog} />
-        </Routes>
+        </Switch>
       </Router>
     <Footer/>
   </div>
