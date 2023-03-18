@@ -1,13 +1,15 @@
 @font-face {
   font-family: farsi;
-  src:  url('./fonts/IRANYekanLightFaNum.ttf');
+  /* src:  url('./fonts/IRANYekanLightFaNum.ttf'); */
+  src:  url('./fonts/AriaWebFaNum-Black.woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: farsiBold;
-  src:  url('./fonts/IRANYekanBoldFaNum.ttf');
+  /* src:  url('./fonts/IRANYekanBoldFaNum.ttf'); */
+  src:  url('./fonts/AriaWebFaNum-Normal.woff2');
 }
 
 @keyframes rotation {

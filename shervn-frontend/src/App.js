@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet'
+
 
 import './App.css';
 
@@ -45,15 +46,15 @@ render() {
     <Router>
         <div className="mainPageWithMenu">
           <Menu  className='menu' widths={6} stackable>
-            <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews  |  نقد" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
-            <Menu.Item as={Link} className="menuFarsi" to={'/insta'}  name="insta" content="instagram  |  اینستاگرام" active={this.state.activeItem === 'insta'} onClick={this.handleItemClick} />
+            {/* <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews  |  نقد" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} /> */}
+            {/* <Menu.Item as={Link} className="menuFarsi" to={'/insta'}  name="insta" content="instagram  |  اینستاگرام" active={this.state.activeItem === 'insta'} onClick={this.handleItemClick} /> */}
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog  |  بلاگ' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} className="menuFarsi" to={'/music'}  name="music" content='music  |  موسیقی' active={this.state.activeItem === 'music'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos  |  ویدیو' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/academia'} name="academia" content='academia  |  دانشگاه' active={this.state.activeItem === 'academia'} onClick={this.handleItemClick}/>
           </Menu>
         </div>
-        <Switch>
+        <Routes>
           <Route path='/reviews' component={Reviews} />
           <Route path='/insta' component={Insta} />
           <Route path='/blog' component={Blog} />
@@ -61,7 +62,7 @@ render() {
           <Route path='/videos' component={Video} />
           <Route path='/academia' component={Academia} />
           <Route path='/' component={Blog} />
-        </Switch>
+        </Routes>
       </Router>
     <Footer/>
   </div>
