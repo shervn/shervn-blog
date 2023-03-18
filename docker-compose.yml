@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:12
     container_name: shervn-blog_database
     volumes: 
       - /mnt/blog/db/:/var/lib/postgresql/data
