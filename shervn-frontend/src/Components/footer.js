@@ -15,7 +15,7 @@ const Footer = () => (
       <li><a href="https://github.com/shervn/"><Icon name='github' /></a></li>
       <li><a href="mailto:shervin.dehghani@gmail.com"><Icon name='mail' /></a></li>
     </ul>
-    <h5 >© shervn 2020</h5>
+    <h5 >© shervn 2023</h5>
   </div>
 )
 
