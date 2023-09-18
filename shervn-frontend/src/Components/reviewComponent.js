@@ -68,6 +68,7 @@ return(
   onMouseEnter={this.handleShow}
   onMouseLeave={this.handleHide}
   src={this.props.review.imageUrl} wrapped ui={false}
+  className='notinvert'
   size='medium'/>
   <Card.Content className='farsiPost'>
     {this.props.review.title}

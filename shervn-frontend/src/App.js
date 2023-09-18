@@ -47,8 +47,8 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu secondary pointing className='menu' widths={4} stackable>
-            {/* <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews  |  نقد" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} /> */}
+          <Menu secondary pointing className='menu' widths={5} stackable>
+            <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews  |  نقد" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
             {/* <Menu.Item as={Link} className="menuFarsi" to={'/insta'}  name="insta" content="instagram  |  اینستاگرام" active={this.state.activeItem === 'insta'} onClick={this.handleItemClick} /> */}
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog  |  بلاگ' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} className="menuFarsi" to={'/music'}  name="music" content='music  |  موسیقی' active={this.state.activeItem === 'music'} onClick={this.handleItemClick}/>
