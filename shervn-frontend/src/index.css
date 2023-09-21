@@ -15,3 +15,13 @@ code {
 /* :root:not(.notinvert) {
   filter: invert(100%);
 } */
+
+:root{filter: invert(100%);}
+
+.notinvert{
+  filter: invert(100%);
+}
+
+.halfinvert{
+  filter: invert(50%);
+}

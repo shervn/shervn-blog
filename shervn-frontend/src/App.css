@@ -92,11 +92,8 @@
   padding-top: 0;
 }
 
-.headerImage:hover{
+.headerImage:not(.halfinvert):hover{
   filter: none;
-  /* -webkit-filter: grayscale(1); Webkit Nightlies & Chrome Canary */
-  /* -webkit-transition: all .3s ease-in-out;  */
-  /* -webkit-transform: scale(1.01); */
 }
 
 .headerText{
@@ -170,7 +167,7 @@ a{
 }
 
 a:hover {
-  color: orange;
+  color: gray;
 }
 
 .blogList{

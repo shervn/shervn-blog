@@ -1,13 +1,13 @@
 import React from 'react'
-import HeaderImage from './headerImage'
-import { Icon } from 'semantic-ui-react'
+import { Icon, Image } from 'semantic-ui-react'
 
 const setarPhoto = require('../images/setar.png')
 
 const Footer = () => (
 
   <div id="footer">
-    <HeaderImage id="setarPicture" image={setarPhoto} border="False"/>      
+    <Image className='headerImage' id="setarPicture" src={setarPhoto}/>
+
 
     <ul id="footerIcons">
       <li><a href="https://soundcloud.com/shervn"><Icon name='soundcloud' /></a></li>

@@ -19,7 +19,7 @@ export default class HeaderText extends Component {
           size='small'>
           <Header icon='asterisk' color='white' content='F. Fozouni' />
           <Modal.Content>
-            <Image src={require('../images/fozouni.jpg')} />
+            <Image className='notinvert' src={require('../images/fozouni.jpg')} />
           </Modal.Content>
           <Modal.Actions>
             <Button color='red' onClick={this.handleClose} inverted>
@@ -27,7 +27,7 @@ export default class HeaderText extends Component {
             </Button>
           </Modal.Actions>
         </Modal>
-        <Image floated='left' src={require('../images/profile2.jpeg')} id="profilepix" size='tiny' circular />
+        <Image className='notinvert' floated='left' src={require('../images/profile2.jpeg')} id="profilepix" size='tiny' circular />
         <Header className='headerText'
           as='h2'
           content='Shervin Dehghani'
