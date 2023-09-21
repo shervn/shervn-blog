@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import {Helmet} from 'react-helmet'
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-// import { Routes ,Route } from 'react-router-dom';
+import {Helmet} from 'react-helmet'
 
 
 import './App.css';
@@ -56,15 +56,15 @@ render() {
             <Menu.Item as={Link} className="menuFarsi" to={'/academia'} name="academia" content='academia  |  دانشگاه' active={this.state.activeItem === 'academia'} onClick={this.handleItemClick}/>
           </Menu>
         </div>
-        <Switch>
-          <Route path='/reviews' component={Reviews} />
-          <Route path='/insta' component={Insta} />
-          <Route path='/blog' component={Blog} />
-          <Route path='/music' component={Music} />
-          <Route path='/videos' component={Video} />
-          <Route path='/academia' component={Academia} />
-          <Route path='/' component={Blog} />
-        </Switch>
+        <Routes>
+          <Route path='/reviews' element={<Reviews/>} />
+          <Route path='/insta' element={<Insta/>} />
+          <Route path='/blog' element={<Blog/>} />
+          <Route path='/music' element={<Music/>} />
+          <Route path='/videos' element={<Video/>} />
+          <Route path='/academia' element={<Academia/>} />
+          <Route path='/' element={<Blog/>} />
+        </Routes>
       </Router>
     <Footer/>
   </div>
