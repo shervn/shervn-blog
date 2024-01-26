@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Container, Header, Divider, Button, Label } from 'semantic-ui-react'
 import { toEnglish } from '../util.js';
-import  HTTPService  from  '../httpService';
+import  HTTPService  from  '../httpService.js';
 
 const  httpService  =  new  HTTPService();
 
-export default class Academia extends Component {
+export default class Research extends Component {
 
   constructor(props){
     super(props);
@@ -60,7 +60,7 @@ export default class Academia extends Component {
       <Container text>
         <br />
         <p className='nicep post'>
-          I'm a research assistant in <em>Klinikum rechts der Isar der Technischen Universität München</em>. I'm pursuing my PhD on Image Guided Micro Robotics.
+          I'm a research assistant in <em>Klinikum rechts der Isar der Technischen Universität München</em>. I'm pursuing my PhD on Image Guided Micro Robotics. You can find more details <a href="https://www.cs.cit.tum.de/en/camp/members/shervin-dehghani/">here</a>.
     </p>
       <p className="post">
           

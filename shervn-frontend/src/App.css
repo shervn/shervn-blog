@@ -206,7 +206,7 @@ a:hover {
 .menuFarsi{
   font-family: 'farsi';
   color: rgb(34, 30, 30);
-  width: 10px;
+  /* width: 10px; */
 }
 
 .modalBandName.header{
@@ -279,4 +279,8 @@ article[aria-label="Image posted by curator_io to instagram"] {
   color: white;
   cursor: pointer;
   padding: 0 !important;
+}
+
+a{
+  text-decoration: underline;
 }
