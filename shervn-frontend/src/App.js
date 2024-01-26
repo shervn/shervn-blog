@@ -47,19 +47,17 @@ render() {
     <Router>
         <div className="mainPageWithMenu">
           <Menu secondary pointing className='menu' widths={12} stackable>
-            <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
-            {/* <Menu.Item as={Link} className="menuFarsi" to={'/insta'}  name="insta" content="instagram  |  اینستاگرام" active={this.state.activeItem === 'insta'} onClick={this.handleItemClick} /> */}
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
-            <Menu.Item as={Link} className="menuFarsi" to={'/sounds'}  name="sounds" content='sounds' active={this.state.activeItem === 'sounds'} onClick={this.handleItemClick}/>
+            <Menu.Item as={Link} className="menuFarsi" to={'/noises'}  name="noises" content='noises' active={this.state.activeItem === 'noises'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
+            <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} className="menuFarsi" to={'/research'} name="research" content='research' active={this.state.activeItem === 'research'} onClick={this.handleItemClick}/>
           </Menu>
         </div>
         <Routes>
-          <Route path='/reviews' element={<Reviews/>} />
-          {/* <Route path='/insta' element={<Insta/>} /> */}
           <Route path='/blog' element={<Blog/>} />
-          <Route path='/sounds' element={<Sound/>} />
+          <Route path='/reviews' element={<Reviews/>} />
+          <Route path='/noises' element={<Sound/>} />
           <Route path='/videos' element={<Video/>} />
           <Route path='/research' element={<Research/>} />
           <Route path='/' element={<Blog/>} />

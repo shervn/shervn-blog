@@ -60,23 +60,19 @@ export default class Research extends Component {
       <Container text>
         <br />
         <p className='nicep post'>
-          I'm a research assistant in <em>Klinikum rechts der Isar der Technischen Universität München</em>. I'm pursuing my PhD on Image Guided Micro Robotics. You can find more details <a href="https://www.cs.cit.tum.de/en/camp/members/shervin-dehghani/">here</a>.
-    </p>
-      <p className="post">
-          
-      </p>
-        <br />
+          I'm a research assistant in <em>Klinikum rechts der Isar der Technischen Universität München</em>. I'm pursuing my PhD on Image Guided Micro Robotics. You can find more details <a className="textRef" href="https://www.cs.cit.tum.de/en/camp/members/shervin-dehghani/">here</a>.
+        </p>
+        <Divider />
+        <p>Here is a list of the research projects in which I have been involved:</p>
         <ul className='researchList'>
           {t}
         </ul>
-
         <div className="buttons">
         <Button circular compact icon='chevron left' onClick=  {  this.prevPage  } />
         <Label basic>
         <h4 className="">{toEnglish(this.state.currentPage)}</h4></Label>
         <Button circular compact icon='chevron right' onClick=  {  this.nextPage  }/>
         </div>
-
       </Container>
     )
   }

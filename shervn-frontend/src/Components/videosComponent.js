@@ -62,10 +62,10 @@ return(
     {/* <Divider /> */}
     {t}
     <div className="buttons">
-          <Button icon='chevron left' onClick=  {  this.prevPage  } />
+          <Button circular compact icon='chevron left' onClick=  {  this.prevPage  } />
           <Label as='a' basic>
           <h4 className="farsiPost">{toFarsi(this.state.currentPage)}</h4></Label>
-          <Button icon='chevron right' onClick=  {  this.nextPage  }/>
+          <Button circular compact icon='chevron right' onClick=  {  this.nextPage  }/>
     </div>
   </Container>
   )

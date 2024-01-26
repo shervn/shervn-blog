@@ -281,7 +281,7 @@ article[aria-label="Image posted by curator_io to instagram"] {
   padding: 0 !important;
 }
 
-a{
+.textRef{
   text-decoration: underline;
 }
 
