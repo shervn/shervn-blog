@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import { Divider, Container, Header, Button, Label } from 'semantic-ui-react'
 import { toFarsi } from '../util.js';
-import  HTTPService  from  '../httpService';
+import  HTTPService  from  '../httpService.js';
 
 const  httpService  =  new  HTTPService();
 
-export default class Music extends Component {
+export default class Sound extends Component {
 
 constructor(props){
   super(props);
@@ -56,7 +56,7 @@ render(){
 return(
   <Container text>
     <br />
-    {/* <p className='nicep post'>Music, and playing music is my [main] hobby. I play different music instruments and always like to try new ones. Piano and Setar (an Iranian music Instrument) are the ones I play for a longer time, but lately I've been practicing Trumpet too.</p>
+    {/* <p className='nicep post'>Sound, and playing music is my [main] hobby. I play different music instruments and always like to try new ones. Piano and Setar (an Iranian music Instrument) are the ones I play for a longer time, but lately I've been practicing Trumpet too.</p>
     <p>I record time to time the stuff I play or the sounds I hear. Based on the recordings, I'm gathering two collections which are:</p>
     <ul>
       <li><p>Improvisation for Home: a collection of my improvisations.</p></li>

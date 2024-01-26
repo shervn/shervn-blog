@@ -48,7 +48,7 @@ export default class Research extends Component {
           <Header as='h3'>{element.title}</Header>
           <Header as='h6'>{element.organization + ' ' + element.date}</Header>
           <p className="post">
-            {element.description}
+            <div dangerouslySetInnerHTML={{__html: element.description}}></div>
           </p>
           {element.projectLink.length ? <Header as='h6'><a href={element.projectLink}>{element.projectLink}</a></Header> : ""} 
         </Container>
@@ -66,7 +66,7 @@ export default class Research extends Component {
           
       </p>
         <br />
-        <ul>
+        <ul className='researchList'>
           {t}
         </ul>
 

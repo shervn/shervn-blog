@@ -284,3 +284,7 @@ article[aria-label="Image posted by curator_io to instagram"] {
 a{
   text-decoration: underline;
 }
+
+.researchList{
+    list-style-type: none;
+}

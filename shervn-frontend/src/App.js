@@ -10,7 +10,7 @@ import './App.css';
 import HeaderImage from './Components/headerImage'
 import HeaderText from './Components/headerText'
 import Footer from './Components/footer'
-import Music from './Components/musicComponent'
+import Sound from './Components/soundComponent'
 import Blog from './Components/blogComponent'
 import Research from './Components/researchComponent.js'
 import Reviews from './Components/reviewsComponent.js'
@@ -19,7 +19,7 @@ import Video from './Components/videosComponent.js'
 import { Menu } from 'semantic-ui-react'
 
 const coverPhoto = require('./images/wall.png')
-function validatePathName(t){ return ['blog', 'insta', 'research', 'recordings', 'videos', 'reviews', 'music'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
+function validatePathName(t){ return ['blog', 'insta', 'research', 'recordings', 'videos', 'reviews', 'sound'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
 
@@ -50,7 +50,7 @@ render() {
             <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
             {/* <Menu.Item as={Link} className="menuFarsi" to={'/insta'}  name="insta" content="instagram  |  اینستاگرام" active={this.state.activeItem === 'insta'} onClick={this.handleItemClick} /> */}
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
-            <Menu.Item as={Link} className="menuFarsi" to={'/music'}  name="music" content='music' active={this.state.activeItem === 'music'} onClick={this.handleItemClick}/>
+            <Menu.Item as={Link} className="menuFarsi" to={'/sounds'}  name="sounds" content='sounds' active={this.state.activeItem === 'sounds'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/research'} name="research" content='research' active={this.state.activeItem === 'research'} onClick={this.handleItemClick}/>
           </Menu>
@@ -59,7 +59,7 @@ render() {
           <Route path='/reviews' element={<Reviews/>} />
           {/* <Route path='/insta' element={<Insta/>} /> */}
           <Route path='/blog' element={<Blog/>} />
-          <Route path='/music' element={<Music/>} />
+          <Route path='/sounds' element={<Sound/>} />
           <Route path='/videos' element={<Video/>} />
           <Route path='/research' element={<Research/>} />
           <Route path='/' element={<Blog/>} />
