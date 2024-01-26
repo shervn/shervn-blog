@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { Header, Image, Modal, Icon, Button } from 'semantic-ui-react'
-
 
 export default class HeaderText extends Component {
   state = { modalOpen: false }
 
+  contextRef = createRef();
   handleOpen = () => this.setState({ modalOpen: true })
   handleClose = () => this.setState({ modalOpen: false })
 

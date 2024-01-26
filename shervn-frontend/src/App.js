@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 
 import {Helmet} from 'react-helmet'
 
-
 import './App.css';
 
 import HeaderImage from './Components/headerImage'
@@ -46,7 +45,7 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu secondary pointing className='menu' widths={12} stackable>
+          <Menu secondary pointing className='menu' widths={5} stackable>
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
             <Menu.Item as={Link} className="menuFarsi" to={'/noises'}  name="noises" content='noises' active={this.state.activeItem === 'noises'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>

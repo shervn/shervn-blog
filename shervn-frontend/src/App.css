@@ -136,6 +136,9 @@ h6.ui.header{
 .mainPageWithMenu{
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 60%;
+  padding: auto;
+  margin: auto;
 }
 
 #footer{
