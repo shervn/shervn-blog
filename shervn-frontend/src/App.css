@@ -96,6 +96,21 @@
   filter: none;
 }
 
+.instaContainer{
+  padding-top: 20px;
+}
+
+div[data-post="1"] {
+  visibility: hidden;
+}
+
+#curator-feed-default-feed-layout{
+  filter: invert() !important;
+  
+}
+.crt-popup-container{
+  filter: invert() !important;
+}
 .headerText{
   width: 100%;
 }

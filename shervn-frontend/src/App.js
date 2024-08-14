@@ -14,11 +14,12 @@ import Blog from './Components/blogComponent'
 import Research from './Components/researchComponent.js'
 import Reviews from './Components/reviewsComponent.js'
 import Video from './Components/videosComponent.js'
+import Insta from './Components/instaComponent.js'
 
 import { Menu } from 'semantic-ui-react'
 
 const coverPhoto = require('./images/wall.png')
-function validatePathName(t){ return ['blog', 'insta', 'research', 'recordings', 'videos', 'reviews', 'sound'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
+function validatePathName(t){ return ['blog', 'photos', 'research', 'recordings', 'videos', 'reviews', 'sound'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
 
@@ -45,8 +46,9 @@ render() {
     </div>
     <Router>
         <div className="mainPageWithMenu">
-          <Menu secondary pointing className='menu' widths={5} stackable>
+          <Menu secondary pointing className='menu' widths={6} stackable>
             <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
+            <Menu.Item as={Link} className="menuFarsi" to={'/photos'} name="photos" content='photos' active={this.state.activeItem === 'photos'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/noises'}  name="noises" content='noises' active={this.state.activeItem === 'noises'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/videos'} name="videos" content='videos' active={this.state.activeItem === 'videos'} onClick={this.handleItemClick}/>
             <Menu.Item as={Link} className="menuFarsi" to={'/reviews'}  name="reviews" content="reviews" active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick} />
@@ -55,6 +57,7 @@ render() {
         </div>
         <Routes>
           <Route path='/blog' element={<Blog/>} />
+          <Route path='/photos' element={<Insta/>} />
           <Route path='/reviews' element={<Reviews/>} />
           <Route path='/noises' element={<Sound/>} />
           <Route path='/videos' element={<Video/>} />
