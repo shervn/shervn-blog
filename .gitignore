@@ -10,3 +10,6 @@ shervn-nginx/certs/*
 .env
 shervn-nginx/certs/
 ./*/.DS_Store
+shervn-frontend/.DS_Store
+shervn-frontend/.DS_Store
+shervn-frontend/src/.DS_Store

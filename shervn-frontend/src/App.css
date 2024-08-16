@@ -77,12 +77,36 @@
   margin-bottom: 10px;
 }
 
+.headerImage{
+  border-color: rgba(98, 127, 127, 0.549) !important;
+  border-width: 0.1px !important;
+}
 .headerImage:first-of-type{
   /* filter: none;
   -webkit-transition: all .3s ease-in-out; 
   -webkit-filter: grayscale(0.01); */
   margin-bottom: 5%;
   width: 100%;
+}
+
+.musiclistening{
+  /* text-align: justify; */
+  /* direction: rtl; */
+  font-family: 'farsi';
+  line-height: 1;
+  margin-top: -50px;
+}
+
+.musiclistening a{
+  text-decoration: wavy underline;
+  text-underline-offset: 0.5em;
+  /* background-color: #696291; */
+  width: 100%;
+  height: 100%;
+  text-decoration-color:#696291;
+  filter: none() !important;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
 }
 
 .headerImage:last-of-type{
@@ -93,16 +117,16 @@
 }
 
 .headerImage:not(.halfinvert):hover{
-  filter: none;
+  /* filter: none; */
 }
 
 .instaContainer{
   padding-top: 20px;
 }
 
-div[data-post="1"] {
+/* div[data-post="1"] {
   visibility: hidden;
-}
+} */
 
 #curator-feed-default-feed-layout{
   filter: invert() !important;

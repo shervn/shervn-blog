@@ -17,5 +17,8 @@ export default class PostService{
         const url = `${API_URL}${link}`;
         return axios.post(url).then(response => response.data);
     }
-    
+
+    getDetails(){
+        return fetch("https://shervn.com/media/blog_details.txt").then(response => response.text()).then(t => t.split("\n"))
+    }
 }

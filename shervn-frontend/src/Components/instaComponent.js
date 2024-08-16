@@ -8,7 +8,6 @@ export default class Insta extends Component {
 
     script.src = "https://cdn.curator.io/published/0ca529fb-7e34-414f-92ab-dba5100385ac.js";
     script.async = true;
-
     document.body.appendChild(script);
 }
 

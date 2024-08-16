@@ -46,8 +46,7 @@ export default class Blog extends Component {
         <Container text className={element.className}>
           <Header as='h3' content={element.title} className={element.className} />
          {element.image ? <Image className='notinvert' src={element.image} floated='left' size='small'/> : ''}
-          {console.log(element.image)}
-          {element.body.split('\n').map(x => <p className={element.className}>{x}</p>)}
+          {element.body.split('\n').map(x => <p className={element.className} key={(Math.random() + 1).toString(36).substring(4)}>{x}</p>)}
           <Header as='h3' subheader={'- ' + element.date} className={element.className} />
         <Divider/>
         </Container>

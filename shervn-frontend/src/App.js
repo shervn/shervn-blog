@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 
-import {Helmet} from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import './App.css';
 
@@ -18,7 +18,6 @@ import Insta from './Components/instaComponent.js'
 
 import { Menu } from 'semantic-ui-react'
 
-const coverPhoto = require('./images/wall.png')
 function validatePathName(t){ return ['blog', 'photos', 'research', 'recordings', 'videos', 'reviews', 'sound'].indexOf(t.split('/')[1]) > 0 ? t.split('/')[1] : 'blog'};
 
 export default class App extends Component {
@@ -34,14 +33,14 @@ handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
 render() {
   return (
-    <div>
+    <HelmetProvider>
   <Helmet>
     <title>Shervin Dehghani *</title>
     <meta name="description" content="This is the personal webpage of Shervin Dehghani.   شروین دهقانی. صفحه شخصی." />
   </Helmet>
   <div id="mainContainer">
-    <div id="header" bordered>
-      <HeaderImage image={coverPhoto} alt="Shervin Dehghani cover" border="False"/>
+    <div id="header" >
+      <HeaderImage alt="Shervin Dehghani cover"/>
       <HeaderText/>
     </div>
     <Router>
@@ -67,7 +66,7 @@ render() {
       </Router>
     <Footer/>
   </div>
-</div>
+</HelmetProvider>
   );
 }
 }

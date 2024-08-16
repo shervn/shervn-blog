@@ -20,7 +20,6 @@ constructor(props){
 
 componentDidMount() {
   httpService.getPosts('vid_posts').then(function (result) {
-      console.log(result);
       this.setState({ posts: result.data,
                       nextPageURL:  result.nextlink,
                       prevPageURL:  result.prevlink})
