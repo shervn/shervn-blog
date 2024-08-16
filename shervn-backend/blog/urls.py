@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from blogcomponents import views
-from django.conf.urls import url
+from django.urls import re_path as url
 from django.conf import settings
 
 from django.conf.urls.static import static
