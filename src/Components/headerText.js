@@ -34,7 +34,7 @@ const HeaderText = () => {
           </Button>
         </Modal.Actions>
       </Modal>
-      <Image className='notinvert' floated='left' src='https://shervn.com/media/blog_profile.png' id="profilepix" size='tiny' circular />
+      <Image className='notinvert' floated='left' src={getImagePath('blog_profile.png')} id="profilepix" size='tiny' circular />
       <Header className='headerText'
         as='h2'
         content={metadata.name}
