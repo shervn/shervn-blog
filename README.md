@@ -1,0 +1,1 @@
+[![Workflow for S3 Deploy](https://github.com/shervn/shervn-blog/actions/workflows/main.yml/badge.svg)](https://github.com/shervn/shervn-blog/actions/workflows/main.yml)
