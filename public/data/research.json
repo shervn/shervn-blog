@@ -1,0 +1,112 @@
+[
+    {
+      "order": 45,
+      "title": "Colibri5: Real-Time Monocular 5-DoF Trocar Pose Tracking\r\nfor Robot-Assisted Vitreoretinal Surgery",
+      "description": "We present a real-time marker-less method for 3D pose tracking of trocar, achieved with only a single monocular camera.\r\n\r\n\u003Cp\u003E\r\nMoreover, I contributed as a co-author to the following publications:\r\n\u003C/p\u003E\r\n\u003Cp\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003EUncertainty-Aware Contextual Visualization for Human Supervision of OCT-Guided Autonomous Robotic Subretinal Injection\u003C/li\u003E\r\n\u003Cli\u003EEnvibroscope: Real-Time Monitoring and Prediction of Environmental Motion for Enhancing Safety in Robot-Assisted Microsurgery\u003C/li\u003E\r\n\u003Cli\u003EExploring the Needle Tip Interaction Force with Retinal Tissue Deformation in Vitreoretinal Surgery\u003C/li\u003E\r\n\u003C/ul\u003E\r\n\u003C/p\u003E",
+      "date": "ICRA 2024",
+      "organization": "CAMP/TUM. Best Medical Robotics Paper Award Finalist.",
+      "createdAt": "2024-01-29T12:43:00.563193Z",
+      "className": "post",
+      "projectLink": "https://shervn.github.io/colibri5-page/"
+    },
+    {
+      "order": 44,
+      "title": "Medical Image Computing and Computer-Assisted Intervention (MICCAI) 2023",
+      "description": "I contributed as a co-author to the following publications presented at \u003Cb\u003EMICCAI 2023\u003C/b\u003E:\r\n\r\n\u003Cp\u003E\r\n\u003Cul\u003E\r\n\u003Cli\u003E\u003Cb\u003EIntelligent Virtual B-Scan Mirror (IVBM) \u003C/b\u003E(Michael Sommersperger)\u003C/li\u003E\r\n\u003Cli\u003E\u003Cb\u003ESemantic Virtual Shadows (SVS) for Improved Perception in 4D OCT Guided Surgery\u003C/b\u003E (Michael Sommersperger)\u003C/li\u003E\r\n\u003Cli\u003E\u003Cb\u003EFrom Tissue to Sound: Model-Based Sonification of Medical Imaging \u003C/b\u003E(Sasan Matinfar)\u003C/li\u003E\r\n\u003C/ul\u003E\r\n\u003C/p\u003E",
+      "date": "October 2023",
+      "organization": "Computer Aided Medical Procedures (CAMP).",
+      "createdAt": "2024-01-26T14:21:18.328871Z",
+      "className": "post",
+      "projectLink": ""
+    },
+    {
+      "order": 43,
+      "title": "Twitter Social Analysis",
+      "description": "In this project, we utilised Twitter APIs to gather data from Farsi Twitter in order to analyse the trends, influential parties, and groups within the communities. Unfortunately, the project was discontinued due to alterations in Twitter's policies and features.",
+      "date": "2022-2023",
+      "organization": "Private,",
+      "createdAt": "2023-07-27T07:47:27.443689Z",
+      "className": "post",
+      "projectLink": "https://www.instagram.com/kandu.dev/"
+    },
+    {
+      "order": 42,
+      "title": "Robotic Navigation Autonomy for Subretinal Injection via Intelligent Real-Time Virtual iOCT Volume Slicing",
+      "description": "We introduce a framework for autonomous robotic navigation during subretinal injection, utilizing real-time iOCT volume processing. Our method includes instrument pose estimation, online registration, and trajectory planning. We also present intelligent virtual B-scans enabled by CNNs for rapid pose estimation, validated through experiments on ex-vivo porcine eyes. Lastly, we discuss identified challenges and propose solutions for further system development.",
+      "date": "ICRA 2023",
+      "organization": "Johns Hopkins University (JHU) / Computer Aided Medical Procedures (CAMP/TUM).",
+      "createdAt": "2023-03-27T13:04:40.016411Z",
+      "className": "post",
+      "projectLink": "https://shervn.github.io/ivbs/"
+    },
+    {
+      "order": 41,
+      "title": "ColibriDoc: An Eye-in-Hand Autonomous Trocar Docking System",
+      "description": "We present a platform for autonomous trocar docking that combines computer vision and a robotic setup. Inspired by the Cuban Colibri (hummingbird) aligning its beak to a flower using only vision, we mount a camera onto the end-effector of a robotic system. By estimating the position and pose of the trocar, the robot is able to autonomously align and navigate the instrument towards the Trocar's Entry Point and finally perform the insertion.",
+      "date": "ICRA 2022",
+      "organization": "CAMP, Klinikum rechts der Isar der TUM, JHU.",
+      "createdAt": "2022-01-03T14:05:09.692483Z",
+      "className": "post",
+      "projectLink": "https://shervn.github.io/colibridoc/"
+    },
+    {
+      "order": 38,
+      "title": "Master Thesis",
+      "description": "Deep Learning Based Volumetric Segmentation of Biological Cells in Microscopic Images",
+      "date": "2020",
+      "organization": "CAMP, TUM.",
+      "createdAt": "2020-07-22T09:39:45.525673Z",
+      "className": "post",
+      "projectLink": "https://arxiv.org/abs/2206.04558"
+    },
+    {
+      "order": 39,
+      "title": "Graphite: GRAPH-Induced feaTure Extraction for Point Cloud Registration",
+      "description": "IDP Project, accepted at 3DV2020",
+      "date": "2019-2020",
+      "organization": "CAMP, TUM.",
+      "createdAt": "2020-07-22T09:44:32.455437Z",
+      "className": "post",
+      "projectLink": "https://arxiv.org/pdf/2010.09079.pdf"
+    },
+    {
+      "order": 34,
+      "title": "Audio Feedback for Sterility Zones in OR",
+      "description": "Raising Awareness of Sterility Zones in OR, using Sonification and Human Skeleton Tracking. This project was implemented in c++ and SuperCollider.",
+      "date": "2019",
+      "organization": "Medical Augmented Reality Summer School. CAMP. TUM.",
+      "createdAt": "2020-04-26T23:09:02.593312Z",
+      "className": "post",
+      "projectLink": "https://www.medicalaugmentedreality.org"
+    },
+    {
+      "order": 40,
+      "title": "3D Pose Estimation and Object Recognition",
+      "description": "Pose estimation and object instance recognition.",
+      "date": "2018",
+      "organization": "CAMP, TUM.",
+      "createdAt": "2020-10-27T07:30:51.656166Z",
+      "className": "post",
+      "projectLink": "https://github.com/shervn/TDCV17-3DPoseEstimation"
+    },
+    {
+        "order": 35,
+        "title": "Clustering, Categorizing, and Summarizing Users Based on Their Social Media Posts By using Deep Pre-Trained Embeddings",
+        "description": "In this project, we were finding the similarities and dissimilarities between German and English users based on their comments on social media.\r\nWe used Oragnic Dataset from TUM and used Python on Google Colab.",
+        "date": "Summer Semester 2019",
+        "organization": "TUM Practical Course Project.",
+        "createdAt": "2020-04-26T23:09:24.604632Z",
+        "className": "post",
+        "projectLink": ""
+      },
+      {
+        "order": 36,
+        "title": "PointCloud: RECONSTRUCT. SEGMENT. AUGMENT.",
+        "description": "Working with an RGB-D camera to reconstruct a scene from a stream, segment the objects inside and change the desired objects with new ones.\r\nImplementation was done in Python, with using open3d library. We also used PointNet++ as our model.",
+        "date": "Winter Semester 2019",
+        "organization": "TUM Practical Course Project.",
+        "createdAt": "2020-04-26T23:09:42.024681Z",
+        "className": "post",
+        "projectLink": ""
+      }
+  ]

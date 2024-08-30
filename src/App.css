@@ -1,0 +1,330 @@
+@font-face {
+  font-family: farsi;
+  src:  url('./assets/fonts/AriaWebFaNum-Normal.woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: farsiBold;
+  src:  url('./assets/fonts/AriaWebFaNum-Black.woff2');
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.App {
+  text-align: center;
+}
+.rotate {
+  width: 2em;
+  animation: rotation 20000ms infinite linear; 
+}
+
+@media (min-width: 300px) {
+  #mainContainer{
+    margin: 5%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  #header{
+    width:80%;
+    margin: auto;
+    padding-bottom: 20px;
+  }
+}
+
+@media (min-width: 480px) {
+  #mainContainer{
+    margin: 5%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  #header{
+    width:60%;
+    margin: auto;
+    padding-bottom: 20px;
+  }
+}
+
+@media (min-width: 720px) {
+
+#mainContainer{
+  margin: 10%;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+#header{
+  min-width: 300px;
+  max-width: 400px;
+  margin: auto;
+  padding-bottom: 20px;
+}
+}
+
+#mainContainer{
+  margin: 7%;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.headerImage{
+  /* border-color: rgba(98, 127, 127, 0.549) !important; */
+  /* border-width: 0.1px !important; */
+}
+.headerImage:first-of-type{
+  /* filter: none;
+  -webkit-transition: all .3s ease-in-out; 
+  -webkit-filter: grayscale(0.01); */
+  margin-bottom: 5%;
+  width: 100%;
+}
+
+.musiclistening{
+  /* text-align: justify; */
+  /* direction: rtl; */
+  font-family: 'farsi';
+  line-height: 1;
+  margin-top: -50px;
+}
+
+.musiclistening a{
+  text-decoration: wavy underline;
+  text-underline-offset: 0.5em;
+  /* background-color: #696291; */
+  width: 100%;
+  height: 100%;
+  text-decoration-color:#696291;
+  filter: none() !important;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+
+.headerImage:last-of-type{
+  /* margin-bottom: 5%; */
+  width: 100%;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.headerImage:not(.halfinvert):hover{
+  /* filter: none; */
+}
+
+.instaContainer{
+  padding-top: 20px;
+}
+
+/* div[data-post="1"] {
+  visibility: hidden;
+} */
+
+#curator-feed-default-feed-layout{
+  filter: invert() !important;
+  
+}
+.crt-popup-container{
+  filter: invert() !important;
+}
+.headerText{
+  width: 100%;
+}
+
+h2.ui.header.headerText
+{
+  margin: 0;
+}
+
+#profilepix{
+  margin-bottom: 50px;
+}
+
+.post{
+  padding-top: 10px;
+}
+
+h5{
+  text-align: center;
+  color: (50,50,50);
+  margin-top: 5px;
+}
+
+#footerIcons li{
+  display: inline-flex;
+}
+
+.nicep::first-letter { 
+  font-size: 200%;
+}
+
+h6.ui.header{
+  margin-top:10px;
+  color: gray;
+  margin-top:1em;
+}
+
+.mainPageWithMenu{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 60%;
+  padding: auto;
+  margin: auto;
+}
+
+#footer{
+  margin: auto;
+  margin-top: 10px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+#footerIcons{
+  margin: auto;
+  padding: 0;
+}
+
+#setarPicture{
+  width: 30%;
+  max-width: 200px;
+  padding-top: 30px;
+  margin: auto;
+}
+
+a.cv{
+  color: rgb(28, 90, 114);
+}
+
+a{
+  color: inherit;
+}
+
+a:hover {
+  color: gray;
+}
+
+.blogList{
+  list-style: none;
+  padding: 0;
+}
+
+.farsiPost{
+  text-align: justify;
+  direction: rtl;
+  font-family: 'farsi';
+  line-height: 1.6;
+}
+
+.farsiPost::selection {
+  background: #e6e6cc; /* WebKit/Blink Browsers */
+}
+
+.ui.big.header.farsiTitleWhite{
+  direction: rtl;
+  font-family: 'farsi';
+  color: rgb(255, 255, 255);
+  font-size: 5em;
+}
+
+/* h3.ui.farsiPost.header{
+  font-family: 'farsiBold';
+  color: rgb(34, 30, 30);
+} */
+
+.header.farsiPost{
+  font-family: 'farsiBold';
+  color: rgb(34, 30, 30);
+}
+
+.menuFarsi{
+  font-family: 'farsi';
+  color: rgb(34, 30, 30);
+  /* width: 10px; */
+}
+
+.modalBandName.header{
+  font-family: 'farsi';
+  color: rgb(100, 100, 100);
+  direction: rtl;
+}
+
+.buttons{
+  /* position: ; */
+  margin: 0;
+  margin-top: 10px;
+  /* justify-content: center; */
+  text-align: center;
+  align-items: center;
+}
+
+.ui.icon.button{
+  /* position: ; */
+  margin: 0;
+  margin-right: 0px;
+  /* justify-content: center; */
+  text-align: center;
+  align-items: center;
+}
+
+.farsiModal{
+  /* direction: rtl; */
+}
+
+.modalImage{
+  margin-left: 50px;
+  width: 10em;
+  height: 10em;
+}
+
+#cardsR2L {
+  flex-direction: row-reverse;
+}
+
+.ui.basic.label{
+  text-align: center;
+  border: none;
+  margin: auto;
+}
+
+.farsiCard{
+  /* padding: 0.5em; */
+  padding: 40px 0 0 0;
+  margin: 5px;
+}
+
+.farsiCard:hover{
+  cursor: pointer;
+}
+
+article[aria-label="Image posted by curator_io to instagram"] {
+  position: absolute;
+  visibility:hidden;
+  display:none;
+}
+
+.crt-load-more{
+  height: 80px;
+  /* line-height: 80px;   */
+  width: 80px;  
+  /* font-weight: bold; */
+  border-radius: 50%;
+  /* background-color: #4CAF50; */
+  color: white;
+  cursor: pointer;
+  padding: 0 !important;
+}
+
+.textRef{
+  text-decoration: underline;
+}
+
+.researchList{
+    list-style-type: none;
+}
