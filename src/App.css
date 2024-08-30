@@ -233,10 +233,6 @@ a:hover {
   font-size: 5em;
 }
 
-/* h3.ui.farsiPost.header{
-  font-family: 'farsiBold';
-  color: rgb(34, 30, 30);
-} */
 
 .header.farsiPost{
   font-family: 'farsiBold';
@@ -327,4 +323,17 @@ article[aria-label="Image posted by curator_io to instagram"] {
 
 .researchList{
     list-style-type: none;
+}
+
+.ui.header.dateField{
+  direction: rtl;
+  align-content: center;
+  width: 7em;
+  font-size: 1em;
+  background-color: black !important;
+  color: white;
+  font-family: 'farsi';
+  line-height: 1.6;
+  padding-right: 1em;
+  padding-left: 1em;
 }

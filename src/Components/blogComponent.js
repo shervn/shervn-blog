@@ -1,5 +1,6 @@
 import React from 'react'
-import { Container, Header, Divider, Button, Image, Label } from 'semantic-ui-react'
+import {
+  Container, Header, Divider, Button, Image, Label, } from 'semantic-ui-react'
 import { toFarsi, loadData, getImagePath } from '../utils.js';
 import { useEffect, useState } from 'react';
 
@@ -31,13 +32,15 @@ const Blog = () => {
           blogData.slice((currentPage - 1) * count, currentPage * count).map(element =>
             <li key={element.order + element.date}>
               <br />
-              <Container text className={element.className}>
-                <Header as='h3' content={element.title} className={element.className} />
-                {element.image ? <Image className='notinvert' src={getImagePath(element.image)} floated='left' size='small' /> : ''}
-                {element.body.split('\n').map(x => <p className={element.className} key={(Math.random() + 1).toString(36).substring(4)}>{x}</p>)}
-                <Header as='h3' subheader={'- ' + element.date} className={element.className} />
-                <Divider />
-              </Container>
+
+                  <Container text className={element.className}>
+                    <Header as='h3' content={element.title} className={element.className} />
+                    {element.image ? <Image className='notinvert' src={getImagePath(element.image)} floated='left' size='small' /> : ''}
+                    {element.body.split('\n').map(x => <p className={element.className} key={(Math.random() + 1).toString(36).substring(4)}>{x}</p>)}
+                    <Header as='h3' content={element.date} className='dateField' />
+                 
+                  </Container>
+              <Divider />
             </li>
           )
         }

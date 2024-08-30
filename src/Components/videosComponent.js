@@ -23,13 +23,14 @@ const Video = () => {
   return (
     <div>
       <br />
+      <ul className="blogList">
       {videoData.slice((currentPage - 1) * count, currentPage * count).map(element => (
+        <li>
         <Container text key={uid()}>
           <Header as='h3' className={element.className}>{element.title}</Header>
           {element.body.split('\n').map((x, index) => (
             <p className={element.className} key={uid()}>{x}</p>
           ))}
-          <Header as='h3' subheader={'- ' + element.date} className={element.className} />
           <iframe
             className='notinvert'
             title={element.title}
@@ -40,9 +41,12 @@ const Video = () => {
             allow="autoplay"
             src={element.youtubeLink}
           ></iframe>
+          <Header as='h3' content={element.date} className='dateField' />
           <Divider />
         </Container>
+          </li>
       ))}
+      </ul>
 
       <div className="buttons">
         <Button circular compact icon='chevron left' onClick={prevPage} />
