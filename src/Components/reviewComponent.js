@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Dimmer, Card, Image, Icon, Header } from 'semantic-ui-react'
 import { getImagePath } from '../utils.js';
 
