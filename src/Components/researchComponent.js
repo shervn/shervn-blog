@@ -41,7 +41,7 @@ const Research = () => {
                 <p className="post">
                   <div dangerouslySetInnerHTML={{__html: element.description}}></div>
                 </p>
-                {element.projectLink.length ? <Header as='h6'><a href={element.projectLink} target='_blank'>[Project Page]</a></Header> : ""} 
+                {element.projectLink.length ? <Header as='h6'><a href={element.projectLink} target='_blank' rel="noreferrer">[Project Page]</a></Header> : ""} 
               </Container>
               <br />
               <Divider />
