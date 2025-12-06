@@ -1,5 +1,4 @@
-import React from "react";
-import { Grid, Image, Container, Divider } from "semantic-ui-react";
+import { Grid, Image, Container } from "semantic-ui-react";
 
 export default function PhotoGrid({ data }) {
   // Function to randomly insert empty squares
