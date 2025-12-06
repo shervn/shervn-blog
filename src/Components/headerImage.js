@@ -9,7 +9,7 @@ const HeaderImage = () => {
     <Header className='headerText'
     as='h5'
     content=''/>
-    <Image className='headerImage notinvert' bordered
+    <Image className='headerImage notinvert'
       src={getImagePath('blog_cover.png')}/>
 
       </div>
