@@ -28,7 +28,7 @@ export const data = [
     ]
   },
   {
-    folderName: " Côte d'Azur کوت‌آزور",
+    folderName: " Cote d'Azur کوت‌دازور",
     photos: [
       "/images/postboxes/Cote d'Azur/original_d13e8eb5-d14d-424e-9634-2cc2e666fd0b_PXL_20250724_163602320~2.jpg",
       "/images/postboxes/Cote d'Azur/original_e639644b-bf8d-48c2-a4da-8b08827cd221_PXL_20250723_162036686~2.jpg",
