@@ -2,112 +2,112 @@ export const data = [
   {
     folderName: "Barcelona / بارسلونا",
     photos: [
-      "/images/Postbox/Barcelona/Picture 1.jpg",
-      "/images/Postbox/Barcelona/Picture 2.jpg",
-      "/images/Postbox/Barcelona/Picture 3.jpg",
-      "/images/Postbox/Barcelona/Picture 4.jpg",
-      "/images/Postbox/Barcelona/Picture 5.jpg"
+      "/images/Postbox/Barcelona_1.jpg",
+      "/images/Postbox/Barcelona_2.jpg",
+      "/images/Postbox/Barcelona_3.jpg",
+      "/images/Postbox/Barcelona_4.jpg",
+      "/images/Postbox/Barcelona_5.jpg"
     ]
   },
   {
     folderName: "Guangzhou / گوانژو",
     photos: [
-      "/images/Postbox/China/Picture 1.jpg",
-      "/images/Postbox/China/Picture 2.jpg",
-      "/images/Postbox/China/Picture 3.jpg",
-      "/images/Postbox/China/Picture 4.jpg"
+      "/images/Postbox/China_1.jpg",
+      "/images/Postbox/China_2.jpg",
+      "/images/Postbox/China_3.jpg",
+      "/images/Postbox/China_4.jpg"
     ]
   },
   {
     folderName: "Berlin / برلین",
     photos: [
-      "/images/Postbox/Berlin/Picture 1.jpg",
-      "/images/Postbox/Berlin/Picture 2.jpg",
-      "/images/Postbox/Berlin/Picture 3.jpg",
-      "/images/Postbox/Berlin/Picture 4.jpg"
+      "/images/Postbox/Berlin_1.jpg",
+      "/images/Postbox/Berlin_2.jpg",
+      "/images/Postbox/Berlin_3.jpg",
+      "/images/Postbox/Berlin_4.jpg"
     ]
   },
   {
     folderName: "Cote d'Azur / کوت‌دازور",
     photos: [
-      "/images/Postbox/Cote d'Azur/Picture 1.jpg",
-      "/images/Postbox/Cote d'Azur/Picture 2.jpg",
-      "/images/Postbox/Cote d'Azur/Picture 3.jpg",
-      "/images/Postbox/Cote d'Azur/Picture 4.jpg",
-      "/images/Postbox/Cote d'Azur/Picture 5.jpg",
-      "/images/Postbox/Cote d'Azur/Picture 6.jpg"
+      "/images/Postbox/Cote_1.jpg",
+      "/images/Postbox/Cote_2.jpg",
+      "/images/Postbox/Cote_3.jpg",
+      "/images/Postbox/Cote_4.jpg",
+      "/images/Postbox/Cote_5.jpg",
+      "/images/Postbox/Cote_6.jpg"
     ]
   },
   {
     folderName: "London / لندن",
     photos: [
-      "/images/Postbox/London/Picture 1.jpg",
-      "/images/Postbox/London/Picture 2.jpg",
-      "/images/Postbox/London/Picture 3.jpg",
-      "/images/Postbox/London/Picture 4.jpg",
-      "/images/Postbox/London/Picture 5.jpg",
-      "/images/Postbox/London/Picture 6.jpg",
-      "/images/Postbox/London/Picture 7.jpg",
-      "/images/Postbox/London/Picture 8.jpg"
+      "/images/Postbox/London_1.jpg",
+      "/images/Postbox/London_2.jpg",
+      "/images/Postbox/London_3.jpg",
+      "/images/Postbox/London_4.jpg",
+      "/images/Postbox/London_5.jpg",
+      "/images/Postbox/London_6.jpg",
+      "/images/Postbox/London_7.jpg",
+      "/images/Postbox/London_8.jpg"
     ]
   },
   {
     folderName: "Seoul / سئول",
     photos: [
-      "/images/Postbox/Seoul/Picture 1.jpg",
-      "/images/Postbox/Seoul/Picture 2.jpg",
-      "/images/Postbox/Seoul/Picture 3.jpg",
-      "/images/Postbox/Seoul/Picture 4.jpg",
-      "/images/Postbox/Seoul/Picture 5.jpg",
-      "/images/Postbox/Seoul/Picture 6.jpg",
-      "/images/Postbox/Seoul/Picture 7.jpg"
+      "/images/Postbox/Seoul_1.jpg",
+      "/images/Postbox/Seoul_2.jpg",
+      "/images/Postbox/Seoul_3.jpg",
+      "/images/Postbox/Seoul_4.jpg",
+      "/images/Postbox/Seoul_5.jpg",
+      "/images/Postbox/Seoul_6.jpg",
+      "/images/Postbox/Seoul_7.jpg"
     ]
   },
   {
     folderName: "Tehran / تهران *",
     photos: [
-      "/images/Postbox/Tehran/Picture 1.jpg",
-      "/images/Postbox/Tehran/Picture 2.jpg",
-      "/images/Postbox/Tehran/Picture 3.jpg",
-      "/images/Postbox/Tehran/Picture 4.jpg",
-      "/images/Postbox/Tehran/Picture 5.jpg",
-      "/images/Postbox/Tehran/Picture 6.jpg"
+      "/images/Postbox/Tehran_1.jpg",
+      "/images/Postbox/Tehran_2.jpg",
+      "/images/Postbox/Tehran_3.jpg",
+      "/images/Postbox/Tehran_4.jpg",
+      "/images/Postbox/Tehran_5.jpg",
+      "/images/Postbox/Tehran_6.jpg"
     ]
   },
   {
     folderName: "Tokyo / توکیو",
     photos: [
-      "/images/Postbox/Tokyo/Picture 1.jpg",
-      "/images/Postbox/Tokyo/Picture 2.jpg",
-      "/images/Postbox/Tokyo/Picture 3.jpg",
-      "/images/Postbox/Tokyo/Picture 4.jpg",
-      "/images/Postbox/Tokyo/Picture 5.jpg",
-      "/images/Postbox/Tokyo/Picture 6.jpg",
-      "/images/Postbox/Tokyo/Picture 7.jpg"
+      "/images/Postbox/Tokyo_1.jpg",
+      "/images/Postbox/Tokyo_2.jpg",
+      "/images/Postbox/Tokyo_3.jpg",
+      "/images/Postbox/Tokyo_4.jpg",
+      "/images/Postbox/Tokyo_5.jpg",
+      "/images/Postbox/Tokyo_6.jpg",
+      "/images/Postbox/Tokyo_7.jpg"
     ]
   },
   {
     folderName: "Toronto / تورنتو",
     photos: [
-      "/images/Postbox/Toronto/Picture 1.jpg",
-      "/images/Postbox/Toronto/Picture 2.jpg",
-      "/images/Postbox/Toronto/Picture 3.jpg",
-      "/images/Postbox/Toronto/Picture 4.jpg",
-      "/images/Postbox/Toronto/Picture 5.jpg",
-      "/images/Postbox/Toronto/Picture 6.jpg",
-      "/images/Postbox/Toronto/Picture 7.jpg"
+      "/images/Postbox/Toronto_1.jpg",
+      "/images/Postbox/Toronto_2.jpg",
+      "/images/Postbox/Toronto_3.jpg",
+      "/images/Postbox/Toronto_4.jpg",
+      "/images/Postbox/Toronto_5.jpg",
+      "/images/Postbox/Toronto_6.jpg",
+      "/images/Postbox/Toronto_7.jpg"
     ]
   },
   {
     folderName: "Wien / وین",
     photos: [
-      "/images/Postbox/Wien/Picture 1.jpg",
-      "/images/Postbox/Wien/Picture 2.jpg",
-      "/images/Postbox/Wien/Picture 3.jpg",
-      "/images/Postbox/Wien/Picture 4.jpg",
-      "/images/Postbox/Wien/Picture 5.jpg",
-      "/images/Postbox/Wien/Picture 6.jpg",
-      "/images/Postbox/Wien/Picture 7.jpg"
+      "/images/Postbox/Wien_1.jpg",
+      "/images/Postbox/Wien_2.jpg",
+      "/images/Postbox/Wien_3.jpg",
+      "/images/Postbox/Wien_4.jpg",
+      "/images/Postbox/Wien_5.jpg",
+      "/images/Postbox/Wien_6.jpg",
+      "/images/Postbox/Wien_7.jpg"
     ]
   }
 ];
