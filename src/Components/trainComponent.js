@@ -67,8 +67,8 @@ export default function TrainComponent({ data }) {
         <p
         className="farsiPost"
         style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
+            fontSize: "1.1rem",
+            fontWeight: "1000",
             textAlign: "center",
             marginBottom: 0,
         }}

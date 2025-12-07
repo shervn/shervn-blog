@@ -56,6 +56,7 @@ export default function PhotoGrid({ data }) {
         <Grid.Column key={i}>
         {src ? (
           <Image
+          rounded
           src={src}
           style={{
             width: "100%",
