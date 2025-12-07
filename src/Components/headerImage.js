@@ -10,7 +10,6 @@ const HeaderImage = () => {
     content=''/>
     <Image className='headerImage'
     src={getImagePath('blog_cover.png')}/>
-    
     </div>
   )
 }

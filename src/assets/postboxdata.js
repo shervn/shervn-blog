@@ -1,6 +1,6 @@
 export const data = [
   {
-    folderName: "Barcelona بارسلونا",
+    folderName: "Barcelona / بارسلونا",
     photos: [
       "/images/Postboxes/Barcelona/Picture 1.jpg",
       "/images/Postboxes/Barcelona/Picture 2.jpg",
@@ -10,7 +10,7 @@ export const data = [
     ]
   },
   {
-    folderName: "China چین",
+    folderName: "Guangzhou / گوانژو",
     photos: [
       "/images/Postboxes/China/Picture 1.jpg",
       "/images/Postboxes/China/Picture 2.jpg",
@@ -19,7 +19,7 @@ export const data = [
     ]
   },
   {
-    folderName: "Berlin برلین",
+    folderName: "Berlin / برلین",
     photos: [
       "/images/Postboxes/Berlin/Picture 1.jpg",
       "/images/Postboxes/Berlin/Picture 2.jpg",
@@ -28,7 +28,7 @@ export const data = [
     ]
   },
   {
-    folderName: " Cote d'Azur کوت‌دازور",
+    folderName: "Cote d'Azur / کوت‌دازور",
     photos: [
       "/images/Postboxes/Cote d'Azur/Picture 1.jpg",
       "/images/Postboxes/Cote d'Azur/Picture 2.jpg",
@@ -39,7 +39,7 @@ export const data = [
     ]
   },
   {
-    folderName: "London لندن",
+    folderName: "London / لندن",
     photos: [
       "/images/Postboxes/London/Picture 1.jpg",
       "/images/Postboxes/London/Picture 2.jpg",
@@ -52,7 +52,7 @@ export const data = [
     ]
   },
   {
-    folderName: "Seoul سئول",
+    folderName: "Seoul / سئول",
     photos: [
       "/images/Postboxes/Seoul/Picture 1.jpg",
       "/images/Postboxes/Seoul/Picture 2.jpg",
@@ -64,7 +64,7 @@ export const data = [
     ]
   },
   {
-    folderName: "* Tehran تهران",
+    folderName: "Tehran / تهران *",
     photos: [
       "/images/Postboxes/Tehran/Picture 1.jpg",
       "/images/Postboxes/Tehran/Picture 2.jpg",
@@ -75,7 +75,7 @@ export const data = [
     ]
   },
   {
-    folderName: "Tokyo توکیو",
+    folderName: "Tokyo / توکیو",
     photos: [
       "/images/Postboxes/Tokyo/Picture 1.jpg",
       "/images/Postboxes/Tokyo/Picture 2.jpg",
@@ -83,12 +83,11 @@ export const data = [
       "/images/Postboxes/Tokyo/Picture 4.jpg",
       "/images/Postboxes/Tokyo/Picture 5.jpg",
       "/images/Postboxes/Tokyo/Picture 6.jpg",
-      "/images/Postboxes/Tokyo/Picture 7.jpg",
-      "/images/Postboxes/Tokyo/Picture 8.jpg"
+      "/images/Postboxes/Tokyo/Picture 7.jpg"
     ]
   },
   {
-    folderName: "Toronto تورنتو",
+    folderName: "Toronto / تورنتو",
     photos: [
       "/images/Postboxes/Toronto/Picture 1.jpg",
       "/images/Postboxes/Toronto/Picture 2.jpg",
@@ -100,7 +99,7 @@ export const data = [
     ]
   },
   {
-    folderName: "Wien وین",
+    folderName: "Wien / وین",
     photos: [
       "/images/Postboxes/Wien/Picture 1.jpg",
       "/images/Postboxes/Wien/Picture 2.jpg",

@@ -3,7 +3,7 @@ import { Container, Header, Divider, Button, Image, Icon } from 'semantic-ui-rea
 import { loadData, getImagePath } from '../utils.js';
 
 
-const Blog = ({ type }) => {
+const Blog = ({ type="blog" }) => {
   const [blogData, setBlogData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   

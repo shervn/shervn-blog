@@ -64,9 +64,17 @@ export default function TrainComponent({ data }) {
               boxSizing: "border-box",
             }}
           >
-            <p style={{ fontWeight: "bold", marginBottom: "12px" }}>
-              {item.city} <span style={{ fontWeight: 400 }}></span>
-            </p>
+        <p
+        className="farsiPost"
+        style={{
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: 0,
+        }}
+        >
+        {item.city}
+        </p>
 
             <div
               style={{
