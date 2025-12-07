@@ -1,22 +1,21 @@
 import { Component } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
-
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Menu } from 'semantic-ui-react';
 
 import './App.css';
 
-import HeaderImage from './Components/headerImage';
-import HeaderText from './Components/headerText';
-import Footer from './Components/footer';
+import HeaderText from './Components/headerText.js';
+import Footer from './Components/footerComponent.js';
 import Sound from './Components/soundComponent';
 import Blog from './Components/blogComponent';
 import TrainComponent from './Components/trainComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
+
 import { data } from "./assets/postboxdata.js";
 import { traindata } from "./assets/traindata.js";
 
-import { Menu } from 'semantic-ui-react';
 
 function validatePathName(t) {
   return ['blog', 'reviews', 'postboxes', 'metro', 'noises'].includes(t.split('/')[1])
@@ -46,8 +45,7 @@ export default class App extends Component {
         </Helmet>
         <div id="mainContainer">
           <div id="header">
-            <HeaderImage alt="Shervin Dehghani cover" />
-            <HeaderText />
+            <HeaderText alt="Shervin Dehghani cover" />
           </div>
           <Router>
             <div className="mainPageWithMenu">

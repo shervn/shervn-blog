@@ -13,6 +13,12 @@ const HeaderText = () => {
   return (
     <div className="header-container">
 
+      <Header className='headerText'
+      as='h5'
+      content=''/>
+      <Image className='headerImage'
+      src={getImagePath('blog_cover.png')}/>
+
       {/* Music Row */}
       <div className="music-row">
         <h5 className='musiclistening'>

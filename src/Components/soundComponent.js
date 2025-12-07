@@ -32,7 +32,7 @@ const Sound = () => {
         <Container text>
         <Header as='h3' className={element.className}>{element.title}</Header>
         {element.body.split('\n').map(x => <p className={element.className} key={uid()}>{x}</p>)}
-        <iframe title={element.title} width="100%" height={element.playlist === true ? 350 : 150} allow="autoplay" src={element.soundCloudLink}></iframe>
+        <iframe title={element.title} width="100%" frameborder="no" height={element.playlist === true ? 350 : 150} allow="autoplay" src={element.soundCloudLink}></iframe>
         </Container>
         <Divider />
         </div>
