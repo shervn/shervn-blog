@@ -38,7 +38,7 @@ export default class App extends Component {
       <HelmetProvider>
       <Helmet>
       <title>Shervin Dehghani *</title>
-      <meta name="description" content="This is the personal webpage of Shervin Dehghani.   شروین دهقانی. صفحه شخصی." />
+      <meta name="description" content="This is the personal webpage of Shervin Dehghani.   شروین . صفحه شخصی." />
       </Helmet>
       <div id="mainContainer">
       <div id="header" >
@@ -47,12 +47,12 @@ export default class App extends Component {
       </div>
       <Router>
       <div className="mainPageWithMenu">
-      <Menu secondary pointing className='menu' widths={5} stackable>
-      <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
-      <Menu.Item as={Link} className="menuFarsi" to={'/reviews'} name="reviews" content='reviews' active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick}/>
-      <Menu.Item as={Link} className="menuFarsi" to={'/postboxes'}  name="postboxes" content='postboxes' active={this.state.activeItem === 'postboxes'} onClick={this.handleItemClick}/>
-      <Menu.Item as={Link} className="menuFarsi" to={'/metro'}  name="metro" content='metro مترو' active={this.state.activeItem === 'metro'} onClick={this.handleItemClick}/>
-      <Menu.Item as={Link} className="menuFarsi" to={'/noises'} name="noises" content='noises' active={this.state.activeItem === 'noises'} onClick={this.handleItemClick}/>
+      <Menu tabular widths={5} stackable>
+      <Menu.Item as={Link} className="menuFarsi" to={'/blog'}  name="blog" content='Blog' active={this.state.activeItem === 'blog'} onClick={this.handleItemClick} />
+      <Menu.Item as={Link} className="menuFarsi" to={'/reviews'} name="reviews" content='Reviews' active={this.state.activeItem === 'reviews'} onClick={this.handleItemClick}/>
+      <Menu.Item as={Link} className="menuFarsi" to={'/postboxes'}  name="postboxes" content='Postboxes' active={this.state.activeItem === 'postboxes'} onClick={this.handleItemClick}/>
+      <Menu.Item as={Link} className="menuFarsi" to={'/metro'}  name="metro" content='Metro مترو' active={this.state.activeItem === 'metro'} onClick={this.handleItemClick}/>
+      <Menu.Item as={Link} className="menuFarsi" to={'/noises'} name="noises" content='Noises' active={this.state.activeItem === 'noises'} onClick={this.handleItemClick}/>
       </Menu>
       </div>
       <Routes>

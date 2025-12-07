@@ -194,3 +194,80 @@ h6.ui.header { margin-top: 1em; color: gray; }
   text-align: center;
   align-items: center;
 }
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* keep “listening to” centered */
+.music-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.musiclistening {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* profile block stays one line even on phone */
+.profile-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+
+  /* Prevent wrapping on small screens */
+  flex-wrap: nowrap;
+  width: 100%;
+
+  /* allow shrinking instead of wrapping */
+  overflow: hidden;
+}
+
+.profile-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+
+  /* allow text to shrink instead of pushing to new line */
+  flex: 1;
+  min-width: 0;
+}
+
+.asterisk-trigger {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .musiclistening {
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  #profilepix {
+    width: 54px !important;
+    height: 54px !important;
+    flex-shrink: 0;
+  }
+
+  .headerText {
+    font-size: 1.3rem !important;
+    line-height: 1.3;
+    white-space: nowrap; /* prevent breaking the name on 2 lines */
+  }
+}
+.noselect {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
