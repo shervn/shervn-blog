@@ -1,13 +1,25 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Container, Button, Icon } from "semantic-ui-react";
 
 export default function TrainComponent({ data }) {
-  const visible = 5;
   const [start, setStart] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
   const containerRef = useRef();
-  
+
+  const [visible, setVisible] = useState(
+  typeof window !== "undefined" && window.innerWidth < 768 ? 4 : 6);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisible(window.innerWidth < 768 ? 4 : 6);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // const visible = 4;
   const goLeft = () => setStart((s) => (s - 1 + data.length) % data.length);
   const goRight = () => setStart((s) => (s + 1) % data.length);
   
@@ -70,9 +82,8 @@ export default function TrainComponent({ data }) {
         aspectRatio: "9/16",
         overflow: "hidden",
         background: "#eee",
-        borderRadius: "8px",
         position: "relative",
-        maxHeight: "500px"
+        maxHeight: "550px",
       }}
       >
       <h3 className="overlayCityName">
