@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Divider, Container, Header, Button, Label } from 'semantic-ui-react';
 import { toFarsi, loadData, uid } from '../utils.js';
 
@@ -7,54 +7,53 @@ const count = 5;
 const Video = () => {
   const [videoData, setVideoData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
+  
   useEffect(() => {
     loadData(setVideoData, 'video');
   }, [currentPage]);
-
+  
   const prevPage = () => {
     setCurrentPage(Math.max(currentPage - 1, 1));
   };
-
+  
   const nextPage = () => {
     setCurrentPage(Math.min(currentPage + 1, Math.ceil(videoData.length / count)));
   };
-
+  
   return (
     <div>
-      <br />
-      <ul className="blogList">
-      {videoData.slice((currentPage - 1) * count, currentPage * count).map(element => (
-        <li>
-        <Container text key={uid()}>
-          <Header as='h3' className={element.className}>{element.title}</Header>
-          {element.body.split('\n').map((x, index) => (
-            <p className={element.className} key={uid()}>{x}</p>
-          ))}
-          <iframe
-            className='notinvert'
-            title={element.title}
-            width="100%"
-            height={400}
-            scrolling="no"
-            frameBorder="no"
-            allow="autoplay"
-            src={element.youtubeLink}
-          ></iframe>
-          <Header as='h3' content={element.date} className='dateField' />
-          <Divider />
-        </Container>
-          </li>
+    <br />
+    <ul className="blogList">
+    {videoData.slice((currentPage - 1) * count, currentPage * count).map(element => (
+      <li>
+      <Container text key={uid()}>
+      <Header as='h3' className={element.className}>{element.title}</Header>
+      {element.body.split('\n').map((x, index) => (
+        <p className={element.className} key={uid()}>{x}</p>
       ))}
-      </ul>
-
-      <div className="buttons">
-        <Button circular compact icon='chevron left' onClick={prevPage} />
-        <Label as='a' basic>
-          <h4 className="farsiPost">{toFarsi(currentPage)}</h4>
-        </Label>
-        <Button circular compact icon='chevron right' onClick={nextPage} />
-      </div>
+      <iframe
+      title={element.title}
+      width="100%"
+      height={400}
+      scrolling="no"
+      frameBorder="no"
+      allow="autoplay"
+      src={element.youtubeLink}
+      ></iframe>
+      <Header as='h3' content={element.date} className='dateField' />
+      <Divider />
+      </Container>
+      </li>
+    ))}
+    </ul>
+    
+    <div className="buttons">
+    <Button circular compact icon='chevron left' onClick={prevPage} />
+    <Label as='a' basic>
+    <h4 className="farsiPost">{toFarsi(currentPage)}</h4>
+    </Label>
+    <Button circular compact icon='chevron right' onClick={nextPage} />
+    </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export function toEnglish(i) {
 export const uid = () => (Math.random() + 1).toString(36).substring(2);
 
 export function getImagePath(image_name){
-        return `${process.env.PUBLIC_URL}/images/${image_name}` 
+        return `${process.env.PUBLIC_URL}/images/Misc/${image_name}` 
 }
 
 export const loadData = async (func, path) => {
