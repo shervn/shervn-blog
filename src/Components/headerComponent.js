@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Header, Image, Modal, Icon, Button } from 'semantic-ui-react'
 import { loadData, getImagePath } from '../utils.js';
 
-const HeaderText = () => {
+export default function HeaderComponent(){
   const [metadata, setMetadata] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -75,5 +75,3 @@ const HeaderText = () => {
     </div>
   );
 };
-
-export default HeaderText;

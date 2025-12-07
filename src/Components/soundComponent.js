@@ -6,7 +6,7 @@ import { loadData, uid} from '../utils.js';
 const Sound = () => {
   
   const [soundData, setSoundData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   
   const count = 5;
   

@@ -42,7 +42,6 @@ export default function PhotoGrid({ data }) {
     {shuffledData.map((section) => (
       <div key={section.folderName} style={{ marginBottom: "3rem" }}>
       <p
-      className="farsiPost"
       style={{
         fontSize: "1.5rem",
         fontWeight: "bold",

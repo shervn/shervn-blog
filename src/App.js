@@ -6,7 +6,7 @@ import { Menu } from 'semantic-ui-react';
 
 import './App.css';
 
-import HeaderText from './Components/headerText.js';
+import HeaderComponent from './Components/headerComponent.js';
 import Footer from './Components/footerComponent.js';
 import Sound from './Components/soundComponent';
 import Blog from './Components/blogComponent';
@@ -45,7 +45,7 @@ export default class App extends Component {
         </Helmet>
         <div id="mainContainer">
           <div id="header">
-            <HeaderText alt="Shervin Dehghani cover" />
+            <HeaderComponent alt="Shervin Dehghani cover" />
           </div>
           <Router>
             <div className="mainPageWithMenu">
