@@ -44,7 +44,7 @@ export default function TrainComponent({ data }) {
       display: "flex",
       width: `${(data.length * 100) / visible}%`,
       transform: `translateX(-${start * slideWidth}%)`,
-      transition: "transform 0.5s ease",
+      transition: "transform 0.2s ease-out",
       cursor: isDragging ? "grabbing" : "grab",
     }}
     onMouseDown={(e) => handleDragStart(e.clientX)}
@@ -78,10 +78,10 @@ export default function TrainComponent({ data }) {
       <h3 className="overlayCityName">
       {item.city}
       </h3>
-      
       <img
       src={item.src}
       alt={`${item.city} ${item.year}`}
+      onDragStart={(e) => e.preventDefault()}
       style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
       </div>

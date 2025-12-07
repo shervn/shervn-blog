@@ -274,12 +274,15 @@ h6.ui.header { margin-top: 1em; color: gray; }
   .headerText {
     font-size: 1.3rem !important;
     line-height: 1.3;
-    white-space: nowrap; /* prevent breaking the name on 2 lines */
+    white-space: nowrap;
   }
 }
 .noselect {
-  user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  user-select: none;
+}
+.noselect img {
+  pointer-events: none;
 }
