@@ -2,7 +2,6 @@ import { useEffect, useState }  from 'react'
 import { Divider, Container, Header, Button, Icon } from 'semantic-ui-react'
 import { loadData, uid} from '../utils.js';
 
-
 const Sound = () => {
   
   const [soundData, setSoundData] = useState([]);

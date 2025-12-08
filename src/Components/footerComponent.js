@@ -1,15 +1,7 @@
 import { Icon, Image } from 'semantic-ui-react'
-import { useEffect, useState } from 'react';
-import {loadData, getImagePath} from '../utils.js';
-
+import {getImagePath} from '../utils.js';
 
 const Footer = () => {
-  
-  const [metadata, setMetadata] = useState([]);
-  
-  useEffect(() => {
-    loadData(setMetadata, 'meta');
-  }, []);
   
   return(
     
@@ -21,7 +13,7 @@ const Footer = () => {
           <li><a href="mailto:shervin.dehghani@gmail.com"><Icon name='mail' /></a></li>
           <li><a href="https://scholar.google.com/citations?user=YGjd874AAAAJ&hl=en"><Icon name='university' /></a></li>
       </ul>
-      <h5 className='englishPost'>© shervn {metadata.year}</h5>
+      <h5 className='englishPost'>© shervn {new Date().getFullYear()}</h5>
       <br/>
     </div>
   )

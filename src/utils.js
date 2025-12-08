@@ -1,12 +1,3 @@
-export function toFarsi(i) {
-        var persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        return persian[i];
-};
-
-export function toEnglish(i) {
-        return i;
-};
-
 export const uid = () => (Math.random() + 1).toString(36).substring(2);
 
 export function getImagePath(image_name){
@@ -26,7 +17,6 @@ export const loadData = async (func, path) => {
                                         }
                                 );
                         }
-
                         else {
                         }
                         func(jsonData);
