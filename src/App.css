@@ -223,7 +223,7 @@ h6.ui.header { margin-top: 1em; color: gray; }
 
 .musiclistening {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* profile block stays one line even on phone */
