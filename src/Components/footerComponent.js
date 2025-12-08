@@ -21,7 +21,7 @@ const Footer = () => {
           <li><a href="mailto:shervin.dehghani@gmail.com"><Icon name='mail' /></a></li>
           <li><a href="https://scholar.google.com/citations?user=YGjd874AAAAJ&hl=en"><Icon name='university' /></a></li>
       </ul>
-      <h5 >© shervn {metadata.year}</h5>
+      <h5 className='englishPost'>© shervn {metadata.year}</h5>
       <br/>
     </div>
   )

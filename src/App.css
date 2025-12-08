@@ -24,7 +24,7 @@
 }
 @font-face {
   font-family: farsiBold;
-  font-weight: 800;
+  font-weight: bold;
   src: url('./assets/fonts/Onest.ttf') format('truetype');
   unicode-range: U+0000-00FF;
 }
@@ -182,13 +182,12 @@ h6.ui.header { margin-top: 1em; color: gray; }
 .farsiCard:hover { cursor: pointer; }
 #cardsR2L { flex-direction: row-reverse; }
 
+
 .modalImage {
   margin-left: 50px;
   width: 10em;
   height: 10em;
 }
-.farsiModal {}
-
 /* Misc */
 .post { padding-top: 10px; }
 #setarPicture { width: 30%; max-width: 200px; padding-top: 30px; margin: auto; }
@@ -311,5 +310,11 @@ h6.ui.header { margin-top: 1em; color: gray; }
     justify-content: left !important;
     padding-left: 1rem !important;
   }
+}
 
+.englishPost{
+  font-family: "farsi" !important;
+}
+.ui.header.farsiPost{
+  font-family: "farsiBold" !important;
 }
