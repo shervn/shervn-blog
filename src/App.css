@@ -82,15 +82,6 @@ a.cv {
   padding: auto;
 }
 
-/* Media Queries */
-@media (min-width: 300px) {
-  #header { width: 80%; }
-}
-
-@media (min-width: 480px) {
-  #header { width: 60%; }
-}
-
 @media (min-width: 720px) {
   #mainContainer { margin: 30px 10% 10px; }
   #header {
@@ -235,7 +226,8 @@ h6.ui.header {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 120%;
+  width: 100%;
+  margin: auto;
 }
 
 .music-row {
@@ -276,7 +268,7 @@ h6.ui.header {
   cursor: pointer;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   .musiclistening {
     text-align: left;
   }
