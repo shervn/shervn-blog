@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Header, Image, Modal, Button, Icon } from 'semantic-ui-react';
-import { loadData, getImagePath } from '../utils.js';
+import { loadData, getImagePath, timeAgo } from '../utils.js';
 
 const SPOTIY_RECENT_API = 'https://nibv576k3b.execute-api.us-east-1.amazonaws.com/spotify-latest'
 
@@ -39,9 +39,12 @@ export default function HeaderComponent() {
       <Image className='headerImage' src={getImagePath('blog_cover.png')} />
 
       {spotifyTrack && (
-          <h5 className='musiclistening'>
+        <div className='musiclistening'>
+          <h5>
           <Icon name='headphones'/>Listening to <a className='song' href={spotifyTrack.url}>{spotifyTrack.song}</a> by <span className='band'>{spotifyTrack.band}</span>
           </h5>
+          <p>{timeAgo(spotifyTrack.listened_at)}</p>
+        </div>
       )}
 
       <Modal

@@ -99,7 +99,13 @@ a.cv {
   }
 }
 
+.musiclistening p{
+  text-align: center;
+  color: rgb(35, 35, 35);
+}
+
 .musiclistening {
+  text-align: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-family: farsi;
@@ -158,8 +164,6 @@ h5,
 h6.ui.header {
   margin: 0;
 }
-h5 { color: rgb(50, 50, 50); margin-top: 5px; text-align: center; }
-h6.ui.header { margin-top: 1em; color: gray; }
 
 /* Footer */
 #footer {
@@ -239,11 +243,6 @@ h6.ui.header { margin-top: 1em; color: gray; }
   width: 100%;
 }
 
-.musiclistening {
-  margin: 0;
-  font-size: 1rem;
-}
-
 /* profile block stays one line even on phone */
 .profile-row {
   display: flex;
@@ -276,11 +275,12 @@ h6.ui.header { margin-top: 1em; color: gray; }
   cursor: pointer;
 }
 
-/* Mobile tweaks */
 @media (max-width: 600px) {
   .musiclistening {
-    font-size: 0.82rem;
-    text-align: center;
+    text-align: left;
+  }
+  .musiclistening p{
+    text-align: left;
   }
 
   #profilepix {
