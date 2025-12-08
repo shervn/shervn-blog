@@ -1,7 +1,7 @@
 export const data = [
   {
-    folderName: "Barcelona / بارسلونا",
-    photos: [
+    City: { English: "Barcelona", Farsi: "بارسِلونا" },
+    Photos: [
       "/images/Postbox/Barcelona_1.jpg",
       "/images/Postbox/Barcelona_2.jpg",
       "/images/Postbox/Barcelona_3.jpg",
@@ -10,8 +10,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Guangzhou / گوانژو",
-    photos: [
+    City: { English: "Guangzhou", Farsi: "گُوانگ‌ژو" },
+    Photos: [
       "/images/Postbox/China_1.jpg",
       "/images/Postbox/China_2.jpg",
       "/images/Postbox/China_3.jpg",
@@ -19,8 +19,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Berlin / برلین",
-    photos: [
+    City: { English: "Berlin", Farsi: "بِرلین" },
+    Photos: [
       "/images/Postbox/Berlin_1.jpg",
       "/images/Postbox/Berlin_2.jpg",
       "/images/Postbox/Berlin_3.jpg",
@@ -28,8 +28,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Cote d'Azur / کوت‌دازور",
-    photos: [
+    City: { English: "Cote d'Azur", Farsi: "کُت‌دازور" },
+    Photos: [
       "/images/Postbox/Cote_1.jpg",
       "/images/Postbox/Cote_2.jpg",
       "/images/Postbox/Cote_3.jpg",
@@ -39,8 +39,8 @@ export const data = [
     ]
   },
   {
-    folderName: "London / لندن",
-    photos: [
+    City: { English: "London", Farsi: "لَندَن" },
+    Photos: [
       "/images/Postbox/London_1.jpg",
       "/images/Postbox/London_2.jpg",
       "/images/Postbox/London_3.jpg",
@@ -52,8 +52,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Seoul / سئول",
-    photos: [
+    City: { English: "Seoul", Farsi: "سِئول" },
+    Photos: [
       "/images/Postbox/Seoul_1.jpg",
       "/images/Postbox/Seoul_2.jpg",
       "/images/Postbox/Seoul_3.jpg",
@@ -64,8 +64,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Tehran / تهران *",
-    photos: [
+    City: { English: "Tehran", Farsi: "* تِهران" },
+    Photos: [
       "/images/Postbox/Tehran_1.jpg",
       "/images/Postbox/Tehran_2.jpg",
       "/images/Postbox/Tehran_3.jpg",
@@ -75,8 +75,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Tokyo / توکیو",
-    photos: [
+    City: { English: "Tokyo", Farsi: "توکیو" },
+    Photos: [
       "/images/Postbox/Tokyo_1.jpg",
       "/images/Postbox/Tokyo_2.jpg",
       "/images/Postbox/Tokyo_3.jpg",
@@ -87,8 +87,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Toronto / تورنتو",
-    photos: [
+    City: { English: "Toronto", Farsi: "تورِنتو" },
+    Photos: [
       "/images/Postbox/Toronto_1.jpg",
       "/images/Postbox/Toronto_2.jpg",
       "/images/Postbox/Toronto_3.jpg",
@@ -99,8 +99,8 @@ export const data = [
     ]
   },
   {
-    folderName: "Wien / وین",
-    photos: [
+    City: { English: "Wien", Farsi: "وین" },
+    Photos: [
       "/images/Postbox/Wien_1.jpg",
       "/images/Postbox/Wien_2.jpg",
       "/images/Postbox/Wien_3.jpg",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Header, Image, Modal, Icon, Button } from 'semantic-ui-react';
+import { Header, Image, Modal, Button } from 'semantic-ui-react';
 import { loadData, getImagePath } from '../utils.js';
 
 const SPOTIY_RECENT_API = 'https://nibv576k3b.execute-api.us-east-1.amazonaws.com/spotify-latest'
@@ -40,26 +40,26 @@ export default function HeaderComponent() {
 
       {spotifyTrack && (
           <h5 className='musiclistening'>
-            ♫ listening to  <a href={spotifyTrack.url}>{spotifyTrack.song}</a> by {spotifyTrack.band}
+            ♫ listening to  <a className='song' href={spotifyTrack.url}>{spotifyTrack.song}</a> by {spotifyTrack.band}
           </h5>
       )}
 
-      {/* Modal */}
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        size='small'
+        basic
+        size='tiny'
+        style={{ padding: 0, textAlign: 'center' }}
       >
-        <Header icon='asterisk' content='F. Fozouni' />
-        <Modal.Content>
-          <Image src={getImagePath('fozouni.jpg')} />
-        </Modal.Content>
-        <Modal.Actions>
-          <Button color='red' onClick={() => setModalOpen(false)}>
-            <Icon name='close' /> Close
-          </Button>
-        </Modal.Actions>
-      </Modal>
+      <Image src={getImagePath('fozouni.jpg')} style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }} />
+      <Button
+        color='red'
+        onClick={() => setModalOpen(false)}
+        style={{ margin: '10px auto', display: 'block' }}
+      >
+        Close
+      </Button>
+    </Modal>
 
       {/* Profile + Text */}
       <div className="profile-row">

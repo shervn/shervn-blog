@@ -86,9 +86,9 @@ export default function TrainComponent({ data }) {
         maxHeight: "550px",
       }}
       >
-      <h3 className="overlayCityName">
-      {item.city}
-      </h3>
+      <div className="overlayCityName">
+        <div>{item.city}</div>
+      </div>
       <img
       src={item.src}
       alt={`${item.city} ${item.year}`}

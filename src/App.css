@@ -1,17 +1,34 @@
-/* Fonts */
 @font-face {
   font-family: farsi;
   src: url('./assets/fonts/AriaWebFaNum-Normal.woff2');
   font-weight: normal;
   font-style: normal;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 
 @font-face {
   font-family: farsiBold;
   src: url('./assets/fonts/AriaWebFaNum-Black.woff2');
+  font-weight: bold;
+  font-style: normal;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 
-/* Animations */
+
+@font-face {
+  font-family: farsi;
+  src: url('./assets/fonts/Onest.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+0000-00FF;
+}
+@font-face {
+  font-family: farsiBold;
+  font-weight: 800;
+  src: url('./assets/fonts/Onest.ttf') format('truetype');
+  unicode-range: U+0000-00FF;
+}
+
 @keyframes rotation {
   from { transform: rotate(0deg); }
   to { transform: rotate(359deg); }
@@ -90,10 +107,9 @@ a.cv {
   margin-top: -50px;
 }
 
-.musiclistening a {
-  text-decoration: wavy underline;
-  text-underline-offset: 0.5em;
-  text-decoration-color: #4b6d41;
+
+.musiclistening .song {
+  background-color:#deefd9;
   padding: 0 0.25em;
   width: 100%;
   height: 100%;
@@ -190,7 +206,6 @@ h6.ui.header { margin-top: 1em; color: gray; }
 
 .overlayCityName{
   font-size: 1.1rem;
-  font-weight: 80;
   margin: 0;
   position: absolute;
   top: 8px;
@@ -198,6 +213,7 @@ h6.ui.header { margin-top: 1em; color: gray; }
   color: #fff;
   background-color: rgba(0,0,0,1);
   padding: 2px 6px;
+  font-family: "farsi";
 }
 
 /* Buttons */

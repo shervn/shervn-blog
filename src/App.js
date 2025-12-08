@@ -49,7 +49,7 @@ export default class App extends Component {
           </div>
           <Router>
             <div className="mainPageWithMenu">
-              <Menu tabular widths={5} stackable>
+              <Menu secondary widths={5} stackable>
                 <Menu.Item
                   as={Link}
                   className="menuFarsi"
