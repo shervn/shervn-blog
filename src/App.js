@@ -38,7 +38,7 @@ export default class App extends Component {
     return (
       <HelmetProvider>
         <Helmet>
-          <title>Shervin Dehghani *</title>
+          <title>shervn</title>
           <meta
             name="description"
             content="This is the personal webpage of Shervin Dehghani. شروین . صفحه شخصی."
