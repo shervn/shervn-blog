@@ -163,6 +163,7 @@ h2.ui.header.headerText,
 h5,
 h6.ui.header {
   margin: 0;
+  font-family: "farsi";
 }
 
 /* Footer */
