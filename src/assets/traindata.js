@@ -1,12 +1,12 @@
 export const traindata = [
-  { city: "Washington DC", year: 2025, src: "/images/Trains/dc.webp" },
-  { city: "London", year: 2025, src: "/images/Trains/ldn2.webp" },
-  { city: "Tehran *", year: 2025, src: "/images/Trains/thr.webp" },
+  { City: { English: "Washington DC", Farsi: "واشِنگتُن دی‌سی" }, year: 2025, Image: "/images/Trains/dc.webp" },
+  { City: { English: "London", Farsi: "لَندَن" }, year: 2025, Image: "/images/Trains/ldn2.webp" },
+  { City: { English: "Tehran", Farsi: "* تِهران" }, year: 2025, Image: "/images/Trains/thr.webp" },
 
-  { city: "Guangzhou", year: 2024, src: "/images/Trains/guangzhou.jpg" },
-  { city: "Munich", year: 2024, src: "/images/Trains/munich.jpg" },
-  { city: "Tokyo", year: 2024, src: "/images/Trains/tokyo.jpg" },
-  { city: "Hangzhou", year: 2023, src: "/images/Trains/hanzhou.webp" },
-  { city: "Seoul", year: 2023, src: "/images/Trains/seoul.jpg" },
-  { city: "London", year: 2023, src: "/images/Trains/ldn.webp" },
+  { City: { English: "Guangzhou", Farsi: "گوانگژو" }, year: 2024, Image: "/images/Trains/guangzhou.jpg" },
+  { City: { English: "Munich", Farsi: "مونیخ" }, year: 2024, Image: "/images/Trains/munich.jpg" },
+  { City: { English: "Tokyo", Farsi: "توکیو" }, year: 2024, Image: "/images/Trains/tokyo.jpg" },
+  { City: { English: "Hangzhou", Farsi: "هانگژو" }, year: 2023, Image: "/images/Trains/hanzhou.webp" },
+  { City: { English: "Seoul", Farsi: "سِئول" }, year: 2023, Image: "/images/Trains/seoul.jpg" },
+  { City: { English: "London", Farsi: "لَندَن" }, year: 2023, Image: "/images/Trains/ldn.webp" },
 ];

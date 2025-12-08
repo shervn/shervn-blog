@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Divider } from 'semantic-ui-react'
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -96,6 +97,8 @@ export default class App extends Component {
                   onClick={this.handleItemClick}
                 />
               </Menu>
+             <Divider />
+
             </div>
             <Routes>
               <Route path="/blog" element={<Blog type="blog" />} />
