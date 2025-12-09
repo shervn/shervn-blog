@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header, Image, Modal, Button, Icon } from 'semantic-ui-react';
 import { loadData, getImagePath, timeAgo } from '../utils.js';
 
-const SPOTIY_RECENT_API = 'https://nibv576k3b.execute-api.us-east-1.amazonaws.com/spotify-latest'
+const SPOTIY_RECENT_API = 'https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/recent-tracks?limit=1'
 
 export default function HeaderComponent() {
   const [metadata, setMetadata] = useState({});
@@ -20,13 +20,15 @@ export default function HeaderComponent() {
         const res = await fetch(SPOTIY_RECENT_API);
         if (!res.ok) throw new Error('Failed to fetch track');
         const data = await res.json();
-        setSpotifyTrack(data);
+        setSpotifyTrack(data[0]); // pick first track
       } catch (err) {
         console.error(err);
+        // fallback is an object, not an array
         setSpotifyTrack({
           band: 'Radiohead',
           song: 'Morning Bell',
-          url: 'https://open.spotify.com/track/4h37RgtBg9iynN3BIL5lFU?si=6d72e93e8ee54b15'
+          url: 'https://open.spotify.com/track/4h37RgtBg9iynN3BIL5lFU?si=6d72e93e8ee54b15',
+          listened_at: '2025-12-09T16:44:40.157Z'
         });
       }
     }
