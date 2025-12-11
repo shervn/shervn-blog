@@ -5,12 +5,12 @@ import { MusicPlayer } from './spotifyComponent.js'
 
 
 const images = [
-  "/Header/a.png",
-  "/Header/b.png",
-  "/Header/c.png",
-  "/Header/d.png",
-  "/Header/e.png",
-  "/Header/f.png",
+  "Header/a.png",
+  "Header/b.png",
+  "Header/c.png",
+  "Header/d.png",
+  "Header/e.png",
+  "Header/f.png",
 ];
 
 const HeaderImages = () => {
