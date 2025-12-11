@@ -97,9 +97,9 @@ a.cv {
 
 .musiclistening {
   text-align: center;
+  margin: 0;
+  padding: 0;
   padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding: 1rem;
   font-family: farsi;
 }
 
