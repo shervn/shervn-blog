@@ -61,9 +61,6 @@ a.cv {
   margin-bottom: 10px;
 }
 
-.headerImage:first-of-type {
-  width: 100%;
-}
 
 .headerImage:last-of-type {
   width: 100%;
@@ -348,4 +345,8 @@ font-family: "farsi" !important;
 .always-visible:hover {
   transform: scale(1.2);
   transition: transform 0.3s ease;
+}
+
+.headerImage {
+  pointer-events: none;
 }

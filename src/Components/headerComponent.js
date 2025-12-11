@@ -3,6 +3,58 @@ import { Header, Image, Modal, Button} from 'semantic-ui-react';
 import { loadData, getImagePath } from '../utils.js';
 import { MusicPlayer } from './spotifyComponent.js'
 
+
+const images = [
+  "/Header/a.png",
+  "/Header/b.png",
+  "/Header/c.png",
+  "/Header/d.png",
+  "/Header/e.png",
+  "/Header/f.png",
+];
+
+const HeaderImages = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+      <div
+        className="headerContainer"
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "1280 / 909",
+          overflow: "hidden",
+        }}
+      >
+        {images.map((src, index) => (
+          <Image
+            key={index}
+            className="headerImage"
+            src={getImagePath(src)}
+            style={{
+              opacity: index === activeIndex ? 1 : 0.65,
+              transition: "opacity 2.2s ease-in-out, transform 2.2s ease-in-out",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: index === activeIndex ? "scale(1.005)" : "scale(1)",
+            }}
+          />
+        ))}
+      </div>
+  );
+};
+
 export default function HeaderComponent() {
   const [metadata, setMetadata] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,8 +64,7 @@ export default function HeaderComponent() {
   return (
     <div className="header-container">
       <Header className='headerText' as='h5' content='' />
-      <Image className='headerImage' src={getImagePath('blog_cover.png')} />
-
+      <HeaderImages/>
       <MusicPlayer />
 
       <Modal
