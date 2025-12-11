@@ -29,11 +29,31 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: validatePathName(window.location.pathname)
+      activeItem: validatePathName(window.location.pathname),
+      clickSequence: [], // track the navigation sequence
     };
   }
 
-  handleItemClick = (_e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (_e, { name }) => {
+    const { clickSequence } = this.state;
+
+    // Update sequence, keep only the last 4 clicks
+    const updatedSequence = [...clickSequence, name].slice(-4);
+    this.setState({ 
+      activeItem: name,
+      clickSequence: updatedSequence
+    }, () => {
+      // Check if the sequence matches the pattern
+      if (updatedSequence.join(',') === 'blog,spotify,blog,spotify') {
+        // Call the API
+        fetch('https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/toggle', {
+          method: 'GET'
+        })
+        .then(res => console.log('Toggled API response:', res))
+        .catch(err => console.error('API call failed:', err));
+      }
+    });
+  };
 
   render() {
     return (
@@ -52,63 +72,20 @@ export default class App extends Component {
           <Router>
             <div className="mainPageWithMenu">
               <Menu secondary widths={6} stackable>
-                <Menu.Item
-                  as={Link}
-                  className="menuFarsi"
-                  to={'/blog'}
-                  name="blog"
-                  content="Blog"
-                  active={this.state.activeItem === 'blog'}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  as={Link}
-                  className="menuFarsi"
-                  to={'/reviews'}
-                  name="reviews"
-                  content="Reviews"
-                  active={this.state.activeItem === 'reviews'}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  as={Link}
-                  className="menuFarsi"
-                  to={'/postboxes'}
-                  name="postboxes"
-                  content="Postboxes"
-                  active={this.state.activeItem === 'postboxes'}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  as={Link}
-                  className="menuFarsi"
-                  to={'/metro'}
-                  name="metro"
-                  content="مترو / Metro"
-                  active={this.state.activeItem === 'metro'}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  as={Link}
-                  className="menuFarsi"
-                  to={'/noises'}
-                  name="noises"
-                  content="Noises"
-                  active={this.state.activeItem === 'noises'}
-                  onClick={this.handleItemClick}
-                />
-                <Menu.Item
-                  as={Link}
-                  className="menuFarsi"
-                  to={'/spotify'}
-                  name="spotify"
-                  content="Spotify"
-                  active={this.state.activeItem === 'spotify'}
-                  onClick={this.handleItemClick}
-                />
+                {['blog','reviews','postboxes','metro','noises','spotify'].map((item) => (
+                  <Menu.Item
+                    key={item}
+                    as={Link}
+                    className="menuFarsi"
+                    to={`/${item}`}
+                    name={item}
+                    content={item.charAt(0).toUpperCase() + item.slice(1)}
+                    active={this.state.activeItem === item}
+                    onClick={this.handleItemClick}
+                  />
+                ))}
               </Menu>
-             <Divider />
-
+              <Divider />
             </div>
             <Routes>
               <Route path="/blog" element={<Blog type="blog" />} />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Grid, Container, Header, List } from "semantic-ui-react";
+import { Grid, Container, Header, List, Loader } from "semantic-ui-react";
 
 export default function MusicStatComponent() {
   const [songs, setSongs] = useState([]);
@@ -33,9 +33,10 @@ export default function MusicStatComponent() {
 
   if (loading)
     return (
-      <Container style={{ textAlign: "center", marginTop: "2rem", fontFamily: "farsi" }}>
-        Loading...
-      </Container>
+      <div style={{ textAlign: 'center' }}>
+        <Loader active indeterminate inline="centered" size="small" />
+        <p>Loading...</p>
+      </div>
     );
   if (!songs.length && !artists.length) return null;
 

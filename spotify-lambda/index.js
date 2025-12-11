@@ -54,6 +54,37 @@ app.use((req, res, next) => {
   next();
 });
 
+const STATE_FILE = path.join(__dirname, 'toggleState.json');
+
+// Helper to read state from file
+function readState() {
+  try {
+    const raw = fs.readFileSync(STATE_FILE, 'utf-8');
+    return JSON.parse(raw).state;
+  } catch (err) {
+    return false; // default state
+  }
+}
+
+// Helper to write state to file
+function writeState(state) {
+  fs.writeFileSync(STATE_FILE, JSON.stringify({ state }));
+}
+
+// --- Toggle API ---
+app.get('/toggle', (req, res) => {
+  const currentState = readState();
+  const newState = !currentState;
+  writeState(newState);
+  res.json({ state: newState });
+});
+
+// Optional: API to get current state without toggling
+app.get('/toggle-state', (req, res) => {
+  res.json({ state: readState() });
+});
+
+
 // --- Recent Tracks ---
 app.get('/recent-tracks', async (req, res) => {
   const FALLBACK_TRACK = [

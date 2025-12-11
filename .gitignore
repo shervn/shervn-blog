@@ -7,3 +7,4 @@ package-lock.json
 spotify-lambda
 !spotify-lambda/index.js
 !spotify-lambda/server.js
+!spotify-lambda/s3Toggle.js

@@ -6,56 +6,46 @@ const BASE_API = 'https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com';
 const SPOTIFY_RECENT_API = `${BASE_API}/recent-tracks?limit=1`;
 const CURRENTLY_PLAYING_API = `${BASE_API}/currently-playing`;
 const PLAYER_API = `${BASE_API}/player`;
+const TOGGLE_API = `${BASE_API}/toggle-state`;
 
 export function MusicPlayer() {
   const [spotifyTrack, setSpotifyTrack] = useState(null);
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [showButtons, setShowButtons] = useState(true);
   const intervalRef = useRef(null);
+  const refreshRef = useRef(null);
 
-  // Fetch recent Spotify track
-  useEffect(() => {
-    async function fetchSpotifyTrack() {
-      try {
-        const res = await fetch(SPOTIFY_RECENT_API);
-        if (!res.ok) throw new Error('Failed to fetch track');
-        const data = await res.json();
-        setSpotifyTrack(data[0]);
-      } catch (err) {
-        console.error(err);
-        setSpotifyTrack({
-          band: 'Radiohead',
-          song: 'Morning Bell',
-          url: 'https://open.spotify.com/track/4h37RgtBg9iynN3BIL5lFU?si=6d72e93e8ee54b15',
-          listened_at: '2025-12-09T16:44:40.157Z'
-        });
-      } finally {
-        setLoading(false);
-      }
+  const fetchData = async () => {
+    try {
+      const toggleRes = await fetch(TOGGLE_API).then(r => r.json());
+      setShowButtons(toggleRes.state);
+      const [spotifyRes, currentRes] = await Promise.all([
+        fetch(SPOTIFY_RECENT_API).then(r => r.json()),
+        fetch(CURRENTLY_PLAYING_API).then(r => r.json()),
+      ]);
+
+      setSpotifyTrack(spotifyRes[0] || null);
+      setCurrentlyPlaying(
+        currentRes?.message === 'No track currently playing' ? null : currentRes
+      );
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-    fetchSpotifyTrack();
+  };
+
+  useEffect(() => {
+    fetchData();
+    refreshRef.current = setInterval(fetchData, 5000);
+    return () => clearInterval(refreshRef.current);
   }, []);
 
-  // Fetch currently playing track
-  useEffect(() => {
-    async function fetchCurrentlyPlaying() {
-      try {
-        const res = await fetch(CURRENTLY_PLAYING_API);
-        const data = await res.json();
-        setCurrentlyPlaying(data?.message === 'No track currently playing' ? null : data);
-      } catch (err) {
-        console.error(err);
-        setCurrentlyPlaying(null);
-      }
-    }
-    fetchCurrentlyPlaying();
-  }, []);
-
-  // Handle progress updates
   useEffect(() => {
     if (!currentlyPlaying) return;
-
     setProgress(currentlyPlaying.progress_ms);
 
     if (!currentlyPlaying?.is_playing) return;
@@ -66,8 +56,7 @@ export function MusicPlayer() {
         if (next >= currentlyPlaying.duration_ms) {
           setTimeout(async () => {
             try {
-              const res = await fetch(CURRENTLY_PLAYING_API);
-              const data = await res.json();
+              const data = await fetch(CURRENTLY_PLAYING_API).then(r => r.json());
               setCurrentlyPlaying(data?.message === 'No track currently playing' ? null : data);
             } catch (err) {
               console.error(err);
@@ -97,8 +86,7 @@ export function MusicPlayer() {
     e.currentTarget.blur();
     try {
       await fetch(`${PLAYER_API}?action=${action}`);
-      const res = await fetch(CURRENTLY_PLAYING_API);
-      const data = await res.json();
+      const data = await fetch(CURRENTLY_PLAYING_API).then(r => r.json());
       setCurrentlyPlaying(data?.message === 'No track currently playing' ? null : data);
     } catch (err) {
       console.error(err);
@@ -111,7 +99,7 @@ export function MusicPlayer() {
     return (
       <div style={{ textAlign: 'center' }}>
         <Loader active indeterminate inline="centered" size="small" />
-        <p>Loading music…</p>
+        <p>Loading...</p>
       </div>
     );
   }
@@ -138,6 +126,7 @@ export function MusicPlayer() {
             : ''}
       </p>
 
+      {/* Only show player controls if toggle is true */}
       {currentlyPlaying && (
         <Segment basic style={{ padding: 0, margin: 0 }}>
           <Grid verticalAlign='middle'>
@@ -165,21 +154,28 @@ export function MusicPlayer() {
               <Grid.Column width={2} textAlign='left'>{formatTime(currentlyPlaying.duration_ms)}</Grid.Column>
             </Grid.Row>
           </Grid>
+          {showButtons ? (
+            <div style={{ display: 'flex', justifyContent: 'center', height:'3rem' }}>
+              <Button inverted icon onClick={e => handlePlayerAction(e, 'previous')}>
+                <Icon name='backward' />
+              </Button>
+              {currentlyPlaying?.is_playing ? (
+                <Button inverted icon onClick={e => handlePlayerAction(e, 'pause')}>
+                  <Icon name='pause' />
+                </Button>
+              ) : (
+                <Button inverted icon onClick={e => handlePlayerAction(e, 'play')}>
+                  <Icon name='play' />
+                </Button>
+              )}
+              <Button inverted icon onClick={e => handlePlayerAction(e, 'next')}>
+                <Icon name='forward' />
+              </Button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', height:'3rem'}}><p></p></div>
+          )}
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button inverted icon onClick={e => handlePlayerAction(e, 'previous')}>
-              <Icon name='backward' />
-            </Button>
-            <Button inverted icon onClick={e => handlePlayerAction(e, 'pause')}>
-              <Icon name='pause' />
-            </Button>
-            <Button inverted icon onClick={e => handlePlayerAction(e, 'play')}>
-              <Icon name='play' />
-            </Button>
-            <Button inverted icon onClick={e => handlePlayerAction(e, 'next')}>
-              <Icon name='forward' />
-            </Button>
-          </div>
         </Segment>
       )}
     </div>
