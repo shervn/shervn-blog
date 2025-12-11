@@ -44,6 +44,7 @@ export default class App extends Component {
       clickSequence: updatedSequence
     }, () => {
       if (updatedSequence.join(',') === 'blog,spotify,blog,spotify') {
+        updatedSequence = []
         fetch('https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/toggle', {
           method: 'GET'
         })
