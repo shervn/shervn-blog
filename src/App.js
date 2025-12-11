@@ -13,13 +13,14 @@ import Sound from './Components/soundComponent';
 import Blog from './Components/blogComponent';
 import TrainComponent from './Components/trainComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
+import MusicStatComponent from "./Components/musicStatComponent.js"
 
 import { data } from "./assets/postboxdata.js";
 import { traindata } from "./assets/traindata.js";
 
 
 function validatePathName(t) {
-  return ['blog', 'reviews', 'postboxes', 'metro', 'noises'].includes(t.split('/')[1])
+  return ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'spotify'].includes(t.split('/')[1])
     ? t.split('/')[1]
     : 'blog';
 }
@@ -46,11 +47,11 @@ export default class App extends Component {
         </Helmet>
         <div id="mainContainer">
           <div id="header">
-            <HeaderComponent alt="Shervin Dehghani cover" />
+            <HeaderComponent alt="Shervin cover" />
           </div>
           <Router>
             <div className="mainPageWithMenu">
-              <Menu secondary widths={5} stackable>
+              <Menu secondary widths={6} stackable>
                 <Menu.Item
                   as={Link}
                   className="menuFarsi"
@@ -96,6 +97,15 @@ export default class App extends Component {
                   active={this.state.activeItem === 'noises'}
                   onClick={this.handleItemClick}
                 />
+                <Menu.Item
+                  as={Link}
+                  className="menuFarsi"
+                  to={'/spotify'}
+                  name="spotify"
+                  content="Spotify"
+                  active={this.state.activeItem === 'spotify'}
+                  onClick={this.handleItemClick}
+                />
               </Menu>
              <Divider />
 
@@ -106,6 +116,7 @@ export default class App extends Component {
               <Route path="/postboxes" element={<PhotoGrid data={data} />} />
               <Route path="/metro" element={<TrainComponent data={traindata} />} />
               <Route path="/noises" element={<Sound />} />
+              <Route path="/spotify" element={<MusicStatComponent />} />
               <Route path="*" element={<Navigate to="/blog" replace />} />
             </Routes>
           </Router>

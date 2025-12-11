@@ -75,7 +75,7 @@ app.get('/recent-tracks', async (req, res) => {
     );
 
     const tracks = response.data.items.map((item) => ({
-      band: item.track.artists.map(a => a.name).join(', '),
+      band: item.track.artists.map(a => a.name).join('⨯'),
       song: item.track.name,
       url: item.track.external_urls.spotify,
       listened_at: item.played_at,
@@ -86,6 +86,33 @@ app.get('/recent-tracks', async (req, res) => {
     res.status(500).json(FALLBACK_TRACK);
   }
 });
+
+// --- Pause ---
+app.get("/player", async (req, res) => {
+  try {
+    const { action } = req.query;
+
+    // Only allow these four actions
+    const allowedActions = ["pause", "play", "next", "previous"];
+    if (!allowedActions.includes(action)) {
+      return res.status(400).json({ error: "Invalid action" });
+    }
+
+    const token = await getAccessToken();
+
+    const response = await axios({
+      method: action === "next" || action === "previous" ? "post" : "put",
+      url: `https://api.spotify.com/v1/me/player/${action}`,
+      headers: { Authorization: `Bearer ${token}` },
+      data: null, // no body needed
+    });
+
+    res.json(response.data || { success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.response?.data || err.message });
+  }
+});
+
 
 // --- Top Artists ---
 app.get("/top-artists", async (req, res) => {
@@ -131,7 +158,7 @@ app.get("/top-songs", async (req, res) => {
 
     const simplified = response.data.items.map((track) => ({
       song: track.name,
-      artist: track.artists.map((a) => a.name).join(", "),
+      artist: track.artists.map((a) => a.name).join('⨯'),
       url: track.external_urls.spotify,
       since: time_range,
     }));
@@ -161,7 +188,7 @@ app.get("/currently-playing", async (req, res) => {
 
     const simplified = {
       song: track.name,
-      artist: track.artists.map(a => a.name).join(", "),
+      artist: track.artists.map(a => a.name).join('⨯'),
       album: track.album.name,
       url: track.external_urls.spotify,
       duration_ms: track.duration_ms,

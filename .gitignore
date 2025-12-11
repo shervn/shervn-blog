@@ -5,3 +5,5 @@ node_modules
 yarn.lock
 package-lock.json
 spotify-lambda
+!spotify-lambda/index.js
+!spotify-lambda/server.js

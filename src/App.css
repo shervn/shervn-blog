@@ -99,6 +99,7 @@ a.cv {
   text-align: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  padding: 1rem;
   font-family: farsi;
 }
 
@@ -273,7 +274,7 @@ h6.ui.header {
     text-align: left;
   }
   .musiclistening p{
-    text-align: left;
+    text-align: center;
   }
 
   #profilepix {
@@ -310,4 +311,13 @@ h6.ui.header {
 }
 .ui.header.farsiPost{
   font-family: "farsiBold" !important;
+}
+
+.stats{
+  font-family: "farsi" !important;
+}
+
+.ui .header{
+font-family: "farsi" !important;
+
 }
