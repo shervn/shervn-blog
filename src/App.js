@@ -38,18 +38,17 @@ export default class App extends Component {
     const { clickSequence } = this.state;
 
     // Update sequence, keep only the last 4 clicks
-    const updatedSequence = [...clickSequence, name].slice(-4);
+    const updatedSequence = [...clickSequence, name].slice(-5);
     this.setState({ 
       activeItem: name,
       clickSequence: updatedSequence
     }, () => {
-      if (updatedSequence.join(',') === 'blog,spotify,blog,spotify') {
-        updatedSequence = []
+      if (updatedSequence.join(',') === 'blog,spotify,blog,spotify,reviews') {
         fetch('https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/toggle', {
           method: 'GET'
         })
-        .then(res => console.log('Toggled API response:', res))
-        .catch(err => console.error('API call failed:', err));
+        .then(res => console.log(''))
+        .catch(err => console.error(''));
       }
     });
   };
