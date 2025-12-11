@@ -91,7 +91,7 @@ export function MusicPlayer() {
     } catch (err) {
       console.error(err);
     }
-  };
+  }
 
   const track = currentlyPlaying || spotifyTrack;
 
@@ -156,21 +156,39 @@ export function MusicPlayer() {
           </Grid>
           {showButtons ? (
             <div style={{ display: 'flex', justifyContent: 'center', height:'3rem' }}>
-              <Button inverted icon onClick={e => handlePlayerAction(e, 'previous')}>
-                <Icon name='backward' />
-              </Button>
-              {currentlyPlaying?.is_playing ? (
-                <Button inverted icon onClick={e => handlePlayerAction(e, 'pause')}>
-                  <Icon name='pause' />
-                </Button>
-              ) : (
-                <Button inverted icon onClick={e => handlePlayerAction(e, 'play')}>
-                  <Icon name='play' />
-                </Button>
-              )}
-              <Button inverted icon onClick={e => handlePlayerAction(e, 'next')}>
-                <Icon name='forward' />
-              </Button>
+          <Button
+            className="always-visible"
+            icon
+            onClick={e => handlePlayerAction(e, 'previous')}
+          >
+            <Icon name='backward' />
+          </Button>
+
+          {currentlyPlaying?.is_playing ? (
+            <Button
+              className="always-visible"
+              icon
+              onClick={e => handlePlayerAction(e, 'pause')}
+            >
+              <Icon name='pause' />
+            </Button>
+          ) : (
+            <Button
+              className="always-visible"
+              icon
+              onClick={e => handlePlayerAction(e, 'play')}
+            >
+              <Icon name='play' />
+            </Button>
+)}
+
+<Button
+  className="always-visible"
+  icon
+  onClick={e => handlePlayerAction(e, 'next')}
+>
+  <Icon name='forward' />
+</Button>
             </div>
           ) : (
             <div style={{ display: 'flex', height:'3rem'}}><p></p></div>

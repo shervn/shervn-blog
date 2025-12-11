@@ -332,3 +332,20 @@ font-family: "farsi" !important;
     line-height: 0.5;
     padding: 2px;
 }
+
+.always-visible {
+  background: transparent !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.1);                /* normal size */
+  transition: transform 0.3s ease !important;    /* smooth scaling */
+}
+.always-visible:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
