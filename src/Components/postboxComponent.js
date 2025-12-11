@@ -1,32 +1,22 @@
 import { useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Grid, Image, Container } from "semantic-ui-react";
+import { comments as allComments } from "../assets/postboxdata.js";
 
 export default function PhotoGrid({ data }) {
-  const [isPhone, setIsPhone] = useState(
-    typeof window !== "undefined" ? window.innerWidth <= 768 : false
-  );
+  const [items, setItems] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
+  const [windowCount, setWindowCount] = useState(0); // counts items since last null
   const loadMoreRef = useRef(null);
 
-  // Update isPhone on resize
-  useEffect(() => {
-    const handleResize = () => setIsPhone(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+  // Pre-shuffle comments once
+  const shuffledComments = useMemo(() => {
+    const arr = [...allComments];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
   }, []);
-
-  const insertEmptySquares = useCallback(
-    (items) => {
-      if (isPhone) return items;
-      const result = [];
-      items.forEach((item) => {
-        result.push(item);
-        if (Math.random() < 0.15) result.push(null);
-      });
-      return result;
-    },
-    [isPhone]
-  );
 
   const shuffleArray = useCallback((array) => {
     const newArr = [...array];
@@ -37,8 +27,31 @@ export default function PhotoGrid({ data }) {
     return newArr;
   }, []);
 
-  const finalItems = useMemo(() => {
-    if (!Array.isArray(data)) return [];
+  const insertEmptySquares = useCallback((items, startingWindowCount = 0) => {
+    const result = [];
+    let count = startingWindowCount;
+
+    items.forEach((item, index) => {
+      result.push(item);
+      count++;
+
+      // force a null if 6 items have passed without one
+      if (count >= 5) {
+        result.push(null);
+        count = 0;
+      } else if (index < items.length - 1 && Math.random() < 0.25) {
+        // random null insertion
+        result.push(null);
+        count = 0;
+      }
+    });
+
+    return { result, windowCount: count };
+  }, []);
+
+  // Append only new items when data changes
+  useEffect(() => {
+    if (!Array.isArray(data)) return;
 
     const flat = data.flatMap((section) => {
       const photos = section.Photos || [];
@@ -52,27 +65,35 @@ export default function PhotoGrid({ data }) {
       }));
     });
 
-    if (flat.length === 0) return [];
+    if (flat.length === 0) return;
 
-    return insertEmptySquares(shuffleArray(flat));
-  }, [data, insertEmptySquares, shuffleArray]);
+    const newItems = flat.slice(items.length); // only new
+    const shuffledNewItems = shuffleArray(newItems);
+    const { result: processedNewItems, windowCount: newWindowCount } = insertEmptySquares(
+      shuffledNewItems,
+      windowCount
+    );
 
-  // Infinite scroll using IntersectionObserver
+    setItems((prev) => [...prev, ...processedNewItems]);
+    setWindowCount(newWindowCount);
+  }, [data, items.length, shuffleArray, insertEmptySquares, windowCount]);
+
+  // Infinite scroll
   useEffect(() => {
     if (!loadMoreRef.current) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setVisibleCount((prev) => Math.min(prev + 10, finalItems.length));
+          setVisibleCount((prev) => Math.min(prev + 10, items.length));
         }
       },
       { rootMargin: "200px" }
     );
     observer.observe(loadMoreRef.current);
     return () => observer.disconnect();
-  }, [finalItems.length]);
+  }, [items.length]);
 
-  if (finalItems.length === 0) {
+  if (items.length === 0) {
     return (
       <Container className="instaContainer">
         <div style={{ padding: 20 }}>No photos available.</div>
@@ -83,7 +104,7 @@ export default function PhotoGrid({ data }) {
   return (
     <Container className="instaContainer" style={{ userSelect: "none" }}>
       <Grid doubling stackable columns={3}>
-        {finalItems.slice(0, visibleCount).map((item, i) => (
+        {items.slice(0, visibleCount).map((item, i) => (
           <Grid.Column key={i}>
             {item ? (
               <div style={{ position: "relative" }}>
@@ -104,16 +125,38 @@ export default function PhotoGrid({ data }) {
                 </div>
               </div>
             ) : (
-              <div style={{ width: "100%", paddingTop: "100%" }} />
+              <div className="commentPlaceHolder">
+                {(() => {
+                  // Compute placeholder index deterministically
+                  const placeholderIndex =
+                    items.slice(0, i + 1).filter((x) => x === null).length - 1;
+                  const comment =
+                    shuffledComments[placeholderIndex % shuffledComments.length];
+
+                  const words = comment.split(" ");
+                  const lines =
+                    words.length <= 3
+                      ? words
+                      : [words[0], words[1], words.slice(2).join(" ")];
+
+                  return lines.map((line, idx) => (
+                    <p
+                      key={idx}
+                      style={{
+                        textAlign: Math.random() < 0.5 ? "left" : "right",
+                      }}
+                    >
+                      {line}
+                    </p>
+                  ));
+                })()}
+              </div>
             )}
           </Grid.Column>
         ))}
       </Grid>
 
-      {/* Sentinel div to trigger loading more */}
-      {visibleCount < finalItems.length && (
-        <div ref={loadMoreRef} style={{ height: 1 }} />
-      )}
+      {visibleCount < items.length && <div ref={loadMoreRef} style={{ height: 1 }} />}
     </Container>
   );
 }

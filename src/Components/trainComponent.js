@@ -19,7 +19,6 @@ export default function TrainComponent({ data }) {
       return () => window.removeEventListener("resize", handleResize);
     }, []);
     
-    // const visible = 4;
     const goLeft = () => setStart((s) => (s - 1 + data.length) % data.length);
     const goRight = () => setStart((s) => (s + 1) % data.length);
     

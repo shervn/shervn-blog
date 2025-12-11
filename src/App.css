@@ -321,3 +321,14 @@ h6.ui.header {
 font-family: "farsi" !important;
 
 }
+
+.commentPlaceHolder{
+    width: 100%;
+    padding-top: 100%;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-family: farsi;
+    font-size: 38px;
+    line-height: 0.5;
+    padding: 2px;
+}
