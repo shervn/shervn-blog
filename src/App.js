@@ -22,7 +22,7 @@ import { traindata } from "./assets/traindata.js";
 function validatePathName(t) {
   return ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'spotify'].includes(t.split('/')[1])
     ? t.split('/')[1]
-    : 'blog';
+    : 'postboxes';
 }
 
 export default class App extends Component {
@@ -43,9 +43,7 @@ export default class App extends Component {
       activeItem: name,
       clickSequence: updatedSequence
     }, () => {
-      // Check if the sequence matches the pattern
       if (updatedSequence.join(',') === 'blog,spotify,blog,spotify') {
-        // Call the API
         fetch('https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/toggle', {
           method: 'GET'
         })
@@ -62,7 +60,7 @@ export default class App extends Component {
           <title>shervn</title>
           <meta
             name="description"
-            content="This is the personal webpage of Shervin Dehghani. شروین . صفحه شخصی."
+            content="This is the personal webpage of Shervin. شروین . صفحه شخصی."
           />
         </Helmet>
         <div id="mainContainer">
@@ -94,7 +92,7 @@ export default class App extends Component {
               <Route path="/metro" element={<TrainComponent data={traindata} />} />
               <Route path="/noises" element={<Sound />} />
               <Route path="/spotify" element={<MusicStatComponent />} />
-              <Route path="*" element={<Navigate to="/blog" replace />} />
+              <Route path="*" element={<Navigate to="/postboxes" replace />} />
             </Routes>
           </Router>
           <Footer />
