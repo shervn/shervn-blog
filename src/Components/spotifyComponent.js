@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { Icon, Button, Segment, Grid } from 'semantic-ui-react';
+import { Icon, Button, Segment, Grid, Loader } from 'semantic-ui-react';
 import { timeAgo } from '../utils.js';
 
 const BASE_API = 'https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com';
@@ -11,6 +11,7 @@ export function MusicPlayer() {
   const [spotifyTrack, setSpotifyTrack] = useState(null);
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
   const intervalRef = useRef(null);
 
   // Fetch recent Spotify track
@@ -29,6 +30,8 @@ export function MusicPlayer() {
           url: 'https://open.spotify.com/track/4h37RgtBg9iynN3BIL5lFU?si=6d72e93e8ee54b15',
           listened_at: '2025-12-09T16:44:40.157Z'
         });
+      } finally {
+        setLoading(false);
       }
     }
     fetchSpotifyTrack();
@@ -61,7 +64,6 @@ export function MusicPlayer() {
       setProgress(prev => {
         const next = Math.min(prev + 50, currentlyPlaying.duration_ms);
         if (next >= currentlyPlaying.duration_ms) {
-          // Refresh track info 2 seconds after it ends
           setTimeout(async () => {
             try {
               const res = await fetch(CURRENTLY_PLAYING_API);
@@ -104,6 +106,16 @@ export function MusicPlayer() {
   };
 
   const track = currentlyPlaying || spotifyTrack;
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Loader active indeterminate inline="centered" size="small" />
+        <p>Loading music…</p>
+      </div>
+    );
+  }
+
   if (!track) return null;
 
   return (
