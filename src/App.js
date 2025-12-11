@@ -1,9 +1,7 @@
 import { Component } from 'react';
-import { Divider } from 'semantic-ui-react'
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Divider, Menu } from 'semantic-ui-react';
+import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Menu } from 'semantic-ui-react';
 
 import './App.css';
 
@@ -13,7 +11,8 @@ import Sound from './Components/soundComponent';
 import Blog from './Components/blogComponent';
 import TrainComponent from './Components/trainComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
-import MusicStatComponent from "./Components/musicStatComponent.js"
+import MusicStatComponent from "./Components/musicStatComponent.js";
+import SinglePost from './Components/singlePostComponent.js';
 
 import { data } from "./assets/postboxdata.js";
 import { traindata } from "./assets/traindata.js";
@@ -25,19 +24,24 @@ function validatePathName(t) {
     : 'postboxes';
 }
 
+// Wrapper component to extract type and uuid from URL params
+const SingleItemWrapper = () => {
+  const { type, uuid } = useParams();
+  return <SinglePost type={type} uuid={uuid} />;
+};
+
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: validatePathName(window.location.pathname),
-      clickSequence: [], // track the navigation sequence
+      clickSequence: [],
     };
   }
 
   handleItemClick = (_e, { name }) => {
     const { clickSequence } = this.state;
 
-    // Update sequence, keep only the last 4 clicks
     const updatedSequence = [...clickSequence, name].slice(-5);
     this.setState({ 
       activeItem: name,
@@ -92,6 +96,10 @@ export default class App extends Component {
               <Route path="/metro" element={<TrainComponent data={traindata} />} />
               <Route path="/noises" element={<Sound />} />
               <Route path="/spotify" element={<MusicStatComponent />} />
+
+              {/* Single post/item route */}
+              <Route path="/:type/:uuid" element={<SingleItemWrapper />} />
+
               <Route path="*" element={<Navigate to="/postboxes" replace />} />
             </Routes>
           </Router>

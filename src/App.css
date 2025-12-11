@@ -119,6 +119,7 @@ a.cv {
   direction: rtl;
   font-family: farsi;
   line-height: 1.6;
+  /* unicode-bidi: embed;  */
 }
 
 .farsiPost::selection {

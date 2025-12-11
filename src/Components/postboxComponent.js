@@ -1,6 +1,8 @@
+
+import { comments as allComments } from "../assets/postboxdata.js";
 import { useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Grid, Image, Container } from "semantic-ui-react";
-import { comments as allComments } from "../assets/postboxdata.js";
+import { renderBoldQuotes } from '../utils.js';
 
 export default function PhotoGrid({ data }) {
   const [items, setItems] = useState([]);
@@ -127,7 +129,6 @@ export default function PhotoGrid({ data }) {
             ) : (
               <div className="commentPlaceHolder">
                 {(() => {
-                  // Compute placeholder index deterministically
                   const placeholderIndex =
                     items.slice(0, i + 1).filter((x) => x === null).length - 1;
                   const comment =
@@ -146,7 +147,7 @@ export default function PhotoGrid({ data }) {
                         textAlign: Math.random() < 0.5 ? "left" : "right",
                       }}
                     >
-                      {line}
+                      {renderBoldQuotes(line)}
                     </p>
                   ));
                 })()}

@@ -48,7 +48,7 @@ export default function MusicStatComponent() {
       <Grid stackable columns={2} divided>
         <Grid.Row>
           <Grid.Column textAlign="right">
-            <Header as="h4">Top Songs (last 4 weeks)</Header>
+            <Header dividing as="h4" content="Top Song" subheader="last 4 weeks"/>
             <List relaxed>
               {songs.map((s, i) => (
                 <List.Item key={i}>
@@ -64,7 +64,8 @@ export default function MusicStatComponent() {
           </Grid.Column>
 
           <Grid.Column textAlign="left">
-            <Header as="h4">Top Artists (last 4 weeks)</Header>
+            <Header dividing as="h4" content="Top Artists" subheader="last 4 weeks"/>
+
             <List relaxed>
               {artists.map((a, i) => (
                 <List.Item key={i}>

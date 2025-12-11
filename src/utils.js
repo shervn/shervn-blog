@@ -4,6 +4,14 @@ export function getImagePath(image_name){
         return `${process.env.PUBLIC_URL}/images/Misc/${image_name}` 
 }
 
+export function renderBoldQuotes(text){
+    // Split by quoted parts, remove quotes
+    const parts = text.split(/"(.*?)"/g);
+    return parts.map((part, idx) => 
+      idx % 2 === 1 ? <strong key={idx}>{part}</strong> : part
+    );
+};
+
 export const loadData = async (func, path) => {
 
         try {

@@ -47,7 +47,7 @@ const HeaderImages = () => {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              transform: index === activeIndex ? "scale(1.005)" : "scale(1)",
+              transform: index === activeIndex ? "scale(1.003)" : "scale(1)",
             }}
           />
         ))}
