@@ -40,7 +40,7 @@ const HeaderImages = () => {
             src={getImagePath(src)}
             style={{
               opacity: index === activeIndex ? 1 : 0.65,
-              transition: "opacity 2.2s ease-in-out, transform 2.2s ease-in-out",
+              transition: "opacity 2.0s ease-in-out, transform 2.0s ease-in-out",
               position: "absolute",
               top: 0,
               left: 0,
