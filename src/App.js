@@ -7,13 +7,13 @@ import { EASTER_EGG_SEQUENCE, EASTER_EGG_SEQUENCE_LENGTH } from './utils/constan
 
 import './styles/App.css';
 
-import HeaderComponent from './components/headerComponent.js';
-import Footer from './components/footerComponent.js';
-import Blog from './components/blogComponent.js';
-import TrainComponent from './components/trainComponent.js';
-import PhotoGrid from "./components/postboxComponent.js";
-import MusicStatComponent from "./components/musicStatComponent.js";
-import SinglePost from './components/singlePostComponent.js';
+import HeaderComponent from './Components/headerComponent.js';
+import Footer from './Components/footerComponent.js';
+import Blog from './Components/blogComponent.js';
+import TrainComponent from './Components/trainComponent.js';
+import PhotoGrid from "./Components/postboxComponent.js";
+import MusicStatComponent from "./Components/musicStatComponent.js";
+import SinglePost from './Components/singlePostComponent.js';
 
 
 function validatePathName(t) {

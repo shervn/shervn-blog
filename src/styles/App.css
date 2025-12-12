@@ -395,66 +395,6 @@ p.farsiPost,
 .instaContainer .ui.grid > .column {
   padding: var(--container-padding);
   overflow: visible;
-  border-right: 1px dotted rgba(0, 0, 0, 0.2);
-  border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
-}
-
-/* Remove borders from edges - works for 3-column grid */
-.instaContainer .ui.grid > .column:first-child {
-  border-left: none;
-}
-
-.instaContainer .ui.grid > .column:last-child,
-.instaContainer .ui.grid > .column:nth-child(3n) {
-  border-right: none;
-}
-
-.instaContainer .ui.grid > .column:nth-last-child(-n+3) {
-  border-bottom: none;
-}
-
-/* ============================================
-   RESPONSIVE: POSTBOX GRID LINES
-   ============================================ */
-
-/* Tablet: 2-column layout (max-width: 991px)
-   Semantic UI doubling breakpoint */
-@media (max-width: 991px) {
-  /* Override 3-column rules */
-  .instaContainer .ui.grid > .column:nth-child(3n) {
-    border-right: 1px dotted rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Apply 2-column rules */
-  .instaContainer .ui.grid > .column:nth-child(2n) {
-    border-right: none;
-  }
-  
-  /* Override last row rule for 2-column */
-  .instaContainer .ui.grid > .column:nth-last-child(-n+3) {
-    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
-  }
-  
-  .instaContainer .ui.grid > .column:nth-last-child(-n+2) {
-    border-bottom: none;
-  }
-}
-
-/* Mobile: 1-column layout (max-width: 767px)
-   Semantic UI stackable breakpoint */
-@media (max-width: 767px) {
-  .instaContainer .ui.grid > .column {
-    border-right: none;
-    border-left: none;
-  }
-  
-  .instaContainer .ui.grid > .column:not(:last-child) {
-    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
-  }
-  
-  .instaContainer .ui.grid > .column:last-child {
-    border-bottom: none;
-  }
 }
 
 
