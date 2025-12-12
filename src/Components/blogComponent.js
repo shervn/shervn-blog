@@ -7,6 +7,7 @@ import { BLOG_POSTS_PER_PAGE, REVIEW_POSTS_PER_PAGE, BLOG_PREVIEW_MAX_LENGTH, SO
 const Blog = ({ type = "blog" }) => {
   const [blogData, setBlogData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   
   const count = type === "blog" 
     ? BLOG_POSTS_PER_PAGE 
@@ -17,7 +18,11 @@ const Blog = ({ type = "blog" }) => {
   
   useEffect(() => {
     setCurrentPage(0);
-    loadData(setBlogData, type);
+    setIsLoading(true);
+    loadData((data) => {
+      setBlogData(data);
+      setIsLoading(false);
+    }, type);
   }, [type]);
   
   const totalPages = Math.ceil(blogData.length / count);
@@ -28,6 +33,9 @@ const Blog = ({ type = "blog" }) => {
   const nextPage = () =>
     setCurrentPage((currentPage + 1) % totalPages);
 
+  if (isLoading) {
+    return <Container text style={{ minHeight: '200px' }}></Container>;
+  }
   
   return (
     <Container text>

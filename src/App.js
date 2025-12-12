@@ -14,6 +14,7 @@ import TrainComponent from './Components/trainComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
 import MusicStatComponent from "./Components/musicStatComponent.js";
 import SinglePost from './Components/singlePostComponent.js';
+import RouteTransition from './Components/routeTransition.js';
 
 
 function validatePathName(t) {
@@ -96,18 +97,20 @@ export default class App extends Component {
               </Menu>
               <Divider />
             </nav>
-            <Routes>
-              <Route path="/blog" element={<Blog type="blog" />} />
-              <Route path="/reviews" element={<Blog type="review" />} />
-              <Route path="/postboxes" element={<PhotoGrid/>} />
-              <Route path="/metro" element={<TrainComponent/>} />
-              <Route path="/noises" element={<Blog type="noises" />} />
-              <Route path="/spotify" element={<MusicStatComponent />} />
+            <RouteTransition>
+              <Routes>
+                <Route path="/blog" element={<Blog type="blog" />} />
+                <Route path="/reviews" element={<Blog type="review" />} />
+                <Route path="/postboxes" element={<PhotoGrid/>} />
+                <Route path="/metro" element={<TrainComponent/>} />
+                <Route path="/noises" element={<Blog type="noises" />} />
+                <Route path="/spotify" element={<MusicStatComponent />} />
 
-              <Route path="/:type/:uuid" element={<SingleItemWrapper />} />
+                <Route path="/:type/:uuid" element={<SingleItemWrapper />} />
 
-              <Route path="*" element={<Navigate to="/postboxes" replace />} />
-            </Routes>
+                <Route path="*" element={<Navigate to="/postboxes" replace />} />
+              </Routes>
+            </RouteTransition>
           </Router>
           <Footer />
         </div>
