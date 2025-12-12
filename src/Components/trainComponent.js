@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
-import { Container, Button, Icon, Image } from "semantic-ui-react";
+import { Container, Icon, Image } from "semantic-ui-react";
 import { TRAIN_VISIBLE_DESKTOP, TRAIN_VISIBLE_MOBILE, TRAIN_MOBILE_BREAKPOINT } from "../utils/constants.js";
 import { debounce } from "../utils/debounce.js";
+import { traindata } from "../assets/traindata.js";
 
-export default function TrainComponent({ data }) {
+export default function TrainComponent() {
   const [start, setStart] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
@@ -28,8 +29,8 @@ export default function TrainComponent({ data }) {
       };
     }, [handleResize]);
     
-    const goLeft = useCallback(() => setStart((s) => (s - 1 + data.length) % data.length), [data.length]);
-    const goRight = useCallback(() => setStart((s) => (s + 1) % data.length), [data.length]);
+    const goLeft = useCallback(() => setStart((s) => (s - 1 + traindata.length) % traindata.length), []);
+    const goRight = useCallback(() => setStart((s) => (s + 1) % traindata.length), []);
     
     const handleDragStart = useCallback((clientX) => {
       setIsDragging(true);
@@ -73,7 +74,7 @@ export default function TrainComponent({ data }) {
       ref={containerRef}
       className={`train-slider ${isDragging ? 'dragging' : ''}`}
       style={{
-        width: `${(data.length * 100) / visible}%`,
+        width: `${(traindata.length * 100) / visible}%`,
         transform: `translateX(-${start * slideWidth}%)`,
       }}
       onMouseDown={(e) => handleDragStart(e.clientX)}
@@ -86,9 +87,9 @@ export default function TrainComponent({ data }) {
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="group"
-      aria-label={`Slide ${start + 1} of ${data.length}`}
+      aria-label={`Slide ${start + 1} of ${traindata.length}`}
       >
-      {data.map((item, i) => (
+      {traindata.map((item, i) => (
         <div
         key={i}
         className="train-slide"
@@ -113,17 +114,18 @@ export default function TrainComponent({ data }) {
         </div>
         
         <div className="train-pagination" role="group" aria-label="Carousel navigation">
-        <Button 
-          icon 
+        <button 
+          type="button"
+          className="blog-pagination-button"
           onClick={goLeft}
           aria-label="Previous slide"
           tabIndex={0}
         >
         <Icon name="angle left" />
-        </Button>
+        </button>
         
         <div className="train-pagination-dots" role="tablist" aria-label="Slide indicators">
-        {Array.from({ length: data.length }).map((_, i) => (
+        {Array.from({ length: traindata.length }).map((_, i) => (
           <div
           key={i}
           className={`train-pagination-dot ${i === start ? 'active' : ''}`}
@@ -142,14 +144,15 @@ export default function TrainComponent({ data }) {
         ))}
         </div>
         
-        <Button 
-          icon 
+        <button 
+          type="button"
+          className="blog-pagination-button"
           onClick={goRight}
           aria-label="Next slide"
           tabIndex={0}
         >
         <Icon name="angle right" />
-        </Button>
+        </button>
         </div>
         </Container>
       );

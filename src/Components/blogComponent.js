@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Header, Divider, Button, Image, Icon } from 'semantic-ui-react';
+import { Container, Header, Divider, Image, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { loadData, getImagePath, renderBoldQuotes  } from '../utils/general.js';
 import { BLOG_POSTS_PER_PAGE, REVIEW_POSTS_PER_PAGE, BLOG_PREVIEW_MAX_LENGTH, SOUND_POSTS_PER_PAGE } from '../utils/constants.js';
@@ -60,7 +60,6 @@ const Blog = ({ type = "blog" }) => {
                           <Header
                             as={Link}
                             to={`/${type}/${element.uuid}`}
-                            basic
                             size="tiny"
                             className="blog-preview-link"
                           >
@@ -101,9 +100,9 @@ const Blog = ({ type = "blog" }) => {
       </ul>
       
       <div className="blog-pagination">
-        <Button icon onClick={prevPage}>
+        <button className="blog-pagination-button" onClick={prevPage} type="button" aria-label="Previous page">
           <Icon name="angle left" />
-        </Button>
+        </button>
         
         <div className="blog-pagination-dots">
           {Array.from({ length: totalPages }).map((_, i) => (
@@ -114,9 +113,9 @@ const Blog = ({ type = "blog" }) => {
           ))}
         </div>
         
-        <Button icon onClick={nextPage}>
+        <button className="blog-pagination-button" onClick={nextPage} type="button" aria-label="Next page">
           <Icon name="angle right" />
-        </Button>
+        </button>
       </div>
       
     </Container>

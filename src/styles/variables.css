@@ -1,0 +1,45 @@
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+:root {
+  /* Colors */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray: #808080;
+  --color-dark-gray: #232323;
+  --color-light-gray: #ddd;
+  --color-text-dark: #221e1e;
+  --color-bg-song: #deefd9;
+  --color-bg-band: #a7b5d5;
+  --color-selection: #e6e6cc;
+  --color-cv-link: #1c5a72;
+  --color-progress-bg: #ddd;
+  
+  /* Spacing */
+  --spacing-xs: 0.1rem;
+  --spacing-sm: 0.25rem;
+  --spacing-md: 0.5rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Typography */
+  --line-height-base: 1.6;
+  --line-height-loose: 1.8;
+  --font-size-sm: 12px;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.1rem;
+  --font-size-xl: 1.3rem;
+  --font-size-xxl: 38px;
+  
+  /* Layout */
+  --container-padding: 1rem;
+  --grid-gap: 20px;
+  --grid-gap-sm: 8px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease-out;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 2s ease-in-out;
+}
+

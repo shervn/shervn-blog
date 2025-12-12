@@ -1,8 +1,7 @@
 export const uid = () => (Math.random() + 1).toString(36).substring(2);
 
 export function getImagePath(image_name, folder){
-  console.log(`${process.env.PUBLIC_URL}/images/${folder}/${image_name}`);
-        return `${process.env.PUBLIC_URL}/images/${folder}/${image_name}` 
+  return `${process.env.PUBLIC_URL}/images/${folder}/${image_name}`;
 }
 
 export function renderBoldQuotes(text){

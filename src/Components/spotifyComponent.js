@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { Icon, Button, Segment, Grid, Loader } from 'semantic-ui-react';
+import { Icon, Segment, Grid, Loader } from 'semantic-ui-react';
 import { timeAgo } from '../utils/general.js';
 import {
   getToggleState,
@@ -21,6 +21,9 @@ export function MusicPlayer() {
   const [showButtons, setShowButtons] = useState(true);
   const intervalRef = useRef(null);
   const refreshRef = useRef(null);
+  const prevButtonRef = useRef(null);
+  const playPauseButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
 
   const fetchData = async () => {
     try {
@@ -154,43 +157,47 @@ export function MusicPlayer() {
           </Grid>
           {showButtons ? (
             <div className="spotify-controls" role="group" aria-label="Player controls">
-          <Button
+          <button
+            ref={prevButtonRef}
             className="always-visible"
-            icon
             onClick={e => handlePlayerAction(e, 'previous')}
             aria-label="Previous track"
+            type="button"
           >
             <Icon name='backward' />
-          </Button>
+          </button>
 
           {currentlyPlaying?.is_playing ? (
-            <Button
+            <button
+              ref={playPauseButtonRef}
               className="always-visible"
-              icon
               onClick={e => handlePlayerAction(e, 'pause')}
               aria-label="Pause"
+              type="button"
             >
               <Icon name='pause' />
-            </Button>
+            </button>
           ) : (
-            <Button
+            <button
+              ref={playPauseButtonRef}
               className="always-visible"
-              icon
               onClick={e => handlePlayerAction(e, 'play')}
               aria-label="Play"
+              type="button"
             >
               <Icon name='play' />
-            </Button>
+            </button>
 )}
 
-<Button
+<button
+  ref={nextButtonRef}
   className="always-visible"
-  icon
   onClick={e => handlePlayerAction(e, 'next')}
   aria-label="Next track"
+  type="button"
 >
   <Icon name='forward' />
-</Button>
+</button>
             </div>
           ) : (
             <div className="spotify-controls-placeholder"><p></p></div>

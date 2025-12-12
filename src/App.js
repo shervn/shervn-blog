@@ -5,18 +5,15 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { toggleState } from './utils/lambdaUtils.js';
 import { EASTER_EGG_SEQUENCE, EASTER_EGG_SEQUENCE_LENGTH } from './utils/constants.js';
 
-import './App.css';
+import './styles/App.css';
 
-import HeaderComponent from './Components/headerComponent.js';
-import Footer from './Components/footerComponent.js';
-import Blog from './Components/blogComponent';
-import TrainComponent from './Components/trainComponent.js';
-import PhotoGrid from "./Components/postboxComponent.js";
-import MusicStatComponent from "./Components/musicStatComponent.js";
-import SinglePost from './Components/singlePostComponent.js';
-
-import { data } from "./assets/postboxdata.js";
-import { traindata } from "./assets/traindata.js";
+import HeaderComponent from './components/headerComponent.js';
+import Footer from './components/footerComponent.js';
+import Blog from './components/blogComponent.js';
+import TrainComponent from './components/trainComponent.js';
+import PhotoGrid from "./components/postboxComponent.js";
+import MusicStatComponent from "./components/musicStatComponent.js";
+import SinglePost from './components/singlePostComponent.js';
 
 
 function validatePathName(t) {
@@ -25,7 +22,6 @@ function validatePathName(t) {
     : 'postboxes';
 }
 
-// Wrapper component to extract type and uuid from URL params
 const SingleItemWrapper = () => {
   const { type, uuid } = useParams();
   return <SinglePost type={type} uuid={uuid} />;
@@ -49,9 +45,7 @@ export default class App extends Component {
       clickSequence: updatedSequence
     }, () => {
       if (updatedSequence.join(',') === EASTER_EGG_SEQUENCE.join(',')) {
-        toggleState()
-          .then(res => console.log(''))
-          .catch(err => console.error(''));
+        toggleState().catch(() => {})
       }
     });
   };
@@ -60,7 +54,7 @@ export default class App extends Component {
     return (
       <HelmetProvider>
         <Helmet>
-          <title>shervn - Personal Blog & Portfolio</title>
+          <title>shervn - Personal Blog</title>
           <meta
             name="description"
             content="Personal webpage of Shervin Dehghani. Blog posts, reviews, photography, and music. شروین . صفحه شخصی."
@@ -105,12 +99,11 @@ export default class App extends Component {
             <Routes>
               <Route path="/blog" element={<Blog type="blog" />} />
               <Route path="/reviews" element={<Blog type="review" />} />
-              <Route path="/postboxes" element={<PhotoGrid data={data} />} />
-              <Route path="/metro" element={<TrainComponent data={traindata} />} />
+              <Route path="/postboxes" element={<PhotoGrid/>} />
+              <Route path="/metro" element={<TrainComponent/>} />
               <Route path="/noises" element={<Blog type="noises" />} />
               <Route path="/spotify" element={<MusicStatComponent />} />
 
-              {/* Single post/item route */}
               <Route path="/:type/:uuid" element={<SingleItemWrapper />} />
 
               <Route path="*" element={<Navigate to="/postboxes" replace />} />

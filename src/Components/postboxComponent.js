@@ -11,7 +11,9 @@ import {
   POSTBOX_MAX_COMMENT_LINES
 } from '../utils/constants.js';
 
-export default function PhotoGrid({ data }) {
+import { data } from "../assets/postboxdata.js";
+
+export default function PhotoGrid() {
   const [items, setItems] = useState([]);
   const [visibleCount, setVisibleCount] = useState(POSTBOX_INITIAL_VISIBLE);
   const [windowCount, setWindowCount] = useState(0); // counts items since last null
@@ -85,7 +87,7 @@ export default function PhotoGrid({ data }) {
 
     setItems((prev) => [...prev, ...processedNewItems]);
     setWindowCount(newWindowCount);
-  }, [data, items.length, shuffleArray, insertEmptySquares, windowCount]);
+  }, [items.length, shuffleArray, insertEmptySquares, windowCount]);
 
   // Infinite scroll
   useEffect(() => {

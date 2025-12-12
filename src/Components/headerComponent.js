@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Header, Image, Modal } from 'semantic-ui-react';
+import { Header, Modal } from 'semantic-ui-react';
 import { loadData, getImagePath } from '../utils/general.js';
 import { MusicPlayer } from './spotifyComponent.js';
 import { HEADER_IMAGE_INTERVAL } from '../utils/constants.js';
@@ -36,10 +36,11 @@ const HeaderImages = () => {
   return (
       <div className="headerContainer header-container-wrapper">
         {images.map((src, index) => (
-          <Image
+          <img
             key={index}
             className={`headerImage header-image-item ${activeIndices.has(index) ? 'active' : ''}`}
             src={getImagePath(src, 'Header')}
+            alt={`Header ${index + 1}`}
           />
         ))}
       </div>
@@ -66,12 +67,12 @@ export default function HeaderComponent() {
         className="header-modal"
       >
         <Modal.Content onClick={() => setModalOpen(false)}>
-          <Image src={getImagePath('fozouni.jpg', 'Misc')} className="header-modal-image" />
+          <img src={getImagePath('fozouni.jpg', 'Misc')} className="header-modal-image" alt="Fozouni" />
         </Modal.Content>
       </Modal>
 
       <div className="profile-row">
-        <Image src={getImagePath('blog_profile.png', 'Misc')} id="profilepix" size='tiny' circular />
+        <img src={getImagePath('blog_profile.png', 'Misc')} id="profilepix" className="ui tiny circular image" alt="Profile" />
         <div className="profile-column">
           <img
             alt='asterisk'

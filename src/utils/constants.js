@@ -23,7 +23,7 @@ export const TRAIN_VISIBLE_MOBILE = 4;
 export const TRAIN_MOBILE_BREAKPOINT = 768;
 
 // Spotify constants
-export const SPOTIFY_REFRESH_INTERVAL = 5000;
+export const SPOTIFY_REFRESH_INTERVAL = 20000;
 export const SPOTIFY_PROGRESS_UPDATE_INTERVAL = 50;
 export const SPOTIFY_TRACK_CHECK_DELAY = 500;
 

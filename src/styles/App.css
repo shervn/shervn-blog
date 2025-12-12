@@ -1,54 +1,11 @@
-/* ============================================
-   CSS VARIABLES
-   ============================================ */
-:root {
-  /* Colors */
-  --color-black: #000;
-  --color-white: #fff;
-  --color-gray: #808080;
-  --color-dark-gray: #232323;
-  --color-light-gray: #ddd;
-  --color-text-dark: #221e1e;
-  --color-bg-song: #deefd9;
-  --color-bg-band: #a7b5d5;
-  --color-selection: #e6e6cc;
-  --color-cv-link: #1c5a72;
-  --color-progress-bg: #ddd;
-  
-  /* Spacing */
-  --spacing-xs: 0.1rem;
-  --spacing-sm: 0.25rem;
-  --spacing-md: 0.5rem;
-  --spacing-lg: 1rem;
-  --spacing-xl: 2rem;
-  --spacing-xxl: 3rem;
-  
-  /* Typography */
-  --line-height-base: 1.6;
-  --line-height-loose: 1.8;
-  --font-size-sm: 12px;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.1rem;
-  --font-size-xl: 1.3rem;
-  --font-size-xxl: 38px;
-  
-  /* Layout */
-  --container-padding: 1rem;
-  --grid-gap: 20px;
-  --grid-gap-sm: 8px;
-  
-  /* Transitions */
-  --transition-fast: 0.2s ease-out;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 2s ease-in-out;
-}
+@import './variables.css';
 
 /* ============================================
    FONTS
    ============================================ */
 @font-face {
   font-family: farsi;
-  src: url('./assets/fonts/AriaWebFaNum-Normal.woff2');
+  src: url('../assets/fonts/AriaWebFaNum-Normal.woff2');
   font-weight: normal;
   font-style: normal;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
@@ -56,7 +13,7 @@
 
 @font-face {
   font-family: farsiBold;
-  src: url('./assets/fonts/AriaWebFaNum-Black.woff2');
+  src: url('../assets/fonts/AriaWebFaNum-Black.woff2');
   font-weight: bold;
   font-style: normal;
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
@@ -64,7 +21,7 @@
 
 @font-face {
   font-family: farsi;
-  src: url('./assets/fonts/Onest.ttf') format('truetype');
+  src: url('../assets/fonts/Onest.ttf') format('truetype');
   font-weight: 400;
   font-style: Thin;
   unicode-range: U+0000-00FF;
@@ -73,7 +30,7 @@
 @font-face {
   font-family: farsiBold;
   font-weight: 400;
-  src: url('./assets/fonts/Onest.ttf') format('truetype');
+  src: url('../assets/fonts/Onest.ttf') format('truetype');
   unicode-range: U+0000-00FF;
 }
 
@@ -210,7 +167,7 @@ p.farsiPost,
    ============================================ */
 .musiclistening {
   text-align: center;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
   padding: var(--spacing-lg) 0 var(--spacing-lg) 0;
   font-family: farsi;
 }
@@ -279,7 +236,7 @@ p.farsiPost,
 .profile-row {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--spacing-lg);
   flex-wrap: nowrap;
   width: 100%;
@@ -332,6 +289,7 @@ p.farsiPost,
 .single-post-image {
   margin-right: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
+  margin-top: 0;
 }
 
 .single-post-paragraph {
@@ -339,7 +297,8 @@ p.farsiPost,
 }
 
 .single-post-date {
-  margin-top: var(--spacing-xl);
+  margin-top: 0;
+  vertical-align: top;
 }
 
 .single-post-iframe {
@@ -445,7 +404,8 @@ p.farsiPost,
   border-left: none;
 }
 
-.instaContainer .ui.grid > .column:last-child {
+.instaContainer .ui.grid > .column:last-child,
+.instaContainer .ui.grid > .column:nth-child(3n) {
   border-right: none;
 }
 
@@ -460,8 +420,19 @@ p.farsiPost,
 /* Tablet: 2-column layout (max-width: 991px)
    Semantic UI doubling breakpoint */
 @media (max-width: 991px) {
+  /* Override 3-column rules */
+  .instaContainer .ui.grid > .column:nth-child(3n) {
+    border-right: 1px dotted rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Apply 2-column rules */
   .instaContainer .ui.grid > .column:nth-child(2n) {
     border-right: none;
+  }
+  
+  /* Override last row rule for 2-column */
+  .instaContainer .ui.grid > .column:nth-last-child(-n+3) {
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
   }
   
   .instaContainer .ui.grid > .column:nth-last-child(-n+2) {
@@ -669,6 +640,7 @@ p.farsiPost,
   justify-content: center;
   align-items: center;
   height: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .spotify-controls-placeholder {
@@ -682,13 +654,23 @@ button.always-visible {
   background: transparent;
   opacity: 1;
   box-shadow: none;
-  color: inherit;
+  border: none;
+  color: var(--color-black-80);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transform: scale(1.1);
   transition: transform var(--transition-normal);
+  padding: 0;
+  margin: 0;
+}
+
+button.always-visible .icon,
+.ui.button.always-visible .icon {
+  border: none;
+  margin: 0;
+  color: var(--color-black-80);
 }
 
 .always-visible:hover {
@@ -705,7 +687,7 @@ button.always-visible {
 
 .train-slider {
   display: flex;
-  transition: transform 0.2s ease-out;
+  transition: transform var(--transition-normal, 0.2s ease-out);
   cursor: grab;
 }
 
@@ -792,6 +774,21 @@ button.always-visible {
 .blog-pagination-dot.active,
 .train-pagination-dot.active {
   opacity: 1;
+}
+
+.blog-pagination-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.blog-pagination-button:hover {
+  opacity: 0.7;
 }
 
 /* ============================================
@@ -895,7 +892,8 @@ h4.ui.header.dateField:not(.single-post-date):hover {
 h3.ui.header.dateField.single-post-date,
 h4.ui.header.dateField.single-post-date {
   cursor: default;
-  margin-top: var(--spacing-lg);
+  margin-top: 0;
+  vertical-align: top;
 }
 
 .crt-load-more {
@@ -1027,5 +1025,10 @@ h4.ui.header.dateField.single-post-date {
     font-size: var(--font-size-xl);
     line-height: 1.3;
     white-space: nowrap;
+    margin-top: 0 !important;
   }
+}
+
+.ui.header.headerText {
+  margin-top: 0 !important;
 }

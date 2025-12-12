@@ -16,7 +16,7 @@ const PostSkeleton = () => (
         <Placeholder.Line length="full" />
         <Placeholder.Line length="full" />
         <Placeholder.Line length="full" />
-        <Placeholder.Line length="three quarters" />
+        <Placeholder.Line length="medium" />
       </Placeholder.Paragraph>
     </Placeholder>
     <Loader active inline="centered" />
