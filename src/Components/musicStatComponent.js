@@ -1,23 +1,20 @@
 import { useState, useEffect } from "react";
 import { Grid, Container, Header, List, Loader } from "semantic-ui-react";
+import { getTopSongs, getTopArtists } from "../utils/lambdaUtils.js";
+import { MUSIC_STAT_LIMIT, MUSIC_STAT_TIME_RANGE } from "../utils/constants.js";
 
 export default function MusicStatComponent() {
   const [songs, setSongs] = useState([]);
   const [artists, setArtists] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const SONGS_API =
-    "https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/top-songs?limit=5&time_range=short_term";
-  const ARTISTS_API =
-    "https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/top-artists?limit=5";
-
   useEffect(() => {
     async function fetchData() {
       try {
         setLoading(true);
         const [songsRes, artistsRes] = await Promise.all([
-          fetch(SONGS_API).then(r => r.json()),
-          fetch(ARTISTS_API).then(r => r.json())
+          getTopSongs(MUSIC_STAT_LIMIT, MUSIC_STAT_TIME_RANGE),
+          getTopArtists(MUSIC_STAT_LIMIT)
         ]);
         setSongs(songsRes);
         setArtists(artistsRes);
@@ -33,22 +30,23 @@ export default function MusicStatComponent() {
 
   if (loading)
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div className="music-stat-loading" role="status" aria-live="polite">
         <Loader active indeterminate inline="centered" size="small" />
-        <p>Loading...</p>
+        <p>Loading music statistics...</p>
       </div>
     );
   if (!songs.length && !artists.length) return null;
 
   return (
     <Container
-      style={{ width: "50%", margin: "2rem auto", fontFamily: "farsi" }}
-      className="stats"
+      className="stats music-stat-container"
     >
       <Grid stackable columns={2} divided>
         <Grid.Row>
           <Grid.Column textAlign="right">
-            <Header dividing as="h4" content="Top Song" subheader="last 4 weeks"/>
+            <Header as="h4">
+              Top Songs (last 4 weeks)
+            </Header>
             <List relaxed>
               {songs.map((s, i) => (
                 <List.Item key={i}>
@@ -56,7 +54,7 @@ export default function MusicStatComponent() {
                     <a href={s.url} target="_blank" rel="noreferrer">
                       {s.song}
                     </a>
-                    <div style={{ fontSize: "12px", opacity: 0.7 }}>{s.artist}</div>
+                    <div className="music-stat-artist">{s.artist}</div>
                   </List.Content>
                 </List.Item>
               ))}
@@ -64,8 +62,9 @@ export default function MusicStatComponent() {
           </Grid.Column>
 
           <Grid.Column textAlign="left">
-            <Header dividing as="h4" content="Top Artists" subheader="last 4 weeks"/>
-
+          <Header as="h4">
+              Top Artists (last 4 weeks)
+            </Header>
             <List relaxed>
               {artists.map((a, i) => (
                 <List.Item key={i}>

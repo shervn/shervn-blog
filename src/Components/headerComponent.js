@@ -1,54 +1,45 @@
 import { useEffect, useState } from 'react';
-import { Header, Image, Modal, Button} from 'semantic-ui-react';
-import { loadData, getImagePath } from '../utils.js';
-import { MusicPlayer } from './spotifyComponent.js'
-
+import { Header, Image, Modal } from 'semantic-ui-react';
+import { loadData, getImagePath } from '../utils/general.js';
+import { MusicPlayer } from './spotifyComponent.js';
+import { HEADER_IMAGE_INTERVAL } from '../utils/constants.js';
 
 const images = [
-  "Header/a.png",
-  "Header/b.png",
-  "Header/c.png",
-  "Header/d.png",
-  "Header/e.png",
-  "Header/f.png",
+  "a.png",
+  "b.png",
+  "c.png",
+  "d.png",
+  "e.png",
+  "f.png",
 ];
 
 const HeaderImages = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndices, setActiveIndices] = useState(new Set([0]));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % images.length);
-    }, 2000);
+      // Randomly select 1-3 images to be active
+      const numActive = Math.floor(Math.random() * 3) + 1; // 1, 2, or 3 active images
+      const newActiveIndices = new Set();
+      
+      // Randomly select indices
+      while (newActiveIndices.size < numActive) {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        newActiveIndices.add(randomIndex);
+      }
+      
+      setActiveIndices(newActiveIndices);
+    }, HEADER_IMAGE_INTERVAL);
     return () => clearInterval(interval);
   }, []);
 
   return (
-      <div
-        className="headerContainer"
-        style={{
-          position: "relative",
-          width: "100%",
-          aspectRatio: "1280 / 909",
-          overflow: "hidden",
-        }}
-      >
+      <div className="headerContainer header-container-wrapper">
         {images.map((src, index) => (
           <Image
             key={index}
-            className="headerImage"
-            src={getImagePath(src)}
-            style={{
-              opacity: index === activeIndex ? 1 : 0.65,
-              transition: "opacity 2.0s ease-in-out, transform 2.0s ease-in-out",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transform: index === activeIndex ? "scale(1.003)" : "scale(1)",
-            }}
+            className={`headerImage header-image-item ${activeIndices.has(index) ? 'active' : ''}`}
+            src={getImagePath(src, 'Header')}
           />
         ))}
       </div>
@@ -72,19 +63,20 @@ export default function HeaderComponent() {
         onClose={() => setModalOpen(false)}
         basic
         size='tiny'
-        style={{ padding: 0, textAlign: 'center' }}
+        className="header-modal"
       >
-        <Image src={getImagePath('fozouni.jpg')} style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }} />
-        <Button color='red' onClick={() => setModalOpen(false)} style={{ margin: '10px auto', display: 'block' }}>Close</Button>
+        <Modal.Content onClick={() => setModalOpen(false)}>
+          <Image src={getImagePath('fozouni.jpg', 'Misc')} className="header-modal-image" />
+        </Modal.Content>
       </Modal>
 
       <div className="profile-row">
-        <Image src={getImagePath('blog_profile.png')} id="profilepix" size='tiny' circular />
+        <Image src={getImagePath('blog_profile.png', 'Misc')} id="profilepix" size='tiny' circular />
         <div className="profile-column">
           <img
             alt='asterisk'
             onClick={() => setModalOpen(true)}
-            src={getImagePath('asterrisk.png')}
+            src={getImagePath('asterrisk.png', 'Misc')}
             className='asterisk-trigger rotate'
           />
           <Header className='headerText' as='h2' content={metadata.name} subheader={metadata.subtitle} />

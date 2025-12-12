@@ -1,12 +1,12 @@
 import { Icon, Image } from 'semantic-ui-react'
-import {getImagePath} from '../utils.js';
+import {getImagePath} from '../utils/general.js';
 
 const Footer = () => {
   
   return(
     
     <div id="footer">
-      <Image className='headerImage' id="setarPicture" src={getImagePath("setar.png")}/>
+      <Image className='headerImage' id="setarPicture" src={getImagePath("setar.png", "Misc")}/>
       <ul id="footerIcons">
           <li><a href="https://soundcloud.com/shervn"><Icon name='soundcloud' /></a></li>
           <li><a href="https://github.com/shervn/"><Icon name='github' /></a></li>

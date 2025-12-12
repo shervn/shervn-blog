@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Container, Header, Divider, Button, Image, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { loadData, getImagePath, renderBoldQuotes  } from '../utils.js';
+import { loadData, getImagePath, renderBoldQuotes  } from '../utils/general.js';
+import { BLOG_POSTS_PER_PAGE, REVIEW_POSTS_PER_PAGE, BLOG_PREVIEW_MAX_LENGTH, SOUND_POSTS_PER_PAGE } from '../utils/constants.js';
 
 const Blog = ({ type = "blog" }) => {
   const [blogData, setBlogData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   
-  const count = type === "blog" ? 8 : 4;
-  const maxPreviewLength = 500;
+  const count = type === "blog" 
+    ? BLOG_POSTS_PER_PAGE 
+    : type === "review" 
+    ? REVIEW_POSTS_PER_PAGE 
+    : SOUND_POSTS_PER_PAGE;
+  const maxPreviewLength = BLOG_PREVIEW_MAX_LENGTH;
   
   useEffect(() => {
     setCurrentPage(0);
@@ -39,32 +44,27 @@ const Blog = ({ type = "blog" }) => {
 
           return (
             <li key={element.order + element.date}>
-              <br />
+             
               <Container text className={element.className}>
                 <Header as="h3" content={element.title} className={element.className} />
-                {element.image && <Image src={getImagePath(element.image)} floated="left" size="small" />}
+                {element.image && <Image src={getImagePath(element.image, 'Misc')} floated="left" size="small" />}
 
                 {lines.map((line, idx) => {
                   const renderedLine = renderBoldQuotes(line);
                   if (idx === lastLineIndex && shouldTruncate) {
                     return (
-                      <p className={element.className} key={idx} style={{ display: 'inline' }}>
+                      <p className={`${element.className} blog-preview-inline`} key={idx}>
                         {renderedLine} 
-                        <span style={{ display: 'inline-block', marginLeft: '0.3rem' }}>
+                        <span className="blog-preview-ellipsis">
                           ...{' '}
                           <Header
                             as={Link}
                             to={`/${type}/${element.uuid}`}
                             basic
                             size="tiny"
-                            style={{ 
-                              padding: '0', 
-                              minWidth: 'auto', 
-                              color: 'inherit', 
-                              background: 'rgb(222, 239, 217)' 
-                            }}
+                            className="blog-preview-link"
                           >
-                            [ادامه]
+                            {'/ادامه/'}
                           </Header>
                         </span>
                       </p>
@@ -74,7 +74,25 @@ const Blog = ({ type = "blog" }) => {
                   }
                 })}
 
-                <Header as="h3" content={element.date} className="dateField" style={{ marginTop: '0.5rem' }} />
+                {/* Sound iframe (if noises type) */}
+                {type === 'noises' && element.soundCloudLink && (
+                  <iframe
+                    title={element.title}
+                    width="100%"
+                    height={element.playlist === true ? 350 : 150}
+                    allow="autoplay"
+                    src={element.soundCloudLink}
+                    frameBorder="0"
+                    className="single-post-iframe"
+                  />
+                )}
+
+                <Header 
+                  as={Link}
+                  to={`/${type}/${element.uuid}`}
+                  content={element.date} 
+                  className="dateField blog-date" 
+                />
               </Container>
               <Divider />
             </li>
@@ -82,30 +100,16 @@ const Blog = ({ type = "blog" }) => {
         })}
       </ul>
       
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "20px",
-          marginTop: "2rem",
-        }}
-      >
+      <div className="blog-pagination">
         <Button icon onClick={prevPage}>
           <Icon name="angle left" />
         </Button>
         
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className="blog-pagination-dots">
           {Array.from({ length: totalPages }).map((_, i) => (
             <div
               key={i}
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-                background: "black",
-                opacity: i === currentPage ? 1 : 0.3,
-              }}
+              className={`blog-pagination-dot ${i === currentPage ? 'active' : ''}`}
             />
           ))}
         </div>

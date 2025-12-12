@@ -1,3 +1,51 @@
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+:root {
+  /* Colors */
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray: #808080;
+  --color-dark-gray: #232323;
+  --color-light-gray: #ddd;
+  --color-text-dark: #221e1e;
+  --color-bg-song: #deefd9;
+  --color-bg-band: #a7b5d5;
+  --color-selection: #e6e6cc;
+  --color-cv-link: #1c5a72;
+  --color-progress-bg: #ddd;
+  
+  /* Spacing */
+  --spacing-xs: 0.1rem;
+  --spacing-sm: 0.25rem;
+  --spacing-md: 0.5rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Typography */
+  --line-height-base: 1.6;
+  --line-height-loose: 1.8;
+  --font-size-sm: 12px;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.1rem;
+  --font-size-xl: 1.3rem;
+  --font-size-xxl: 38px;
+  
+  /* Layout */
+  --container-padding: 1rem;
+  --grid-gap: 20px;
+  --grid-gap-sm: 8px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease-out;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 2s ease-in-out;
+}
+
+/* ============================================
+   FONTS
+   ============================================ */
 @font-face {
   font-family: farsi;
   src: url('./assets/fonts/AriaWebFaNum-Normal.woff2');
@@ -14,53 +62,213 @@
   unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 
-
 @font-face {
   font-family: farsi;
   src: url('./assets/fonts/Onest.ttf') format('truetype');
   font-weight: 400;
-  font-style: normal;
+  font-style: Thin;
   unicode-range: U+0000-00FF;
 }
+
 @font-face {
   font-family: farsiBold;
-  font-weight: bold;
+  font-weight: 400;
   src: url('./assets/fonts/Onest.ttf') format('truetype');
   unicode-range: U+0000-00FF;
 }
 
+/* ============================================
+   ANIMATIONS
+   ============================================ */
 @keyframes rotation {
   from { transform: rotate(0deg); }
   to { transform: rotate(359deg); }
 }
 
-/* Global */
-.App {
-  text-align: center;
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.rotate {
-  width: 2em;
-  animation: rotation 20000ms infinite linear; 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.App {
+  text-align: center;
 }
 
 a {
   color: inherit;
 }
+
 a:hover {
-  color: gray;
+  color: var(--color-gray);
 }
+
 a.cv {
-  color: rgb(28, 90, 114);
+  color: var(--color-cv-link);
 }
 
-/* Containers */
+/* ============================================
+   LAYOUT & CONTAINERS
+   ============================================ */
 #mainContainer {
-  margin: 7% 5%;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  margin: 30px 5% 10px;
 }
 
+#header {
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+
+.mainPageWithMenu {
+  margin: auto;
+  width: 75%;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.farsiPost {
+  text-align: right;
+  direction: rtl;
+  font-family: farsi;
+  line-height: var(--line-height-base);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-spacing: normal;
+  letter-spacing: normal;
+  hyphens: none;
+}
+
+h3.ui.header.farsiPost,
+h3.farsiPost {
+  font-family: farsiBold !important;
+}
+
+.ui.header.farsiPost,
+p.farsiPost,
+.farsiPost p {
+  line-height: var(--line-height-base);
+}
+
+.farsiPost::selection {
+  background: var(--color-selection);
+}
+
+.ui.header.farsiPost {
+  font-family: farsiBold;
+  margin-top: 0 !important;
+}
+
+.englishPost {
+  font-family: farsi;
+}
+
+.farsiPost {
+  font-family: farsi;
+}
+
+
+/* .header.farsiPost {
+  font-family: farsiBold;
+  color: var(--color-text-dark);
+} */
+
+.ui.big.header.farsiTitleWhite {
+  direction: rtl;
+  font-family: farsi;
+  color: var(--color-white);
+  font-size: 5em;
+}
+
+
+.textRef {
+  text-decoration: underline;
+}
+
+/* ============================================
+   MUSIC LISTENING
+   ============================================ */
+.musiclistening {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-lg) 0 var(--spacing-lg) 0;
+  font-family: farsi;
+}
+
+.musiclistening p {
+  text-align: center;
+  color: var(--color-dark-gray);
+  margin: var(--spacing-xs) 0;
+}
+
+.musiclistening .song {
+  background-color: var(--color-bg-song);
+  padding: 0 0.25em;
+}
+
+.musiclistening .band {
+  background-color: var(--color-bg-band);
+  padding: 0 0.25em;
+}
+
+/* ============================================
+   HEADER COMPONENT
+   ============================================ */
+.header-container-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 909;
+  overflow: hidden;
+}
+
+.header-container-wrapper .header-image-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0.65;
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+  transform: scale(1);
+}
+
+.header-container-wrapper .header-image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.header-image-item.active {
+  opacity: 1;
+  transform: scale(1.003);
+}
+
+.headerImage {
+  pointer-events: none;
+}
 
 .headerImage:last-of-type {
   width: 100%;
@@ -68,185 +276,13 @@ a.cv {
   padding-top: 0;
 }
 
-#header {
-  margin: auto;
-  padding-bottom: 20px;
-}
-
-.mainPageWithMenu {
-  margin: 20px auto;
-  width: 70%;
-  padding: auto;
-}
-
-@media (min-width: 720px) {
-  #mainContainer { margin: 30px 10% 10px; }
-  #header {
-    min-width: 300px;
-    max-width: 400px;
-  }
-}
-
-.musiclistening p{
-  text-align: center;
-  color: rgb(35, 35, 35);
-}
-
-.musiclistening {
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  padding-top: 1rem;
-  font-family: farsi;
-}
-
-.musiclistening .song {
-  background-color:#deefd9;
-  padding: 0 0.25em;
-  width: 100%;
-  height: 100%;
-}
-
-.musiclistening .band {
-  background-color:#a7b5d5;
-  padding: 0 0.25em;
-  width: 100%;
-  height: 100%;
-}
-
-.farsiPost {
-  text-align: justify;
-  direction: rtl;
-  font-family: farsi;
-  line-height: 1.6;
-  /* unicode-bidi: embed;  */
-}
-
-.farsiPost::selection {
-  background: #e6e6cc;
-}
-
-.nicep::first-letter {
-  font-size: 200%;
-}
-
-.ui.big.header.farsiTitleWhite {
-  direction: rtl;
-  font-family: farsi;
-  color: #fff;
-  font-size: 5em;
-}
-
-.header.farsiPost {
-  font-family: farsiBold;
-  color: rgb(34, 30, 30);
-}
-
-.menuFarsi, .modalBandName.header {
-  font-family: farsi;
-  color: rgb(34, 30, 30);
-  direction: rtl;
-}
-
-/* Headers */
-h2.ui.header.headerText,
-h5,
-h6.ui.header {
-  margin: 0;
-  font-family: "farsi";
-}
-
-/* Footer */
-#footer {
-  margin: 10px auto;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-}
-#footerIcons {
-  margin: auto;
-  padding: 0;
-}
-#footerIcons li { display: inline-flex; }
-
-/* Cards & Modals */
-.farsiCard {
-  padding: 40px 0 0 0;
-  margin: 5px;
-}
-.farsiCard:hover { cursor: pointer; }
-#cardsR2L { flex-direction: row-reverse; }
-
-
-.modalImage {
-  margin-left: 50px;
-  width: 10em;
-  height: 10em;
-}
-/* Misc */
-.post { padding-top: 10px; }
-#setarPicture { width: 30%; max-width: 200px; padding-top: 30px; margin: auto; }
-.blogList, .researchList { list-style: none; padding: 0; }
-.crt-load-more { height: 80px; width: 80px; border-radius: 50%; color: white; cursor: pointer; padding: 0 !important; }
-.textRef { text-decoration: underline; }
-
-.ui.header.dateField {
-  align-content: center;
-  width: 7em;
-  font-size: 1em;
-  background-color: black !important;
-  color: white;
-  font-family: farsi;
-  line-height: 1.6;
-  padding: 0 1em;
-}
-
-
-.overlayCityName{
-  font-size: 1.1rem;
-  margin: 0;
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  color: #fff;
-  background-color: rgba(0,0,0,1);
-  padding: 2px 6px;
-  font-family: "farsi";
-}
-
-/* Buttons */
-.buttons, .ui.icon.button {
-  margin: 10px 0 0 0;
-  text-align: center;
-  align-items: center;
-}
-
-.header-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-  margin: auto;
-}
-
-.music-row {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-/* profile block stays one line even on phone */
 .profile-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1rem;
-
-  /* Prevent wrapping on small screens */
+  gap: var(--spacing-lg);
   flex-wrap: nowrap;
   width: 100%;
-
-  /* allow shrinking instead of wrapping */
   overflow: hidden;
 }
 
@@ -254,9 +290,7 @@ h6.ui.header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.3rem;
-
-  /* allow text to shrink instead of pushing to new line */
+  gap: var(--spacing-sm);
   flex: 1;
   min-width: 0;
 }
@@ -267,87 +301,731 @@ h6.ui.header {
   cursor: pointer;
 }
 
-@media (max-width: 500px) {
-  .musiclistening {
-    text-align: left;
-  }
-  .musiclistening p{
+.rotate {
+  width: 2em;
+  animation: rotation 20000ms infinite linear;
+}
+
+.header-modal {
+  padding: 0;
+  text-align: center;
+}
+
+.header-modal-image {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+/* ============================================
+   SINGLE POST COMPONENT
+   ============================================ */
+.single-post-container {
+  margin-top: var(--spacing-xl);
+}
+
+.single-post-container .ui.header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.single-post-image {
+  margin-right: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.single-post-paragraph {
+  line-height: var(--line-height-base);
+}
+
+.single-post-date {
+  margin-top: var(--spacing-xl);
+}
+
+.single-post-iframe {
+  margin-top: var(--spacing-lg);
+}
+
+/* ============================================
+   BLOG COMPONENT
+   ============================================ */
+.blogList,
+.researchList {
+  list-style: none;
+  padding: 0;
+}
+
+.post {
+  padding-top: 10px;
+}
+
+.blog-preview-inline {
+  display: inline;
+}
+
+.blog-preview-ellipsis {
+  display: inline-block;
+  margin-left: var(--spacing-sm);
+}
+
+.blog-preview-link {
+  padding: 0;
+  min-width: auto;
+  color: inherit;
+  background: var(--color-bg-song);
+  font-family: farsiBold !important;
+}
+
+.blog-date {
+  margin-top: var(--spacing-sm);
+  display: block;
+  clear: both;
+}
+
+/* ============================================
+   SOUND COMPONENT
+   ============================================ */
+.sound-item {
+  cursor: pointer;
+}
+
+/* ============================================
+   MUSIC STAT COMPONENT
+   ============================================ */
+.music-stat-container {
+  width: 50%;
+  margin: var(--spacing-lg) auto;
+  font-family: farsi;
+}
+
+.music-stat-container .ui.grid > .row > .column {
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+}
+
+.music-stat-container .ui.grid > .row > .column[class*="right"],
+.music-stat-container .ui.grid > .row > .column.right {
+  padding-right: var(--spacing-xl);
+}
+
+.music-stat-container .ui.grid > .row > .column[class*="left"],
+.music-stat-container .ui.grid > .row > .column.left {
+  padding-left: var(--spacing-xl);
+}
+
+.music-stat-loading {
     text-align: center;
   }
 
-  #profilepix {
-    width: 54px !important;
-    height: 54px !important;
-    flex-shrink: 0;
-  }
+.music-stat-artist {
+  font-size: 12px;
+  opacity: 0.7;
+}
 
-  .headerText {
-    font-size: 1.3rem !important;
-    line-height: 1.3;
-    white-space: nowrap;
+.stats {
+  font-family: farsi;
+}
+
+/* ============================================
+   POSTBOX COMPONENT
+   ============================================ */
+.instaContainer {
+  user-select: none;
+}
+
+.instaContainer .ui.grid > .column {
+  padding: var(--container-padding);
+  overflow: visible;
+  border-right: 1px dotted rgba(0, 0, 0, 0.2);
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+}
+
+/* Remove borders from edges - works for 3-column grid */
+.instaContainer .ui.grid > .column:first-child {
+  border-left: none;
+}
+
+.instaContainer .ui.grid > .column:last-child {
+  border-right: none;
+}
+
+.instaContainer .ui.grid > .column:nth-last-child(-n+3) {
+  border-bottom: none;
+}
+
+/* ============================================
+   RESPONSIVE: POSTBOX GRID LINES
+   ============================================ */
+
+/* Tablet: 2-column layout (max-width: 991px)
+   Semantic UI doubling breakpoint */
+@media (max-width: 991px) {
+  .instaContainer .ui.grid > .column:nth-child(2n) {
+    border-right: none;
+  }
+  
+  .instaContainer .ui.grid > .column:nth-last-child(-n+2) {
+    border-bottom: none;
   }
 }
+
+/* Mobile: 1-column layout (max-width: 767px)
+   Semantic UI stackable breakpoint */
+@media (max-width: 767px) {
+  .instaContainer .ui.grid > .column {
+    border-right: none;
+    border-left: none;
+  }
+  
+  .instaContainer .ui.grid > .column:not(:last-child) {
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+  }
+  
+  .instaContainer .ui.grid > .column:last-child {
+    border-bottom: none;
+  }
+}
+
+
+.instaContainer .ui.grid > .column > div {
+  overflow: visible;
+}
+
+/* ============================================
+   GRID STYLES (SHARED)
+   ============================================ */
+.ui.grid {
+  margin: 0;
+}
+
+.ui.grid > .row {
+  margin: 0;
+}
+
+.ui.grid > .row > .column {
+  padding: var(--spacing-sm);
+}
+
+.ui.grid > .column {
+  padding: var(--spacing-sm);
+}
+
+.spotify-player-segment {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.spotify-player-segment .ui.grid {
+  margin: 0;
+}
+
+.spotify-player-segment .ui.grid > .row.spotify-player-row {
+  margin: 0;
+  padding: 0;
+}
+
+.spotify-player-segment .ui.grid > .row > .column {
+  padding: 0;
+}
+
+.postbox-no-photos {
+  padding: 20px;
+}
+
+.postbox-container {
+  user-select: none;
+}
+
+.postbox-image-wrapper {
+  position: relative;
+}
+
+.postbox-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.postbox-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.commentPlaceHolder .postbox-comment-text {
+  text-align: left;
+  margin: 0;
+  line-height: 1.5;
+  white-space: normal;
+  display: block;
+}
+
+.postbox-comment-text.right {
+  text-align: right;
+}
+
+.postbox-load-more {
+  height: 1px;
+}
+
+.commentPlaceHolder {
+    width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+    font-family: farsi;
+    font-size: 38px;
+    line-height: 0.5;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.commentPlaceHolder p {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  margin: 0;
+  line-height: 1.5em;
+  white-space: normal;
+  display: block;
+  visibility: visible;
+}
+
+.commentPlaceHolder p:first-child {
+  top: 2px;
+}
+
+.commentPlaceHolder p:nth-child(2) {
+  top: calc(2px + 1.4em);
+}
+
+.commentPlaceHolder p:nth-child(3) {
+  top: calc(2px + 2.8em);
+}
+
+.commentPlaceHolder p:nth-child(n+4) {
+  top: calc(2px + 4.2em);
+}
+
+.overlayCityName {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  margin: 0;
+  padding: 2px 6px;
+  font-size: var(--font-size-lg);
+  font-family: farsi;
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+/* ============================================
+   SPOTIFY COMPONENT
+   ============================================ */
+.spotify-loading {
+  text-align: center;
+}
+
+.musiclistening .spotify-listened-at {
+  margin-top: var(--spacing-md);
+}
+
+.spotify-player-row .spotify-start-stop-time {
+  padding-left: var(--spacing-sm) !important;
+  padding-right: var(--spacing-sm) !important;
+}
+
+.spotify-bold-text {
+  font-weight: bold;
+}
+
+.spotify-player-segment {
+  padding: 0;
+  margin: var(--spacing-xs) 0 0;
+}
+
+.spotify-progress-container {
+  position: relative;
+  height: 4px;
+  background-color: var(--color-progress-bg);
+  border-radius: 2px;
+  margin: var(--spacing-xs) 0;
+}
+
+.spotify-progress-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: var(--color-black);
+  border-radius: 2px;
+  transition: width 0.4s linear;
+}
+
+.spotify-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--spacing-lg);
+}
+
+.spotify-controls-placeholder {
+  display: flex;
+  height: 0;
+  margin: 0;
+}
+
+.ui.button.always-visible,
+button.always-visible {
+  background: transparent;
+  opacity: 1;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.1);
+  transition: transform var(--transition-normal);
+}
+
+.always-visible:hover {
+  transform: scale(1.2);
+}
+
+/* ============================================
+   TRAIN COMPONENT
+   ============================================ */
+.train-container {
+  margin-top: var(--spacing-lg);
+  overflow: hidden;
+}
+
+.train-slider {
+  display: flex;
+  transition: transform 0.2s ease-out;
+  cursor: grab;
+}
+
+.train-slider.dragging {
+  cursor: grabbing;
+}
+
+.train-slide {
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.train-image-wrapper {
+  width: 100%;
+  aspect-ratio: 9/16;
+  position: relative;
+}
+
+.train-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================
+   PAGINATION (SHARED)
+   ============================================ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--grid-gap);
+  margin-top: var(--spacing-xl);
+}
+
+.pagination-dots {
+  display: flex;
+  gap: var(--grid-gap-sm);
+}
+
+.pagination-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-black);
+  opacity: 0.3;
+}
+
+.pagination-dot.active {
+  opacity: 1;
+}
+
+/* Legacy pagination classes for backward compatibility */
+.sound-pagination,
+.blog-pagination,
+.train-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--grid-gap);
+  margin-top: var(--spacing-xl);
+}
+
+.sound-pagination-dots,
+.blog-pagination-dots,
+.train-pagination-dots {
+  display: flex;
+  gap: var(--grid-gap-sm);
+}
+
+.sound-pagination-dot,
+.blog-pagination-dot,
+.train-pagination-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-black);
+  opacity: 0.3;
+}
+
+.sound-pagination-dot.active,
+.blog-pagination-dot.active,
+.train-pagination-dot.active {
+  opacity: 1;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+#footer {
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#footerIcons {
+  margin: 0 auto;
+  padding: 0;
+}
+
+#footerIcons li {
+  display: inline-flex;
+}
+
+#setarPicture {
+  width: 30%;
+  max-width: 200px;
+  padding-top: 30px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   CARDS & MODALS
+   ============================================ */
+.farsiCard {
+  padding: 40px 0 0;
+  margin: 5px;
+}
+
+.farsiCard:hover {
+  cursor: pointer;
+}
+
+#cardsR2L {
+  flex-direction: row-reverse;
+}
+
+.modalImage {
+  margin-left: 50px;
+  width: 10em;
+  height: 10em;
+}
+
+/* ============================================
+   BUTTONS & UI ELEMENTS
+   ============================================ */
+.buttons,
+.ui.icon.button {
+  margin: 10px 0 0;
+  text-align: center;
+  align-items: center;
+}
+
+.ui.header.dateField,
+h3.ui.header.dateField,
+h4.ui.header.dateField {
+  align-content: center;
+  width: 7em;
+  font-size: var(--font-size-base);
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: farsi;
+  line-height: var(--line-height-base);
+  padding: 0 var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  display: inline-block;
+}
+
+.ui.header.dateField.blog-date{
+  display: block !important;
+  clear: both;
+}
+
+.ui.header.dateField a,
+h3.ui.header.dateField a,
+h4.ui.header.dateField a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.ui.header.dateField:not(.single-post-date):hover,
+h3.ui.header.dateField:not(.single-post-date):hover,
+h4.ui.header.dateField:not(.single-post-date):hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.ui.header.dateField.single-post-date,
+h3.ui.header.dateField.single-post-date,
+h4.ui.header.dateField.single-post-date {
+  cursor: default;
+  margin-top: var(--spacing-lg);
+}
+
+.crt-load-more {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  color: var(--color-white);
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
 .noselect {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
+
 .noselect img {
   pointer-events: none;
 }
 
-@media only screen and (max-width: 767px) {
-  .ui.menu.stackable .item {
-    justify-content: left !important;
-    padding-left: 1rem !important;
+.music-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* Desktop: Wide layout (min-width: 720px)
+   Expands main container margins for better readability */
+@media (min-width: 720px) {
+  #mainContainer {
+    margin: 30px 10% 10px;
+  }
+
+  #header {
+    min-width: 300px;
+    max-width: 400px;
   }
 }
 
-.englishPost{
-  font-family: "farsi" !important;
-}
-.ui.header.farsiPost{
-  font-family: "farsiBold" !important;
-}
+@media (max-width: 767px) {
 
-.stats{
-  font-family: "farsi" !important;
-}
+  .ui.menu.stackable.secondary .item.menuFarsi {
+    justify-content: left;
+    padding-left: var(--spacing-lg) !important;
+  }
 
-.ui .header{
-font-family: "farsi" !important;
 
-}
+  .train-slide {
+    flex: 0 0 25%;
+  }
 
-.commentPlaceHolder{
-    width: 100%;
-    padding-top: 100%;
-    justify-content: flex-end;
+  .instaContainer .ui.grid {
     align-items: flex-start;
-    font-family: farsi;
-    font-size: 38px;
-    line-height: 0.5;
-    padding: 2px;
+  }
+
+  .instaContainer .ui.grid > .column {
+    overflow: visible !important;
+    height: auto !important;
+    align-self: flex-start;
+    max-height: none !important;
+  }
+
+  .instaContainer .ui.grid > .column > div {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .commentPlaceHolder {
+    aspect-ratio: auto !important;
+    padding-top: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    overflow: visible !important;
+    position: relative;
+  }
+
+  .commentPlaceHolder p {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    margin-bottom: var(--spacing-xs) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    line-height: 1.4em !important;
+  }
+
+  .commentPlaceHolder p:last-child {
+    margin-bottom: 0 !important;
+  }
 }
 
-.always-visible {
-  background: transparent !important;
-  opacity: 1 !important;
-  box-shadow: none !important;
-  color: inherit !important;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transform: scale(1.1);                /* normal size */
-  transition: transform 0.3s ease !important;    /* smooth scaling */
-}
-.always-visible:hover {
-  transform: scale(1.2);
-  transition: transform 0.3s ease;
-}
+/* Small Mobile: Additional adjustments (max-width: 500px)
+   Further optimizations for small screens */
+@media (max-width: 500px) {
+  .musiclistening {
+    text-align: left;
+  }
 
-.headerImage {
-  pointer-events: none;
+  .musiclistening p {
+    text-align: center;
+  }
+
+  .profile-row #profilepix {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+  }
+
+  .header-container .headerText,
+  .profile-column .headerText {
+    font-size: var(--font-size-xl);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
 }

@@ -1,12 +1,17 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Icon, Button, Segment, Grid, Loader } from 'semantic-ui-react';
-import { timeAgo } from '../utils.js';
-
-const BASE_API = 'https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com';
-const SPOTIFY_RECENT_API = `${BASE_API}/recent-tracks?limit=1`;
-const CURRENTLY_PLAYING_API = `${BASE_API}/currently-playing`;
-const PLAYER_API = `${BASE_API}/player`;
-const TOGGLE_API = `${BASE_API}/toggle-state`;
+import { timeAgo } from '../utils/general.js';
+import {
+  getToggleState,
+  getRecentTracks,
+  getCurrentlyPlaying,
+  controlPlayer
+} from '../utils/lambdaUtils.js';
+import {
+  SPOTIFY_REFRESH_INTERVAL,
+  SPOTIFY_PROGRESS_UPDATE_INTERVAL,
+  SPOTIFY_TRACK_CHECK_DELAY
+} from '../utils/constants.js';
 
 export function MusicPlayer() {
   const [spotifyTrack, setSpotifyTrack] = useState(null);
@@ -19,17 +24,15 @@ export function MusicPlayer() {
 
   const fetchData = async () => {
     try {
-      const toggleRes = await fetch(TOGGLE_API).then(r => r.json());
+      const toggleRes = await getToggleState();
       setShowButtons(toggleRes.state);
       const [spotifyRes, currentRes] = await Promise.all([
-        fetch(SPOTIFY_RECENT_API).then(r => r.json()),
-        fetch(CURRENTLY_PLAYING_API).then(r => r.json()),
+        getRecentTracks(1),
+        getCurrentlyPlaying(),
       ]);
 
       setSpotifyTrack(spotifyRes[0] || null);
-      setCurrentlyPlaying(
-        currentRes?.message === 'No track currently playing' ? null : currentRes
-      );
+      setCurrentlyPlaying(currentRes);
 
     } catch (err) {
       console.error(err);
@@ -40,7 +43,7 @@ export function MusicPlayer() {
 
   useEffect(() => {
     fetchData();
-    refreshRef.current = setInterval(fetchData, 5000);
+    refreshRef.current = setInterval(fetchData, SPOTIFY_REFRESH_INTERVAL);
     return () => clearInterval(refreshRef.current);
   }, []);
 
@@ -52,20 +55,20 @@ export function MusicPlayer() {
 
     intervalRef.current = setInterval(() => {
       setProgress(prev => {
-        const next = Math.min(prev + 50, currentlyPlaying.duration_ms);
+        const next = Math.min(prev + SPOTIFY_PROGRESS_UPDATE_INTERVAL, currentlyPlaying.duration_ms);
         if (next >= currentlyPlaying.duration_ms) {
           setTimeout(async () => {
             try {
-              const data = await fetch(CURRENTLY_PLAYING_API).then(r => r.json());
-              setCurrentlyPlaying(data?.message === 'No track currently playing' ? null : data);
+              const data = await getCurrentlyPlaying();
+              setCurrentlyPlaying(data);
             } catch (err) {
               console.error(err);
             }
-          }, 500);
+          }, SPOTIFY_TRACK_CHECK_DELAY);
         }
         return next;
       });
-    }, 50);
+    }, SPOTIFY_PROGRESS_UPDATE_INTERVAL);
 
     return () => clearInterval(intervalRef.current);
   }, [currentlyPlaying]);
@@ -85,9 +88,8 @@ export function MusicPlayer() {
   const handlePlayerAction = async (e, action) => {
     e.currentTarget.blur();
     try {
-      await fetch(`${PLAYER_API}?action=${action}`);
-      const data = await fetch(CURRENTLY_PLAYING_API).then(r => r.json());
-      setCurrentlyPlaying(data?.message === 'No track currently playing' ? null : data);
+      const data = await controlPlayer(action);
+      setCurrentlyPlaying(data);
     } catch (err) {
       console.error(err);
     }
@@ -97,7 +99,7 @@ export function MusicPlayer() {
 
   if (loading) {
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div className="spotify-loading">
         <Loader active indeterminate inline="centered" size="small" />
         <p>Loading...</p>
       </div>
@@ -108,7 +110,7 @@ export function MusicPlayer() {
 
   return (
     <div className='musiclistening'>
-      <p style={{ fontWeight: "bold" }}>
+      <p className="spotify-bold-text">
         <Icon name='headphones' />
         Listening to{' '}
         <a className='song' href={track.url} target="_blank" rel="noreferrer">
@@ -116,7 +118,7 @@ export function MusicPlayer() {
         </a>{' '}
         by <span className='band'>{track.artist || track.band}</span>
       </p>
-      <p>
+      <p className="spotify-listened-at">
         {currentlyPlaying
           ? currentlyPlaying.is_playing
             ? 'currently playing'
@@ -128,38 +130,35 @@ export function MusicPlayer() {
 
       {/* Only show player controls if toggle is true */}
       {currentlyPlaying && (
-        <Segment basic style={{ padding: 0, margin: 0 }}>
+        <Segment basic className="spotify-player-segment" role="region" aria-label="Spotify player">
           <Grid verticalAlign='middle'>
-            <Grid.Row columns={3} textAlign='center' style={{ padding: 0 }}>
-              <Grid.Column width={2} textAlign='right'>{formatTime(progress)}</Grid.Column>
+            <Grid.Row columns={3} textAlign='center' className="spotify-player-row">
+              <Grid.Column className="spotify-start-stop-time" width={2} textAlign='right' aria-label={`Current time: ${formatTime(progress)}`}>{formatTime(progress)}</Grid.Column>
               <Grid.Column width={12}>
-                <div style={{
-                  position: 'relative',
-                  height: '4px',
-                  backgroundColor: '#ddd',
-                  borderRadius: '2px'
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    width: `${percent}%`,
-                    height: '100%',
-                    backgroundColor: '#000',
-                    borderRadius: '2px',
-                    transition: 'width 0.4s linear'
-                  }} />
+                <div 
+                  className="spotify-progress-container"
+                  role="progressbar"
+                  aria-valuenow={percent}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-label={`Progress: ${percent}%`}
+                >
+                  <div 
+                    className="spotify-progress-bar"
+                    style={{ width: `${percent}%` }}
+                  />
                 </div>
               </Grid.Column>
-              <Grid.Column width={2} textAlign='left'>{formatTime(currentlyPlaying.duration_ms)}</Grid.Column>
+              <Grid.Column className="spotify-start-stop-time" width={2} textAlign='left' aria-label={`Total duration: ${formatTime(currentlyPlaying.duration_ms)}`}>{formatTime(currentlyPlaying.duration_ms)}</Grid.Column>
             </Grid.Row>
           </Grid>
           {showButtons ? (
-            <div style={{ display: 'flex', justifyContent: 'center', height:'3rem' }}>
+            <div className="spotify-controls" role="group" aria-label="Player controls">
           <Button
             className="always-visible"
             icon
             onClick={e => handlePlayerAction(e, 'previous')}
+            aria-label="Previous track"
           >
             <Icon name='backward' />
           </Button>
@@ -169,6 +168,7 @@ export function MusicPlayer() {
               className="always-visible"
               icon
               onClick={e => handlePlayerAction(e, 'pause')}
+              aria-label="Pause"
             >
               <Icon name='pause' />
             </Button>
@@ -177,6 +177,7 @@ export function MusicPlayer() {
               className="always-visible"
               icon
               onClick={e => handlePlayerAction(e, 'play')}
+              aria-label="Play"
             >
               <Icon name='play' />
             </Button>
@@ -186,12 +187,13 @@ export function MusicPlayer() {
   className="always-visible"
   icon
   onClick={e => handlePlayerAction(e, 'next')}
+  aria-label="Next track"
 >
   <Icon name='forward' />
 </Button>
             </div>
           ) : (
-            <div style={{ display: 'flex', height:'3rem'}}><p></p></div>
+            <div className="spotify-controls-placeholder"><p></p></div>
           )}
 
         </Segment>

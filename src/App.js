@@ -2,12 +2,13 @@ import { Component } from 'react';
 import { Divider, Menu } from 'semantic-ui-react';
 import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { toggleState } from './utils/lambdaUtils.js';
+import { EASTER_EGG_SEQUENCE, EASTER_EGG_SEQUENCE_LENGTH } from './utils/constants.js';
 
 import './App.css';
 
 import HeaderComponent from './Components/headerComponent.js';
 import Footer from './Components/footerComponent.js';
-import Sound from './Components/soundComponent';
 import Blog from './Components/blogComponent';
 import TrainComponent from './Components/trainComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
@@ -42,17 +43,15 @@ export default class App extends Component {
   handleItemClick = (_e, { name }) => {
     const { clickSequence } = this.state;
 
-    const updatedSequence = [...clickSequence, name].slice(-5);
+    const updatedSequence = [...clickSequence, name].slice(-EASTER_EGG_SEQUENCE_LENGTH);
     this.setState({ 
       activeItem: name,
       clickSequence: updatedSequence
     }, () => {
-      if (updatedSequence.join(',') === 'blog,spotify,blog,spotify,reviews') {
-        fetch('https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com/toggle', {
-          method: 'GET'
-        })
-        .then(res => console.log(''))
-        .catch(err => console.error(''));
+      if (updatedSequence.join(',') === EASTER_EGG_SEQUENCE.join(',')) {
+        toggleState()
+          .then(res => console.log(''))
+          .catch(err => console.error(''));
       }
     });
   };
@@ -61,18 +60,31 @@ export default class App extends Component {
     return (
       <HelmetProvider>
         <Helmet>
-          <title>shervn</title>
+          <title>shervn - Personal Blog & Portfolio</title>
           <meta
             name="description"
-            content="This is the personal webpage of Shervin. شروین . صفحه شخصی."
+            content="Personal webpage of Shervin Dehghani. Blog posts, reviews, photography, and music. شروین . صفحه شخصی."
           />
+          <meta name="keywords" content="shervin, blog, photography, music, portfolio" />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="shervn" />
+          <link rel="canonical" href="https://shervn.com" />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Shervin Dehghani",
+              "url": "https://shervn.com",
+              "sameAs": []
+            })}
+          </script>
         </Helmet>
         <div id="mainContainer">
           <div id="header">
             <HeaderComponent alt="Shervin cover" />
           </div>
           <Router>
-            <div className="mainPageWithMenu">
+            <nav className="mainPageWithMenu" role="navigation" aria-label="Main navigation">
               <Menu secondary widths={6} stackable>
                 {['blog','reviews','postboxes','metro','noises','spotify'].map((item) => (
                   <Menu.Item
@@ -84,17 +96,18 @@ export default class App extends Component {
                     content={item.charAt(0).toUpperCase() + item.slice(1)}
                     active={this.state.activeItem === item}
                     onClick={this.handleItemClick}
+                    aria-label={`Navigate to ${item}`}
                   />
                 ))}
               </Menu>
               <Divider />
-            </div>
+            </nav>
             <Routes>
               <Route path="/blog" element={<Blog type="blog" />} />
               <Route path="/reviews" element={<Blog type="review" />} />
               <Route path="/postboxes" element={<PhotoGrid data={data} />} />
               <Route path="/metro" element={<TrainComponent data={traindata} />} />
-              <Route path="/noises" element={<Sound />} />
+              <Route path="/noises" element={<Blog type="noises" />} />
               <Route path="/spotify" element={<MusicStatComponent />} />
 
               {/* Single post/item route */}

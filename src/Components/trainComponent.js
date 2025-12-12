@@ -1,5 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Container, Button, Icon, Image } from "semantic-ui-react";
+import { TRAIN_VISIBLE_DESKTOP, TRAIN_VISIBLE_MOBILE, TRAIN_MOBILE_BREAKPOINT } from "../utils/constants.js";
+import { debounce } from "../utils/debounce.js";
 
 export default function TrainComponent({ data }) {
   const [start, setStart] = useState(0);
@@ -8,26 +10,33 @@ export default function TrainComponent({ data }) {
   const containerRef = useRef();
   
   const [visible, setVisible] = useState(
-    typeof window !== "undefined" && window.innerWidth < 768 ? 4 : 6);
+    typeof window !== "undefined" && window.innerWidth < TRAIN_MOBILE_BREAKPOINT ? TRAIN_VISIBLE_MOBILE : TRAIN_VISIBLE_DESKTOP);
+    
+    // Debounced resize handler for better performance
+    const handleResize = useMemo(
+      () => debounce(() => {
+        setVisible(window.innerWidth < TRAIN_MOBILE_BREAKPOINT ? TRAIN_VISIBLE_MOBILE : TRAIN_VISIBLE_DESKTOP);
+      }, 150),
+      []
+    );
     
     useEffect(() => {
-      const handleResize = () => {
-        setVisible(window.innerWidth < 768 ? 4 : 6);
-      };
-      
       window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        handleResize.cancel?.();
+      };
+    }, [handleResize]);
     
-    const goLeft = () => setStart((s) => (s - 1 + data.length) % data.length);
-    const goRight = () => setStart((s) => (s + 1) % data.length);
+    const goLeft = useCallback(() => setStart((s) => (s - 1 + data.length) % data.length), [data.length]);
+    const goRight = useCallback(() => setStart((s) => (s + 1) % data.length), [data.length]);
     
-    const handleDragStart = (clientX) => {
+    const handleDragStart = useCallback((clientX) => {
       setIsDragging(true);
       setDragStartX(clientX);
-    };
+    }, []);
     
-    const handleDragMove = (clientX) => {
+    const handleDragMove = useCallback((clientX) => {
       if (!isDragging) return;
       const diff = dragStartX - clientX;
       if (diff > 50) {
@@ -37,26 +46,35 @@ export default function TrainComponent({ data }) {
         goLeft();
         setIsDragging(false);
       }
-    };
+    }, [isDragging, dragStartX, goLeft, goRight]);
     
-    const handleDragEnd = () => setIsDragging(false);
+    const handleDragEnd = useCallback(() => setIsDragging(false), []);
+    
+    const handleKeyDown = useCallback((e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goLeft();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goRight();
+      }
+    }, [goLeft, goRight]);
     
     const slideWidth = 100 / visible;
     
     return (
       <Container
       textAlign="center"
-      className="noselect"
-      style={{ marginTop: "1rem", overflow: "hidden" }}
+      className="noselect train-container"
+      role="region"
+      aria-label="Photo gallery carousel"
       >
       <div
       ref={containerRef}
+      className={`train-slider ${isDragging ? 'dragging' : ''}`}
       style={{
-        display: "flex",
         width: `${(data.length * 100) / visible}%`,
         transform: `translateX(-${start * slideWidth}%)`,
-        transition: "transform 0.2s ease-out",
-        cursor: isDragging ? "grabbing" : "grab",
       }}
       onMouseDown={(e) => handleDragStart(e.clientX)}
       onMouseMove={(e) => handleDragMove(e.clientX)}
@@ -65,32 +83,25 @@ export default function TrainComponent({ data }) {
       onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
       onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
       onTouchEnd={handleDragEnd}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="group"
+      aria-label={`Slide ${start + 1} of ${data.length}`}
       >
       {data.map((item, i) => (
         <div
         key={i}
+        className="train-slide"
         style={{
           flex: `0 0 ${slideWidth}%`,
-          padding: "0 8px",
-          boxSizing: "border-box",
         }}
         >
-          <div
-          style={{
-            width: "100%",
-            aspectRatio: "9/16",
-            position: "relative",
-          }}
-          >
+          <div className="train-image-wrapper">
             <Image
             src={item.Image}
             alt={`${item.City.English} ${item.year}`}
             onDragStart={(e) => e.preventDefault()}
-            style={{ width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              pointerEvents: "none",
-              userSelect: "none", }}
+            className="train-image"
               />
             <div className="overlayCityName">
               <div>{item.City.English}</div>
@@ -101,35 +112,42 @@ export default function TrainComponent({ data }) {
         ))}
         </div>
         
-        <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "20px",
-          marginTop: "2rem",
-        }}
+        <div className="train-pagination" role="group" aria-label="Carousel navigation">
+        <Button 
+          icon 
+          onClick={goLeft}
+          aria-label="Previous slide"
+          tabIndex={0}
         >
-        <Button icon onClick={goLeft}>
         <Icon name="angle left" />
         </Button>
         
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className="train-pagination-dots" role="tablist" aria-label="Slide indicators">
         {Array.from({ length: data.length }).map((_, i) => (
           <div
           key={i}
-          style={{
-            width: "10px",
-            height: "10px",
-            borderRadius: "50%",
-            background: "black",
-            opacity: i === start ? 1 : 0.3,
+          className={`train-pagination-dot ${i === start ? 'active' : ''}`}
+          role="tab"
+          aria-selected={i === start}
+          aria-label={`Go to slide ${i + 1}`}
+          tabIndex={i === start ? 0 : -1}
+          onClick={() => setStart(i)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setStart(i);
+            }
           }}
           />
         ))}
         </div>
         
-        <Button icon onClick={goRight}>
+        <Button 
+          icon 
+          onClick={goRight}
+          aria-label="Next slide"
+          tabIndex={0}
+        >
         <Icon name="angle right" />
         </Button>
         </div>

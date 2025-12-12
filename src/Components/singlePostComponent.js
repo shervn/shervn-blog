@@ -1,59 +1,95 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Header, Image, Divider } from 'semantic-ui-react';
+import { Container, Header, Image, Divider, Loader, Placeholder } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
-import { getImagePath, renderBoldQuotes } from '../utils.js';
+import { Helmet } from 'react-helmet-async';
+import { getImagePath, renderBoldQuotes, loadData } from '../utils/general.js';
+
+// Skeleton loader component
+const PostSkeleton = () => (
+  <Container text>
+    <Placeholder>
+      <Placeholder.Header>
+        <Placeholder.Line length="very long" />
+        <Placeholder.Line length="medium" />
+      </Placeholder.Header>
+      <Placeholder.Paragraph>
+        <Placeholder.Line length="full" />
+        <Placeholder.Line length="full" />
+        <Placeholder.Line length="full" />
+        <Placeholder.Line length="three quarters" />
+      </Placeholder.Paragraph>
+    </Placeholder>
+    <Loader active inline="centered" />
+  </Container>
+);
 
 const SinglePost = ({ type, uuid }) => {
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!type || !uuid) return;
 
-    fetch(`/data/${type}.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        const foundPost = data.find((item) => item.uuid === uuid);
-        if (foundPost) {
-          setPost(foundPost);
-        } else {
-          navigate('/'); // go home if not found
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to load post data:', err);
-        navigate('/'); // redirect on fetch error
-      });
+    loadData((data) => {
+      const foundPost = data.find((item) => item.uuid === uuid);
+      if (foundPost) {
+        setPost(foundPost);
+      } else {
+        navigate('/');
+      }
+      setLoading(false);
+    }, type);
   }, [type, uuid, navigate]);
 
+  if (loading) return <PostSkeleton />;
   if (!post) return null;
 
   return (
-    <Container text style={{ marginTop: '2rem' }} className={post.className}>
-      {/* Title */}
-      <Header as="h2" content={post.title} className={post.className} />
-
+    <>
+      <Helmet>
+        <title>{post.title} | shervn</title>
+        <meta name="description" content={post.body?.substring(0, 160) || `Read ${post.title} on shervn's blog`} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.body?.substring(0, 160) || ''} />
+        {post.image && <meta property="og:image" content={getImagePath(post.image, 'Misc')} />}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "datePublished": post.date,
+            "author": {
+              "@type": "Person",
+              "name": "Shervin Dehghani"
+            }
+          })}
+        </script>
+      </Helmet>
+      <Container text className={`single-post-container ${post.className}`} role="article">
+        {/* Title */}
+        <Header as="h2" content={post.title} className={post.className} />
+      {/* Date */}
+      {post.date && (
+        <Header as="h4" content={post.date} className="dateField single-post-date" />
+      )}
       {/* Image */}
       {post.image && (
         <Image
-          src={getImagePath(post.image)}
+          src={getImagePath(post.image, 'Misc')}
           floated="left"
           size="medium"
-          style={{ marginRight: '1rem', marginBottom: '1rem' }}
+          className="single-post-image"
+          alt={post.title || 'Post image'}
         />
       )}
 
       {/* Body */}
       {post.body.split('\n').map((line, idx) => (
-        <p key={idx} className={post.className} style={{ lineHeight: '1.6rem' }}>
+        <p key={idx} className={`${post.className} single-post-paragraph`}>
           {renderBoldQuotes(line)}
         </p>
       ))}
-
-      {/* Date */}
-      {post.date && (
-        <Header as="h4" content={post.date} className="dateField" style={{ marginTop: '2rem' }} />
-      )}
 
       {/* Sound iframe (if noises type) */}
       {type === 'noises' && post.soundCloudLink && (
@@ -64,12 +100,13 @@ const SinglePost = ({ type, uuid }) => {
           allow="autoplay"
           src={post.soundCloudLink}
           frameBorder="0"
-          style={{ marginTop: '1rem' }}
+          className="single-post-iframe"
         />
       )}
 
       <Divider />
     </Container>
+    </>
   );
 };
 

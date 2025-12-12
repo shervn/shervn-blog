@@ -2,11 +2,18 @@
 import { comments as allComments } from "../assets/postboxdata.js";
 import { useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Grid, Image, Container } from "semantic-ui-react";
-import { renderBoldQuotes } from '../utils.js';
+import { renderBoldQuotes } from '../utils/general.js';
+import {
+  POSTBOX_INITIAL_VISIBLE,
+  POSTBOX_LOAD_MORE_COUNT,
+  POSTBOX_NULL_FORCE_COUNT,
+  POSTBOX_NULL_RANDOM_CHANCE,
+  POSTBOX_MAX_COMMENT_LINES
+} from '../utils/constants.js';
 
 export default function PhotoGrid({ data }) {
   const [items, setItems] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(10);
+  const [visibleCount, setVisibleCount] = useState(POSTBOX_INITIAL_VISIBLE);
   const [windowCount, setWindowCount] = useState(0); // counts items since last null
   const loadMoreRef = useRef(null);
 
@@ -37,11 +44,11 @@ export default function PhotoGrid({ data }) {
       result.push(item);
       count++;
 
-      // force a null if 6 items have passed without one
-      if (count >= 5) {
+      // force a null if threshold items have passed without one
+      if (count >= POSTBOX_NULL_FORCE_COUNT) {
         result.push(null);
         count = 0;
-      } else if (index < items.length - 1 && Math.random() < 0.25) {
+      } else if (index < items.length - 1 && Math.random() < POSTBOX_NULL_RANDOM_CHANCE) {
         // random null insertion
         result.push(null);
         count = 0;
@@ -86,7 +93,7 @@ export default function PhotoGrid({ data }) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setVisibleCount((prev) => Math.min(prev + 10, items.length));
+          setVisibleCount((prev) => Math.min(prev + POSTBOX_LOAD_MORE_COUNT, items.length));
         }
       },
       { rootMargin: "200px" }
@@ -98,28 +105,24 @@ export default function PhotoGrid({ data }) {
   if (items.length === 0) {
     return (
       <Container className="instaContainer">
-        <div style={{ padding: 20 }}>No photos available.</div>
+        <div className="postbox-no-photos">No photos available.</div>
       </Container>
     );
   }
 
   return (
-    <Container className="instaContainer" style={{ userSelect: "none" }}>
-      <Grid doubling stackable columns={3}>
+    <Container className="instaContainer postbox-container" role="main" aria-label="Photo grid">
+      <Grid doubling stackable columns={3} role="grid" aria-label="Photo gallery grid">
         {items.slice(0, visibleCount).map((item, i) => (
           <Grid.Column key={i}>
             {item ? (
-              <div style={{ position: "relative" }}>
+              <div className="postbox-image-wrapper">
                 <Image
                   src={item.src}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    objectFit: "cover",
-                    pointerEvents: "none",
-                    userSelect: "none",
-                  }}
+                  className="postbox-image"
                   draggable={false}
+                  alt={`${item.cityEn} ${item.cityFa}`}
+                  loading="lazy"
                 />
                 <div className="overlayCityName">
                   <div>{item.cityEn}</div>
@@ -136,20 +139,23 @@ export default function PhotoGrid({ data }) {
 
                   const words = comment.split(" ");
                   const lines =
-                    words.length <= 3
+                    words.length <= POSTBOX_MAX_COMMENT_LINES
                       ? words
                       : [words[0], words[1], words.slice(2).join(" ")];
 
-                  return lines.map((line, idx) => (
-                    <p
-                      key={idx}
-                      style={{
-                        textAlign: Math.random() < 0.5 ? "left" : "right",
-                      }}
-                    >
-                      {renderBoldQuotes(line)}
-                    </p>
-                  ));
+                  // Use placeholderIndex as seed for consistent alignment
+                  const seed = placeholderIndex;
+                  return lines.map((line, idx) => {
+                    const textAlign = (seed + idx) % 2 === 0 ? "right" : "left";
+                    return (
+                      <p
+                        key={idx}
+                        className={`postbox-comment-text ${textAlign === "right" ? "right" : ""}`}
+                      >
+                        {renderBoldQuotes(line)}
+                      </p>
+                    );
+                  });
                 })()}
               </div>
             )}
@@ -157,7 +163,7 @@ export default function PhotoGrid({ data }) {
         ))}
       </Grid>
 
-      {visibleCount < items.length && <div ref={loadMoreRef} style={{ height: 1 }} />}
+      {visibleCount < items.length && <div ref={loadMoreRef} className="postbox-load-more" />}
     </Container>
   );
 }
