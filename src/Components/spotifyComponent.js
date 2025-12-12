@@ -10,7 +10,7 @@ import {
 import {
   SPOTIFY_REFRESH_INTERVAL,
   SPOTIFY_PROGRESS_UPDATE_INTERVAL,
-  SPOTIFY_TRACK_CHECK_DELAY
+  SPOTIFY_NEW_TRACK_CHECK_DELAY
 } from '../utils/constants.js';
 
 export function MusicPlayer() {
@@ -19,11 +19,13 @@ export function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showButtons, setShowButtons] = useState(true);
+  const [userPaused, setUserPaused] = useState(false);
   const intervalRef = useRef(null);
   const refreshRef = useRef(null);
   const prevButtonRef = useRef(null);
   const playPauseButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
+  const isInitialLoad = useRef(true);
 
   const fetchData = async () => {
     try {
@@ -35,6 +37,17 @@ export function MusicPlayer() {
       ]);
 
       setSpotifyTrack(spotifyRes[0] || null);
+      
+      // On initial load, if music is paused, don't allow play (user didn't pause it)
+      if (isInitialLoad.current && currentRes) {
+        setUserPaused(false); // Originally paused or playing, user didn't pause it
+        isInitialLoad.current = false;
+      } else if (currentRes && currentRes.is_playing) {
+        // If music starts playing automatically (e.g., new track), reset userPaused
+        // But only if it wasn't already false (to avoid resetting after user clicks play)
+        setUserPaused(prev => prev && false);
+      }
+      
       setCurrentlyPlaying(currentRes);
 
     } catch (err) {
@@ -67,7 +80,7 @@ export function MusicPlayer() {
             } catch (err) {
               console.error(err);
             }
-          }, SPOTIFY_TRACK_CHECK_DELAY);
+          }, SPOTIFY_NEW_TRACK_CHECK_DELAY);
         }
         return next;
       });
@@ -93,6 +106,16 @@ export function MusicPlayer() {
     try {
       const data = await controlPlayer(action);
       setCurrentlyPlaying(data);
+      
+      // Track if user manually paused or played
+      if (action === 'pause') {
+        setUserPaused(true);
+      } else if (action === 'play') {
+        setUserPaused(false);
+      } else if (action === 'previous' || action === 'next') {
+        // When navigating to prev/next track, disable play (new track wasn't paused by user)
+        setUserPaused(false);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -163,6 +186,8 @@ export function MusicPlayer() {
             onClick={e => handlePlayerAction(e, 'previous')}
             aria-label="Previous track"
             type="button"
+            disabled={!currentlyPlaying?.is_playing && !userPaused}
+            style={!currentlyPlaying?.is_playing && !userPaused ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
           >
             <Icon name='backward' />
           </button>
@@ -177,7 +202,7 @@ export function MusicPlayer() {
             >
               <Icon name='pause' />
             </button>
-          ) : (
+          ) : userPaused ? (
             <button
               ref={playPauseButtonRef}
               className="always-visible"
@@ -187,7 +212,18 @@ export function MusicPlayer() {
             >
               <Icon name='play' />
             </button>
-)}
+          ) : (
+            <button
+              ref={playPauseButtonRef}
+              className="always-visible"
+              disabled
+              aria-label="Play (disabled - music was originally paused)"
+              type="button"
+              style={{ opacity: 0.5, cursor: 'not-allowed' }}
+            >
+              <Icon name='play' />
+            </button>
+          )}
 
 <button
   ref={nextButtonRef}
@@ -195,6 +231,8 @@ export function MusicPlayer() {
   onClick={e => handlePlayerAction(e, 'next')}
   aria-label="Next track"
   type="button"
+  disabled={!currentlyPlaying?.is_playing && !userPaused}
+  style={!currentlyPlaying?.is_playing && !userPaused ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
 >
   <Icon name='forward' />
 </button>

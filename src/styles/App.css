@@ -595,14 +595,12 @@ button.always-visible {
   opacity: 1;
   box-shadow: none;
   border: none;
-  color: var(--color-black-80);
-  cursor: pointer;
+  color: var(--color-black-70);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transform: scale(1.1);
   transition: transform var(--transition-normal);
-  padding: 0;
   margin: 0;
 }
 
@@ -610,7 +608,7 @@ button.always-visible .icon,
 .ui.button.always-visible .icon {
   border: none;
   margin: 0;
-  color: var(--color-black-80);
+  color: var(--color-black-70);
 }
 
 .always-visible:hover {
@@ -716,6 +714,7 @@ button.always-visible .icon,
   opacity: 1;
 }
 
+
 .blog-pagination-button {
   background: transparent;
   border: none;
@@ -724,7 +723,7 @@ button.always-visible .icon,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: inherit;
+  color: var(--color-black-70);
 }
 
 .blog-pagination-button:hover {
@@ -887,6 +886,12 @@ h4.ui.header.dateField.single-post-date {
   .ui.menu.stackable.secondary .item.menuFarsi {
     justify-content: left;
     padding-left: var(--spacing-lg) !important;
+  }
+
+  .single-post-image {
+    max-width: 150px !important;
+    width: 150px !important;
+    height: auto !important;
   }
 
 

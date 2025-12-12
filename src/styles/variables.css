@@ -4,6 +4,8 @@
 :root {
   /* Colors */
   --color-black: #000;
+  --color-black-60: #606060;
+  --color-black-70: #2e2b2b;
   --color-white: #fff;
   --color-gray: #808080;
   --color-dark-gray: #232323;
