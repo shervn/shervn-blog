@@ -2,13 +2,27 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Container, Icon, Image } from "semantic-ui-react";
 import { TRAIN_VISIBLE_DESKTOP, TRAIN_VISIBLE_MOBILE, TRAIN_MOBILE_BREAKPOINT } from "../utils/constants.js";
 import { debounce } from "../utils/debounce.js";
-import { traindata } from "../assets/traindata.js";
 
 export default function TrainComponent() {
   const [start, setStart] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
+  const [traindata, setTraindata] = useState([]);
   const containerRef = useRef();
+
+  // Load data from JSON file
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await fetch(`${process.env.PUBLIC_URL}/data/traindata.json`);
+        const jsonData = await response.json();
+        setTraindata(jsonData);
+      } catch (error) {
+        console.error('Error loading train data:', error);
+      }
+    };
+    loadData();
+  }, []);
   
   const [visible, setVisible] = useState(
     typeof window !== "undefined" && window.innerWidth < TRAIN_MOBILE_BREAKPOINT ? TRAIN_VISIBLE_MOBILE : TRAIN_VISIBLE_DESKTOP);
@@ -29,8 +43,8 @@ export default function TrainComponent() {
       };
     }, [handleResize]);
     
-    const goLeft = useCallback(() => setStart((s) => (s - 1 + traindata.length) % traindata.length), []);
-    const goRight = useCallback(() => setStart((s) => (s + 1) % traindata.length), []);
+    const goLeft = useCallback(() => setStart((s) => (s - 1 + traindata.length) % traindata.length), [traindata.length]);
+    const goRight = useCallback(() => setStart((s) => (s + 1) % traindata.length), [traindata.length]);
     
     const handleDragStart = useCallback((clientX) => {
       setIsDragging(true);
@@ -99,14 +113,14 @@ export default function TrainComponent() {
         >
           <div className="train-image-wrapper">
             <Image
-            src={item.Image}
-            alt={`${item.City.English} ${item.year}`}
+            src={item.path}
+            alt={`${item.city.en}`}
             onDragStart={(e) => e.preventDefault()}
             className="train-image"
               />
             <div className="overlayCityName">
-              <div>{item.City.English}</div>
-              <div>{item.City.Farsi}</div>
+              <div>{item.city.en}</div>
+              <div>{item.city.fa}</div>
             </div>
           </div>
         </div>

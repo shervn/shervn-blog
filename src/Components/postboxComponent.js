@@ -1,5 +1,4 @@
 
-import { comments as allComments } from "../assets/postboxdata.js";
 import { useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Grid, Image, Container } from "semantic-ui-react";
 import { renderBoldQuotes } from '../utils/general.js';
@@ -11,23 +10,47 @@ import {
   POSTBOX_MAX_COMMENT_LINES
 } from '../utils/constants.js';
 
-import { data } from "../assets/postboxdata.js";
+import AnimatedStat from "./animatedStat.js";
 
 export default function PhotoGrid() {
   const [items, setItems] = useState([]);
   const [visibleCount, setVisibleCount] = useState(POSTBOX_INITIAL_VISIBLE);
   const [windowCount, setWindowCount] = useState(0); // counts items since last null
+  const [data, setData] = useState([]);
+  const [allComments, setAllComments] = useState([]);
   const loadMoreRef = useRef(null);
+
+  // Load data from JSON files
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [dataRes, commentsRes] = await Promise.all([
+          fetch(`${process.env.PUBLIC_URL}/data/postboxdata.json`),
+          fetch(`${process.env.PUBLIC_URL}/data/comments.json`)
+        ]);
+        const [dataJson, commentsJson] = await Promise.all([
+          dataRes.json(),
+          commentsRes.json()
+        ]);
+        setData(dataJson);
+        setAllComments(commentsJson);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+    loadData();
+  }, []);
 
   // Pre-shuffle comments once
   const shuffledComments = useMemo(() => {
+    if (allComments.length === 0) return [];
     const arr = [...allComments];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
-  }, []);
+  }, [allComments]);
 
   const shuffleArray = useCallback((array) => {
     const newArr = [...array];
@@ -60,34 +83,25 @@ export default function PhotoGrid() {
     return { result, windowCount: count };
   }, []);
 
-  // Append only new items when data changes
+  // Process data when it's loaded
   useEffect(() => {
-    if (!Array.isArray(data)) return;
+    if (!Array.isArray(data) || data.length === 0) return;
 
-    const flat = data.flatMap((section) => {
-      const photos = section.Photos || [];
-      const cityEn = section.City?.English || "";
-      const cityFa = section.City?.Farsi || "";
+    const flat = data.map((item) => ({
+      src: item.path,
+      cityEn: item.city?.en || "",
+      cityFa: item.city?.fa || "",
+    }));
 
-      return photos.map((src) => ({
-        src,
-        cityEn,
-        cityFa,
-      }));
-    });
-
-    if (flat.length === 0) return;
-
-    const newItems = flat.slice(items.length); // only new
-    const shuffledNewItems = shuffleArray(newItems);
+    const shuffledNewItems = shuffleArray(flat);
     const { result: processedNewItems, windowCount: newWindowCount } = insertEmptySquares(
       shuffledNewItems,
-      windowCount
+      0
     );
 
-    setItems((prev) => [...prev, ...processedNewItems]);
+    setItems(processedNewItems);
     setWindowCount(newWindowCount);
-  }, [items.length, shuffleArray, insertEmptySquares, windowCount]);
+  }, [data, shuffleArray, insertEmptySquares]);
 
   // Infinite scroll
   useEffect(() => {
@@ -164,8 +178,27 @@ export default function PhotoGrid() {
           </Grid.Column>
         ))}
       </Grid>
-
       {visibleCount < items.length && <div ref={loadMoreRef} className="postbox-load-more" />}
+      <Grid columns={3} divided >
+        <Grid.Column textAlign="center">
+          <AnimatedStat
+            value={new Set(items.filter(Boolean).map(item => item.cityEn)).size}
+            text="Cities"
+          />
+        </Grid.Column>
+        <Grid.Column textAlign="center">
+          <AnimatedStat
+            value={items.filter(Boolean).length}
+            text="Postboxes"
+          />
+        </Grid.Column>
+        <Grid.Column textAlign="center">
+          <AnimatedStat
+            value={-1}
+            text="Stories"
+          />
+        </Grid.Column>
+      </Grid>
     </Container>
   );
 }
