@@ -4,7 +4,6 @@ on:
     paths:
       - 'blog/src/**'
       - 'blog/public/**'
-      - 'blog/package.json'
       
 jobs:
   run:
