@@ -1,6 +1,6 @@
 
 import { useMemo, useCallback, useState, useEffect, useRef } from "react";
-import { Grid, Image, Container, Loader } from "semantic-ui-react";
+import { Grid, Image, Container, Loader, Divider } from "semantic-ui-react";
 import { renderBoldQuotes, getS3Path, loadData } from '../utils/general.js';
 import {
   POSTBOX_INITIAL_VISIBLE,
@@ -188,19 +188,47 @@ export default function PhotoGrid() {
         <Grid.Column textAlign="center">
           <AnimatedStat
             value={new Set(items.filter(Boolean).map(item => item.cityEn)).size}
-            text="Cities\شهر"
+            text="Cities"
+            isFarsi={false}
           />
         </Grid.Column>
         <Grid.Column textAlign="center">
           <AnimatedStat
             value={items.filter(Boolean).length}
-            text="Postboxes\صندوق"
+            text="Postboxes"
+            isFarsi={false}
           />
         </Grid.Column>
         <Grid.Column textAlign="center">
           <AnimatedStat
             value={-1}
-            text="Stories\روایت"
+            text="Stories"
+            isFarsi={false}
+          />
+        </Grid.Column>
+      </Grid>
+      <Divider />
+
+      <Grid columns={3} divided >
+        <Grid.Column textAlign="center">
+          <AnimatedStat
+            value={-1}
+            text="روایت"
+            isFarsi={true}
+          />
+        </Grid.Column>
+        <Grid.Column textAlign="center">
+          <AnimatedStat
+            value={items.filter(Boolean).length}
+            text="صندوق"
+            isFarsi={true}
+          />
+        </Grid.Column>
+        <Grid.Column textAlign="center">
+          <AnimatedStat
+            value={new Set(items.filter(Boolean).map(item => item.cityEn)).size}
+            text="شهر"
+            isFarsi={true}
           />
         </Grid.Column>
       </Grid>

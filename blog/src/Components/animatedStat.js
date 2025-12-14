@@ -4,7 +4,8 @@ import { Statistic } from "semantic-ui-react";
 export default function AnimatedStat({
   value,
   text,
-  duration = 1500
+  duration = 1500,
+  isFarsi = false
 }) {
   const [displayValue, setDisplayValue] = useState(0);
   const [showInfinity, setShowInfinity] = useState(false);
@@ -44,7 +45,6 @@ export default function AnimatedStat({
         } else {
           setDisplayValue(target);
           if (value === -1) {
-            // immediately switch to infinity (no fade)
             setShowInfinity(true);
           }
         }
@@ -99,23 +99,21 @@ export default function AnimatedStat({
   };
 
   const numberText = displayValue.toLocaleString('en-US');
-  const numberFarsiText = toFarsiDigits(numberText);
+  const displayNumber = isFarsi ? toFarsiDigits(numberText) : numberText;
+  const fontFamily = isFarsi ? 'farsi' : "'Tahoma', sans-serif";
 
   return (
     <div ref={statRef}>
       <Statistic size="small">
-        <Statistic.Value style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', whiteSpace: 'nowrap' }}>
+        <Statistic.Value style={{display: 'flex', alignItems: 'center', justifyContent: 'center', whiteSpace: 'nowrap' }}>
           {value === -1 ? (
             <>{showInfinity ? (
               <span style={{ fontFamily: 'sans-serif' }}>∞</span>
             ) : (
-              <span style={{ fontFamily: 'sans-serif' }}>{numberText}</span>
+              <span style={{ fontFamily }}>{displayNumber}</span>
             )}</>
           ) : (
-            <>
-              <span style={{ fontFamily: "'Tahoma', sans-serif" }}>{numberText}</span>
-              <span style={{ fontFamily: 'farsi' }}>{numberFarsiText}</span>
-            </>
+            <span style={{ fontFamily }}>{displayNumber}</span>
           )}
         </Statistic.Value>
         <Statistic.Label style={{ fontFamily: "farsi" }}>{text}</Statistic.Label>
