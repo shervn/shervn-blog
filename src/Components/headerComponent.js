@@ -39,7 +39,7 @@ const HeaderImages = () => {
           <img
             key={index}
             className={`headerImage header-image-item ${activeIndices.has(index) ? 'active' : ''}`}
-            src={getImagePath(src, 'Header')}
+            src={getImagePath(src, 'header')}
             alt={`Header ${index + 1}`}
           />
         ))}
@@ -67,17 +67,17 @@ export default function HeaderComponent() {
         className="header-modal"
       >
         <Modal.Content onClick={() => setModalOpen(false)}>
-          <img src={getImagePath('fozouni.jpg', 'Misc')} className="header-modal-image" alt="Fozouni" />
+          <img src={getImagePath('fozouni.jpg', 'header')} className="header-modal-image" alt="Fozouni" />
         </Modal.Content>
       </Modal>
 
       <div className="profile-row">
-        <img src={getImagePath('blog_profile.png', 'Misc')} id="profilepix" className="ui tiny circular image" alt="Profile" />
+        <img src={getImagePath('profile.png', 'Misc')} id="profilepix" className="ui tiny circular image" alt="Profile" />
         <div className="profile-column">
           <img
             alt='asterisk'
             onClick={() => setModalOpen(true)}
-            src={getImagePath('asterrisk.png', 'Misc')}
+            src={getImagePath('asterrisk.png', 'header')}
             className='asterisk-trigger rotate'
           />
           <Header className='headerText' as='h2' content={metadata.name} subheader={metadata.subtitle} />

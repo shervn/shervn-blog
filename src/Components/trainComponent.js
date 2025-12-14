@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Container, Icon, Image } from "semantic-ui-react";
 import { TRAIN_VISIBLE_DESKTOP, TRAIN_VISIBLE_MOBILE, TRAIN_MOBILE_BREAKPOINT } from "../utils/constants.js";
 import { debounce } from "../utils/debounce.js";
+import { getS3Path, loadData } from "../utils/general.js";
 
 export default function TrainComponent() {
   const [start, setStart] = useState(0);
@@ -12,16 +13,9 @@ export default function TrainComponent() {
 
   // Load data from JSON file
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/data/traindata.json`);
-        const jsonData = await response.json();
-        setTraindata(jsonData);
-      } catch (error) {
-        console.error('Error loading train data:', error);
-      }
-    };
-    loadData();
+    loadData((jsonData) => {
+      setTraindata(jsonData);
+    }, 'traindata');
   }, []);
   
   const [visible, setVisible] = useState(
@@ -113,7 +107,7 @@ export default function TrainComponent() {
         >
           <div className="train-image-wrapper">
             <Image
-            src={item.path}
+            src={getS3Path(item.path)}
             alt={`${item.city.en}`}
             onDragStart={(e) => e.preventDefault()}
             className="train-image"

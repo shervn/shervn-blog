@@ -6,7 +6,7 @@ const Footer = () => {
   return(
     
     <div id="footer">
-      <img className='headerImage' id="setarPicture" src={getImagePath("setar.png", "Misc")} alt="Setar" />
+      <img className='headerImage' id="setarPicture" src={getImagePath("setar.png", "header")} alt="Setar" />
       <ul id="footerIcons">
           <li><a href="https://soundcloud.com/shervn"><Icon name='soundcloud' /></a></li>
           <li><a href="https://github.com/shervn/"><Icon name='github' /></a></li>

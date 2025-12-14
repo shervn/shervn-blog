@@ -1,11 +1,24 @@
 export const uid = () => (Math.random() + 1).toString(36).substring(2);
 
+const S3_BASE_URL = 'https://shervn-blog-media.s3.amazonaws.com';
+
 export function getImagePath(image_name, folder){
-  return `${process.env.PUBLIC_URL}/images/${folder}/${image_name}`;
+  // Header images load from local public folder
+  if (folder === 'header') {
+    return `${process.env.PUBLIC_URL || ''}/header/${image_name}`;
+  }
+  return `${S3_BASE_URL}/images/${folder}/${image_name}`;
+}
+
+export function getS3Path(path) {
+  if (!path) return '';
+  // Remove leading slash if present, S3 paths typically don't have it
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  const fullUrl = `${S3_BASE_URL}/${cleanPath}`;
+  return fullUrl;
 }
 
 export function renderBoldQuotes(text){
-    // Split by quoted parts, remove quotes
     const parts = text.split(/"(.*?)"/g);
     return parts.map((part, idx) => 
       idx % 2 === 1 ? <strong key={idx}>{part}</strong> : part
@@ -14,7 +27,8 @@ export function renderBoldQuotes(text){
 
 export const loadData = async (func, path) => {
   try {
-    const response = await fetch(process.env.PUBLIC_URL + `/data/${path}.json`);
+    const url = `${S3_BASE_URL}/data/${path}.json`;
+    const response = await fetch(url);
     if (response.ok) {
       const jsonData = await response.json();
       if (Array.isArray(jsonData)) {
@@ -22,9 +36,11 @@ export const loadData = async (func, path) => {
       }
       func(jsonData);
     } else {
+      console.error('Failed to load data:', response.status, response.statusText);
       func([]);
     }
   } catch (error) {
+    console.error('Error loading data:', error);
     func([]);
   }
 }

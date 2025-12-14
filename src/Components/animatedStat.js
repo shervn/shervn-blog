@@ -4,7 +4,7 @@ import { Statistic } from "semantic-ui-react";
 export default function AnimatedStat({
   value,
   text,
-  duration = 900
+  duration = 1500
 }) {
   const [displayValue, setDisplayValue] = useState(0);
   const statRef = useRef(null);

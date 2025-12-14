@@ -1,7 +1,7 @@
 
 import { useMemo, useCallback, useState, useEffect, useRef } from "react";
-import { Grid, Image, Container } from "semantic-ui-react";
-import { renderBoldQuotes } from '../utils/general.js';
+import { Grid, Image, Container, Loader } from "semantic-ui-react";
+import { renderBoldQuotes, getS3Path, loadData } from '../utils/general.js';
 import {
   POSTBOX_INITIAL_VISIBLE,
   POSTBOX_LOAD_MORE_COUNT,
@@ -15,30 +15,28 @@ import AnimatedStat from "./animatedStat.js";
 export default function PhotoGrid() {
   const [items, setItems] = useState([]);
   const [visibleCount, setVisibleCount] = useState(POSTBOX_INITIAL_VISIBLE);
-  const [windowCount, setWindowCount] = useState(0); // counts items since last null
   const [data, setData] = useState([]);
   const [allComments, setAllComments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const loadMoreRef = useRef(null);
 
-  // Load data from JSON files
   useEffect(() => {
-    const loadData = async () => {
+    async function fetchData() {
       try {
-        const [dataRes, commentsRes] = await Promise.all([
-          fetch(`${process.env.PUBLIC_URL}/data/postboxdata.json`),
-          fetch(`${process.env.PUBLIC_URL}/data/comments.json`)
-        ]);
+        setLoading(true);
         const [dataJson, commentsJson] = await Promise.all([
-          dataRes.json(),
-          commentsRes.json()
+          new Promise((resolve) => loadData((data) => resolve(data), 'postboxdata')),
+          new Promise((resolve) => loadData((data) => resolve(data), 'comments'))
         ]);
         setData(dataJson);
         setAllComments(commentsJson);
-      } catch (error) {
-        console.error('Error loading data:', error);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-    };
-    loadData();
+    }
+    fetchData();
   }, []);
 
   // Pre-shuffle comments once
@@ -88,19 +86,18 @@ export default function PhotoGrid() {
     if (!Array.isArray(data) || data.length === 0) return;
 
     const flat = data.map((item) => ({
-      src: item.path,
+      src: getS3Path(item.path),
       cityEn: item.city?.en || "",
       cityFa: item.city?.fa || "",
     }));
 
     const shuffledNewItems = shuffleArray(flat);
-    const { result: processedNewItems, windowCount: newWindowCount } = insertEmptySquares(
+    const { result: processedNewItems } = insertEmptySquares(
       shuffledNewItems,
       0
     );
 
     setItems(processedNewItems);
-    setWindowCount(newWindowCount);
   }, [data, shuffleArray, insertEmptySquares]);
 
   // Infinite scroll
@@ -117,6 +114,14 @@ export default function PhotoGrid() {
     observer.observe(loadMoreRef.current);
     return () => observer.disconnect();
   }, [items.length]);
+
+  if (loading) {
+    return (
+      <Container className="instaContainer">
+        <Loader active indeterminate inline="centered" size="small" />
+      </Container>
+    );
+  }
 
   if (items.length === 0) {
     return (
