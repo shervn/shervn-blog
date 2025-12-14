@@ -48,7 +48,7 @@ const Blog = ({ type = "blog" }) => {
         navigate(`/${routePath}/page/${validPage}`, { replace: true });
       }
     }
-  }, [page, totalPages, isLoading, type, navigate, currentPage]);
+  }, [page, totalPages, isLoading, type, navigate, currentPage, routePath]);
   
   // Navigate to page URL to trigger route transition
   // Always use page number in URL, even for page 1
