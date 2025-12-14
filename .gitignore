@@ -11,3 +11,4 @@ node_modules/
 **/.serverless/
 **/package-lock.json
 /media
+blog/public/.DS_Store

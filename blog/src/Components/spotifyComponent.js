@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Icon, Segment, Grid, Loader } from 'semantic-ui-react';
 import { timeAgo } from '../utils/general.js';
-import waveGif from '../assets/wave.gif';
 import {
   getToggleState,
   getRecentTracks,
@@ -190,7 +189,7 @@ export function MusicPlayer() {
         <div className="spotify-wave-gif-container">
           <img 
             ref={gifRef}
-            src={waveGif} 
+            src="/wave.gif" 
             alt="" 
             className="spotify-wave-gif"
             rel="animated_src"
