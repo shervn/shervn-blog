@@ -57,7 +57,9 @@ async function uploadImageToS3(buffer, folder, fileName) {
   };
   
   await s3.putObject(params).promise();
-  return `/${key}`;
+  // Return just the filename for posts (getImagePath adds folder prefix)
+  // Return full path for postbox/train (getS3Path expects full path)
+  return folder === 'Misc' ? fileName : `/${key}`;
 }
 
 module.exports = {

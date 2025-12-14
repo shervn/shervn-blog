@@ -8,8 +8,8 @@ const DATA_PREFIX = 'data/';
 // Read JSON from S3
 async function readJSON(fileName, defaultValue = { state: false }) {
   try {
-    const command = new GetObjectCommand({
-      Bucket: config.BUCKET,
+    const command = new GetObjectCommand({ 
+      Bucket: config.BUCKET, 
       Key: `${DATA_PREFIX}${fileName}.json`
     });
     const response = await s3Client.send(command);
@@ -18,7 +18,7 @@ async function readJSON(fileName, defaultValue = { state: false }) {
   } catch (err) {
     if (err.name === 'NoSuchKey') {
       return defaultValue;
-    }
+  }
     throw err;
   }
 }

@@ -1,4 +1,5 @@
 const s3Service = require('../services/s3Service');
+const cloudfrontService = require('../services/cloudfrontService');
 
 // Toggle state
 async function toggleState() {
@@ -7,6 +8,9 @@ async function toggleState() {
   const newState = !currentState;
   
   await s3Service.writeJSON('toggleState', { state: newState });
+  
+  // Invalidate CloudFront cache
+  await cloudfrontService.invalidateDataFiles();
   
   return `✅ State toggled!\n\n*Previous state:* ${currentState ? 'ON' : 'OFF'}\n*New state:* ${newState ? 'ON' : 'OFF'}`;
 }
