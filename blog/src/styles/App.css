@@ -164,8 +164,9 @@ p.farsiPost,
   line-height: var(--line-height-base);
 }
 
+*::selection,
 .farsiPost::selection {
-  background: var(--color-selection);
+  background: var(--color-bg-band);
 }
 
 .ui.header.farsiPost {
@@ -580,8 +581,35 @@ p.farsiPost,
   text-align: center;
 }
 
-.musiclistening .spotify-listened-at {
-  margin-top: var(--spacing-md);
+
+
+/* Animated wavy GIF above "currently playing" text */
+.spotify-wave-gif-container {
+  width: 200px;
+  height: 20px;
+  display: block;
+  margin: 1rem auto 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.spotify-wave-gif-container img,
+.spotify-wave-gif-container .jsgif,
+.spotify-wave-gif-container .jsgif canvas {
+  width: 200px !important;
+  height: 20px !important;
+  max-width: 200px !important;
+  max-height: 20px !important;
+  object-fit: contain;
+  display: block;
+  margin: 0;
+}
+
+/* Hide libgif.js progress bar (red loading indicator) */
+.spotify-wave-gif-container .jsgif canvas + div,
+.spotify-wave-gif-container .jsgif > div[style*="background"],
+.spotify-wave-gif-container .jsgif > div[style*="rgba(255,0,22"] {
+  display: none !important;
 }
 
 .spotify-player-row .spotify-start-stop-time {
@@ -644,8 +672,11 @@ button.always-visible {
   align-items: center;
   justify-content: center;
   transform: scale(1.1);
-  transition: transform var(--transition-normal);
+  transition: all var(--transition-normal);
   margin: 0;
+  border-radius: 2px;
+  padding: 4px;
+  cursor: pointer;
 }
 
 button.always-visible .icon,
@@ -655,8 +686,17 @@ button.always-visible .icon,
   color: var(--color-black-70);
 }
 
-.always-visible:hover {
-  transform: scale(1.2);
+.always-visible:hover:not(:disabled) {
+  transform: scale(1.02);
+  background-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.always-visible:active:not(:disabled) {
+  transform: scale(1.02);
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 /* ============================================
@@ -763,15 +803,27 @@ button.always-visible .icon,
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: var(--spacing-sm);
+  padding: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--color-black-70);
+  transform: scale(1.1);
+  transition: all var(--transition-normal);
+  border-radius: 2px;
 }
 
-.blog-pagination-button:hover {
-  opacity: 0.7;
+.blog-pagination-button:hover:not(:disabled) {
+  transform: scale(1.02);
+  background-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.blog-pagination-button:active:not(:disabled) {
+  transform: scale(1.02);
+  background-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 /* ============================================
@@ -1001,6 +1053,11 @@ h4.ui.header.dateField.single-post-date {
 
   .musiclistening p {
     text-align: center;
+  }
+
+  .spotify-wave-gif-container {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .profile-row #profilepix {

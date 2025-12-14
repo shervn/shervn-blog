@@ -88,11 +88,14 @@ export default class App extends Component {
             </nav>
             <RouteTransition>
               <Routes>
-                <Route path="/blog" element={<Blog type="blog" />} />
-                <Route path="/reviews" element={<Blog type="review" />} />
+                <Route path="/blog" element={<Navigate to="/blog/page/1" replace />} />
+                <Route path="/blog/page/:page" element={<Blog type="blog" />} />
+                <Route path="/reviews" element={<Navigate to="/reviews/page/1" replace />} />
+                <Route path="/reviews/page/:page" element={<Blog type="review" />} />
                 <Route path="/postboxes" element={<PhotoGrid/>} />
                 <Route path="/metro" element={<TrainComponent/>} />
-                <Route path="/noises" element={<Blog type="noises" />} />
+                <Route path="/noises" element={<Navigate to="/noises/page/1" replace />} />
+                <Route path="/noises/page/:page" element={<Blog type="noises" />} />
                 <Route path="/spotify" element={<MusicStatComponent />} />
 
                 <Route path="/:type/:uuid" element={<SingleItemWrapper />} />

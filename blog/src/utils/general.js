@@ -19,7 +19,7 @@ export function getS3Path(path) {
 }
 
 export function renderBoldQuotes(text){
-    const parts = text.split(/"(.*?)"/g);
+    const parts = text.split("|");
     return parts.map((part, idx) => 
       idx % 2 === 1 ? <strong key={idx}>{part}</strong> : part
     );

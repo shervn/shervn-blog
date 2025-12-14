@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Icon, Segment, Grid, Loader } from 'semantic-ui-react';
 import { timeAgo } from '../utils/general.js';
+import waveGif from '../assets/wave.gif';
 import {
   getToggleState,
   getRecentTracks,
@@ -26,6 +27,8 @@ export function MusicPlayer() {
   const playPauseButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
   const isInitialLoad = useRef(true);
+  const gifRef = useRef(null);
+  const superGifRef = useRef(null);
 
   const fetchData = async () => {
     try {
@@ -89,6 +92,45 @@ export function MusicPlayer() {
     return () => clearInterval(intervalRef.current);
   }, [currentlyPlaying]);
 
+  // Initialize and control GIF with libgif.js
+  useEffect(() => {
+    if (!gifRef.current || !window.SuperGif) return;
+
+    // Initialize SuperGif if not already initialized
+    if (!superGifRef.current) {
+      superGifRef.current = new window.SuperGif({ 
+        gif: gifRef.current,
+        auto_play: false,
+        draw_while_loading: false,
+        show_progress_bar: false,
+        max_width: 200,
+
+      });
+      superGifRef.current.load(() => {
+        // GIF loaded, control based on playing state
+        if (currentlyPlaying?.is_playing) {
+          superGifRef.current.play();
+        } else {
+          superGifRef.current.pause();
+        }
+      });
+    } else {
+      // Control play/pause based on state
+      if (currentlyPlaying?.is_playing) {
+        superGifRef.current.play();
+      } else {
+        superGifRef.current.pause();
+      }
+    }
+
+    return () => {
+      // Cleanup if needed
+      if (superGifRef.current) {
+        superGifRef.current.pause();
+      }
+    };
+  }, [currentlyPlaying?.is_playing]);
+
   const percent = useMemo(() => {
     if (!currentlyPlaying?.duration_ms) return 0;
     return (progress / currentlyPlaying.duration_ms) * 100;
@@ -144,7 +186,21 @@ export function MusicPlayer() {
         </a>{' '}
         by <span className='band'>{track.artist || track.band}</span>
       </p>
-      <p className="spotify-listened-at">
+      {currentlyPlaying && (
+        <div className="spotify-wave-gif-container">
+          <img 
+            ref={gifRef}
+            src={waveGif} 
+            alt="" 
+            className="spotify-wave-gif"
+            rel="animated_src"
+          />
+        </div>
+      )}
+      <p 
+        className="spotify-listened-at"
+        data-playing={currentlyPlaying?.is_playing ? 'true' : 'false'}
+      >
         {currentlyPlaying
           ? currentlyPlaying.is_playing
             ? 'currently playing'

@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Container, Header, Divider, Image, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { loadData, getImagePath, renderBoldQuotes  } from '../utils/general.js';
 import { BLOG_POSTS_PER_PAGE, REVIEW_POSTS_PER_PAGE, BLOG_PREVIEW_MAX_LENGTH, SOUND_POSTS_PER_PAGE } from '../utils/constants.js';
 
 const Blog = ({ type = "blog" }) => {
+  const { page } = useParams();
+  const navigate = useNavigate();
   const [blogData, setBlogData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Map type to route path (type is "review" but route is "reviews")
+  const routePath = type === "review" ? "reviews" : type;
   
   const count = type === "blog" 
     ? BLOG_POSTS_PER_PAGE 
@@ -17,7 +22,6 @@ const Blog = ({ type = "blog" }) => {
   const maxPreviewLength = BLOG_PREVIEW_MAX_LENGTH;
   
   useEffect(() => {
-    setCurrentPage(0);
     setIsLoading(true);
     loadData((data) => {
       setBlogData(data);
@@ -27,11 +31,41 @@ const Blog = ({ type = "blog" }) => {
   
   const totalPages = Math.ceil(blogData.length / count);
   
-  const prevPage = () =>
-    setCurrentPage((currentPage - 1 + totalPages) % totalPages);
+  // Initialize page from URL, validate against totalPages
+  // Page is required in URL, default to 1 if missing
+  useEffect(() => {
+    if (!isLoading && totalPages > 0) {
+      const pageNum = page ? parseInt(page, 10) : 1;
+      const validPage = Math.max(1, Math.min(pageNum, totalPages));
+      const pageIndex = validPage - 1; // Convert to 0-based index
+      
+      if (pageIndex !== currentPage) {
+        setCurrentPage(pageIndex);
+      }
+      
+      // Redirect if page number is invalid or missing (use replace for redirects)
+      if (!page || pageNum < 1 || pageNum > totalPages) {
+        navigate(`/${routePath}/page/${validPage}`, { replace: true });
+      }
+    }
+  }, [page, totalPages, isLoading, type, navigate, currentPage]);
   
-  const nextPage = () =>
-    setCurrentPage((currentPage + 1) % totalPages);
+  // Navigate to page URL to trigger route transition
+  // Always use page number in URL, even for page 1
+  const goToPage = (pageNum) => {
+    const normalizedPage = ((pageNum % totalPages) + totalPages) % totalPages;
+    navigate(`/${routePath}/page/${normalizedPage + 1}`, { replace: false });
+  };
+  
+  const prevPage = () => {
+    const newPage = (currentPage - 1 + totalPages) % totalPages;
+    goToPage(newPage);
+  };
+  
+  const nextPage = () => {
+    const newPage = (currentPage + 1) % totalPages;
+    goToPage(newPage);
+  };
 
   if (isLoading) {
     return <Container text style={{ minHeight: '200px' }}></Container>;
@@ -117,6 +151,16 @@ const Blog = ({ type = "blog" }) => {
             <div
               key={i}
               className={`blog-pagination-dot ${i === currentPage ? 'active' : ''}`}
+              onClick={() => goToPage(i)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  goToPage(i);
+                }
+              }}
+              aria-label={`Go to page ${i + 1}`}
             />
           ))}
         </div>
