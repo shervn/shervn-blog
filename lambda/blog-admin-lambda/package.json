@@ -1,0 +1,18 @@
+{
+  "name": "blog-admin-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for managing blog posts via Telegram bot",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "remove": "serverless remove",
+    "logs": "serverless logs -f telegramBot -t"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1693.0",
+    "axios": "^1.13.2"
+  },
+  "devDependencies": {
+    "serverless": "^3.40.0"
+  }
+}

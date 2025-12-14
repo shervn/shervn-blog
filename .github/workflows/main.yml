@@ -1,5 +1,11 @@
 name: Workflow for S3 Deploy
-on: [push]
+on:
+  push:
+    paths:
+      - 'blog/src/**'
+      - 'blog/public/**'
+      - 'blog/package.json'
+      
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -10,15 +16,17 @@ jobs:
       - uses: actions/checkout@v2
         
       - name: Install dependencies
+        working-directory: blog
         run: npm install
         
       - name: Build
+        working-directory: blog
         run: npm run build
 
       - name: Deploy
         uses: reggionick/s3-deploy@v3
         with:
-          folder: build
+          folder: blog/build
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ${{ secrets.S3_BUCKET_REGION }}
           invalidation: /

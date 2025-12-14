@@ -1,0 +1,30 @@
+service: blog-admin-lambda
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
+    ALLOWED_USER_ID: ${env:ALLOWED_USER_ID}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+        - s3:DeleteObject
+      Resource:
+        - arn:aws:s3:::shervn-blog-media/*
+
+functions:
+  telegramBot:
+    handler: index.handler
+    timeout: 8
+    events:
+      - http:
+          path: telegram-webhook
+          method: post
+          cors: true
+

@@ -1,5 +1,5 @@
 // Base API URL for all Lambda functions
-export const BASE_API = 'https://11bv2r6dq0.execute-api.us-east-1.amazonaws.com';
+export const BASE_API = 'https://68hlb8id96.execute-api.us-east-1.amazonaws.com/dev';
 
 /**
  * Get toggle state
@@ -85,18 +85,4 @@ export const getTopArtists = async (limit = 5) => {
   }
 };
 
-/**
- * Toggle state (used for easter egg)
- */
-export const toggleState = async () => {
-  try {
-    const response = await fetch(`${BASE_API}/toggle`, {
-      method: 'GET'
-    });
-    return response;
-  } catch (err) {
-    console.error('Error toggling state:', err);
-    return null;
-  }
-};
 

@@ -30,7 +30,3 @@ export const SPOTIFY_NEW_TRACK_CHECK_DELAY = 500;
 // Header constants
 export const HEADER_IMAGE_INTERVAL = 2000;
 
-// Easter egg constants
-export const EASTER_EGG_SEQUENCE = ['blog', 'spotify', 'blog', 'spotify', 'reviews'];
-export const EASTER_EGG_SEQUENCE_LENGTH = EASTER_EGG_SEQUENCE.length;
-

@@ -2,8 +2,6 @@ import { Component } from 'react';
 import { Divider, Menu } from 'semantic-ui-react';
 import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { toggleState } from './utils/lambdaUtils.js';
-import { EASTER_EGG_SEQUENCE, EASTER_EGG_SEQUENCE_LENGTH } from './utils/constants.js';
 
 import './styles/App.css';
 
@@ -33,21 +31,12 @@ export default class App extends Component {
     super(props);
     this.state = {
       activeItem: validatePathName(window.location.pathname),
-      clickSequence: [],
     };
   }
 
   handleItemClick = (_e, { name }) => {
-    const { clickSequence } = this.state;
-
-    const updatedSequence = [...clickSequence, name].slice(-EASTER_EGG_SEQUENCE_LENGTH);
     this.setState({ 
-      activeItem: name,
-      clickSequence: updatedSequence
-    }, () => {
-      if (updatedSequence.join(',') === EASTER_EGG_SEQUENCE.join(',')) {
-        toggleState().catch(() => {})
-      }
+      activeItem: name
     });
   };
 
