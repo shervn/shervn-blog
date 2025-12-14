@@ -3,7 +3,7 @@ export const POSTBOX_INITIAL_VISIBLE = 10;
 export const POSTBOX_LOAD_MORE_COUNT = 10;
 export const POSTBOX_NULL_FORCE_COUNT = 5;
 export const POSTBOX_NULL_RANDOM_CHANCE = 0.25;
-export const POSTBOX_MAX_COMMENT_LINES = 3;
+export const POSTBOX_MAX_COMMENT_LINES = 4;
 
 // Blog constants
 export const BLOG_POSTS_PER_PAGE = 8;

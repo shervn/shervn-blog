@@ -7,14 +7,23 @@ export default function AnimatedStat({
   duration = 1500
 }) {
   const [displayValue, setDisplayValue] = useState(0);
+  const [showInfinity, setShowInfinity] = useState(false);
   const statRef = useRef(null);
   const hasAnimatedRef = useRef(false);
+  const rafRef = useRef(null);
 
   useEffect(() => {
-    if (value === -1 || hasAnimatedRef.current) return;
+    if (hasAnimatedRef.current) return;
 
     const currentRef = statRef.current;
     if (!currentRef) return;
+
+    if (value === -1) {
+      setShowInfinity(true);
+      setDisplayValue(0);
+      hasAnimatedRef.current = true;
+      return;
+    }
 
     const startAnimation = () => {
       if (hasAnimatedRef.current) return;
@@ -22,17 +31,26 @@ export default function AnimatedStat({
       
       const startTime = performance.now();
 
+      const target = value;
       const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 
       function animate(time) {
         const raw = Math.min((time - startTime) / duration, 1);
         const eased = easeOutExpo(raw);
-        setDisplayValue(Math.floor(eased * value));
+        setDisplayValue(Math.floor(eased * target));
 
-        if (raw < 1) requestAnimationFrame(animate);
+        if (raw < 1) {
+          rafRef.current = requestAnimationFrame(animate);
+        } else {
+          setDisplayValue(target);
+          if (value === -1) {
+            // immediately switch to infinity (no fade)
+            setShowInfinity(true);
+          }
+        }
       }
 
-      requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(animate);
     };
 
     // Check if already visible
@@ -41,7 +59,9 @@ export default function AnimatedStat({
     
     if (isVisible) {
       startAnimation();
-      return;
+      return () => {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      };
     }
 
     const observer = new IntersectionObserver(
@@ -56,16 +76,47 @@ export default function AnimatedStat({
     observer.observe(currentRef);
 
     return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       observer.unobserve(currentRef);
       observer.disconnect();
     };
   }, [value, duration]);
 
+  const toFarsiDigits = (str) => {
+    const map = {
+      '0': '۰',
+      '1': '۱',
+      '2': '۲',
+      '3': '۳',
+      '4': '۴',
+      '5': '۵',
+      '6': '۶',
+      '7': '۷',
+      '8': '۸',
+      '9': '۹'
+    };
+    return String(str).replace(/\d/g, (d) => map[d] || d);
+  };
+
+  const numberText = displayValue.toLocaleString('en-US');
+  const numberFarsiText = toFarsiDigits(numberText);
+
   return (
     <div ref={statRef}>
       <Statistic size="small">
-        <Statistic.Value style={{ fontFamily: "'Tahoma', sans-serif" }}>
-          {value === -1 ? "∞" : displayValue}
+        <Statistic.Value style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', whiteSpace: 'nowrap' }}>
+          {value === -1 ? (
+            <>{showInfinity ? (
+              <span style={{ fontFamily: 'sans-serif' }}>∞</span>
+            ) : (
+              <span style={{ fontFamily: 'sans-serif' }}>{numberText}</span>
+            )}</>
+          ) : (
+            <>
+              <span style={{ fontFamily: "'Tahoma', sans-serif" }}>{numberText}</span>
+              <span style={{ fontFamily: 'farsi' }}>{numberFarsiText}</span>
+            </>
+          )}
         </Statistic.Value>
         <Statistic.Label style={{ fontFamily: "farsi" }}>{text}</Statistic.Label>
       </Statistic>

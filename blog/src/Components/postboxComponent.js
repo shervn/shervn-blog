@@ -188,19 +188,19 @@ export default function PhotoGrid() {
         <Grid.Column textAlign="center">
           <AnimatedStat
             value={new Set(items.filter(Boolean).map(item => item.cityEn)).size}
-            text="Cities"
+            text="Cities\شهر"
           />
         </Grid.Column>
         <Grid.Column textAlign="center">
           <AnimatedStat
             value={items.filter(Boolean).length}
-            text="Postboxes"
+            text="Postboxes\صندوق"
           />
         </Grid.Column>
         <Grid.Column textAlign="center">
           <AnimatedStat
             value={-1}
-            text="Stories"
+            text="Stories\روایت"
           />
         </Grid.Column>
       </Grid>
