@@ -1,6 +1,6 @@
-import { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Divider, Menu } from 'semantic-ui-react';
-import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import './styles/App.css';
@@ -24,6 +24,19 @@ function validatePathName(t) {
 const SingleItemWrapper = () => {
   const { type, uuid } = useParams();
   return <SinglePost type={type} uuid={uuid} />;
+};
+
+const PageViewTracker = () => {
+  const location = useLocation();
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname + location.search,
+        page_title: document.title,
+      });
+    }
+  }, [location]);
+  return null;
 };
 
 export default class App extends Component {
@@ -68,6 +81,7 @@ export default class App extends Component {
             <HeaderComponent alt="Shervin cover" />
           </div>
           <Router>
+            <PageViewTracker />
             <nav className="mainPageWithMenu" role="navigation" aria-label="Main navigation">
               <Menu secondary widths={6} stackable>
                 {['blog','reviews','postboxes','metro','noises','spotify'].map((item) => (
