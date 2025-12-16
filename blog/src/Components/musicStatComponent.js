@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
 import { Grid, Container, Header, List, Loader, Image } from "semantic-ui-react";
-import { getTopSongs, getTopArtists, getPlaylist } from "../utils/lambdaUtils.js";
+import { getTopSongs, getTopArtists, getPlaylist, getRecentTracks } from "../utils/lambdaUtils.js";
 import { MUSIC_STAT_LIMIT, MUSIC_STAT_TIME_RANGE } from "../utils/constants.js";
 
 export default function MusicStatComponent() {
   const [songs, setSongs] = useState([]);
   const [artists, setArtists] = useState([]);
   const [playlist, setPlaylist] = useState(null);
+  const [recentTracks, setRecentTracks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
         setLoading(true);
-        const [songsRes, artistsRes, playlistRes] = await Promise.all([
+        const [songsRes, artistsRes, playlistRes, recentTracksRes] = await Promise.all([
           getTopSongs(MUSIC_STAT_LIMIT, MUSIC_STAT_TIME_RANGE),
           getTopArtists(MUSIC_STAT_LIMIT),
-          getPlaylist()
+          getPlaylist(),
+          getRecentTracks(10)
         ]);
         
         setSongs(songsRes);
@@ -24,6 +26,7 @@ export default function MusicStatComponent() {
         if (playlistRes && !playlistRes.error) {
           setPlaylist(playlistRes);
         }
+        setRecentTracks(recentTracksRes);
       } catch (err) {
         console.error(err);
       } finally {
@@ -41,7 +44,7 @@ export default function MusicStatComponent() {
         <p>Loading music statistics...</p>
       </div>
     );
-  if (!songs.length && !artists.length && !playlist) return null;
+  if (!songs.length && !artists.length && !playlist && !recentTracks.length) return null;
 
   return (
     <Container
@@ -52,7 +55,7 @@ export default function MusicStatComponent() {
           <Grid.Row>
             <Grid.Column width={16} textAlign="center">
               <Header as="h4" textAlign="center" style={{ background: 'var(--color-bg-song)' }}>
-                Recently Selected Songs
+              Selected Songs
               </Header>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
                 <Grid stackable columns={2} className="playlist-grid">
@@ -77,6 +80,51 @@ export default function MusicStatComponent() {
                               {track.song}
                             </a>
                             <div className="music-stat-artist">{track.artist}</div>
+                            {track.albumName && (
+                              <div style={{ fontSize: '0.9em', opacity: 0.7, marginTop: '0.25rem' }}>
+                                {track.albumName}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </Grid.Column>
+                    );
+                  })}
+                </Grid>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        )}
+        
+        {recentTracks && recentTracks.length > 0 && (
+          <Grid.Row>
+            <Grid.Column width={16} textAlign="center">
+              <Header as="h4" textAlign="center" style={{ background: 'var(--color-bg-song)' }}>
+                Recently Played Songs
+              </Header>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                <Grid stackable columns={2} className="playlist-grid">
+                  {recentTracks.map((track, i) => {
+                    const isLeftColumn = i % 2 === 0;
+                    const textAlign = isLeftColumn ? 'right' : 'left';
+                    const flexDirection = isLeftColumn ? 'row-reverse' : 'row';
+                    
+                    return (
+                      <Grid.Column key={i} className="playlist-item">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexDirection }}>
+                          {track.albumArt && (
+                            <Image 
+                              src={track.albumArt} 
+                              alt={track.albumName}
+                              size="tiny"
+                              style={{ width: '64px', height: '64px', objectFit: 'cover', flexShrink: 0 }}
+                            />
+                          )}
+                          <div style={{ flex: 1, textAlign }}>
+                            <a href={track.url} target="_blank" rel="noreferrer">
+                              {track.song}
+                            </a>
+                            <div className="music-stat-artist">{track.band || track.artist}</div>
                             {track.albumName && (
                               <div style={{ fontSize: '0.9em', opacity: 0.7, marginTop: '0.25rem' }}>
                                 {track.albumName}

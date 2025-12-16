@@ -22,6 +22,8 @@ router.get('/recent-tracks', async (req, res) => {
       song: item.track.name,
       url: item.track.external_urls.spotify,
       listened_at: item.played_at,
+      albumArt: item.track.album.images[0]?.url || null,
+      albumName: item.track.album.name,
     }));
 
     res.json(tracks.length ? tracks : FALLBACK_TRACK);

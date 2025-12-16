@@ -5,7 +5,6 @@ const s3Client = new S3Client({ region: config.REGION });
 
 const DATA_PREFIX = 'data/';
 
-// Read JSON from S3
 async function readJSON(fileName, defaultValue = { state: false }) {
   try {
     const command = new GetObjectCommand({ 
