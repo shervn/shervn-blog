@@ -85,4 +85,17 @@ export const getTopArtists = async (limit = 5) => {
   }
 };
 
+/**
+ * Get Spotify playlist
+ */
+export const getPlaylist = async () => {
+  try {
+    const response = await fetch(`${BASE_API}/playlist`);
+    return await response.json();
+  } catch (err) {
+    console.error('Error fetching playlist:', err);
+    return null;
+  }
+};
+
 

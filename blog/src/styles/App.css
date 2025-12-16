@@ -399,6 +399,15 @@ p.farsiPost,
   font-family: farsi;
 }
 
+.music-stat-container .ui.header,
+.music-stat-container h4 {
+  font-family: farsi;
+  display: inline-block;
+  width: auto !important;
+  margin: auto;
+  padding: 0.2em 0.5em;
+}
+
 .music-stat-container .ui.grid > .row > .column {
   padding-left: var(--spacing-lg);
   padding-right: var(--spacing-lg);
@@ -421,6 +430,46 @@ p.farsiPost,
 .music-stat-artist {
   font-size: 12px;
   opacity: 0.7;
+}
+
+.playlist-item {
+  margin-bottom: 0;
+  padding: 0.5rem;
+}
+
+.playlist-item .ui.list > .item > .content {
+  padding: 0.5rem 0;
+}
+
+.playlist-item a {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.playlist-item a:hover {
+  text-decoration: underline;
+}
+
+.playlist-grid {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.playlist-grid > .row {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.playlist-grid > .column {
+  max-width: 450px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.playlist-item {
+  text-align: left;
 }
 
 .stats {
