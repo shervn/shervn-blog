@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Header, Image, Divider, Loader, Placeholder, Segment } from 'semantic-ui-react';
+import { Container, Header, Image, Divider, Loader, Placeholder } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getImagePath, renderBoldQuotes, loadData } from '../utils/general.js';
-import { getSong } from '../utils/lambdaUtils.js';
+
+// Extract Spotify track ID from URL or use directly
+const getSpotifyTrackId = (songId) => {
+  if (!songId) return null;
+  
+  // If it's a full URL, extract the track ID
+  const urlMatch = songId.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+  if (urlMatch) {
+    return urlMatch[1];
+  }
+  
+  return songId;
+};
 
 // Skeleton loader component
 const PostSkeleton = () => (
@@ -27,8 +39,6 @@ const PostSkeleton = () => (
 const SinglePost = ({ type, uuid }) => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [song, setSong] = useState(null);
-  const [songLoading, setSongLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,24 +54,6 @@ const SinglePost = ({ type, uuid }) => {
       setLoading(false);
     }, type);
   }, [type, uuid, navigate]);
-
-  useEffect(() => {
-    if (post && post.songId) {
-      setSongLoading(true);
-      getSong(post.songId)
-        .then((songData) => {
-          if (songData && !songData.error) {
-            setSong(songData);
-          }
-        })
-        .catch((err) => {
-          console.error('Error loading song:', err);
-        })
-        .finally(() => {
-          setSongLoading(false);
-        });
-    }
-  }, [post]);
 
   if (loading) return <PostSkeleton />;
   if (!post) return null;
@@ -125,42 +117,23 @@ const SinglePost = ({ type, uuid }) => {
         />
       )}
 
-      {/* Song display (if songId is present) */}
-      {post.songId && (
-        <Segment basic style={{ paddingRight:0 }}>
-          {songLoading ? (
-            <Loader active inline="right" size="small" />
-          ) : song ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem',flexWrap: 'wrap' }}>
-              {song.albumArt && (
-                <Image 
-                  src={song.albumArt} 
-                  alt={song.album}
-                  size="small"
-                  style={{ width: '80px', height: '80px', objectFit: 'cover', flexShrink: 0, borderRadius: '4px' }}
-                />
-              )}
-              <div style={{ minWidth: '200px' }}>
-                <Header as="h4" style={{ marginBottom: '0.5rem' }}>
-                  <a href={song.url} target="_blank" rel="noreferrer" style={{ color: 'inherit' }}>
-                    {song.song}
-                  </a>
-                </Header>
-                <p style={{ margin: '0.25rem 0', opacity: 0.8 }}>
-                  {song.artist}
-                </p>
-                {song.album && (
-                  <p style={{ margin: '0.25rem 0', fontSize: '0.9em', opacity: 0.7 }}>
-                    {song.album}
-                  </p>
-                )}
-              </div>
-            </div>
-          ) : (
-            <p style={{ opacity: 0.6 }}>Unable to load song information</p>
-          )}
-        </Segment>
-      )}
+      {/* Spotify embed (if songId is present) */}
+      {(() => {
+        const trackId = post.songId ? getSpotifyTrackId(post.songId) : null;
+        return trackId ? (
+          <iframe
+            title={`Spotify: ${post.title}`}
+            src={`https://open.spotify.com/embed/track/${trackId}`}
+            width="100%"
+            height="150"
+            frameBorder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+            style={{ borderRadius: '8px', marginTop: '1rem', marginBottom: '1rem' }}
+            className="single-post-spotify-embed"
+          />
+        ) : null;
+      })()}
 
       <Divider />
     </Container>
