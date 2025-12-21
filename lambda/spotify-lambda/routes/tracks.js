@@ -32,5 +32,33 @@ router.get('/recent-tracks', async (req, res) => {
   }
 });
 
+router.get('/get-song', async (req, res) => {
+  try {
+    const { id } = req.query;
+
+    if (!id) {
+      return res.status(400).json({ error: 'Track ID is required' });
+    }
+
+    const track = await spotifyService.getTrack(id);
+
+    const simplified = {
+      song: track.name,
+      artist: track.artists.map(a => a.name).join('⨯'),
+      album: track.album.name,
+      url: track.external_urls.spotify,
+      albumArt: track.album.images[0]?.url || null,
+    };
+
+    res.json(simplified);
+  } catch (err) {
+    if (err.response && err.response.status === 404) {
+      return res.status(404).json({ error: 'Track not found' });
+    }
+
+    res.status(500).json({ error: err.response?.data || err.message });
+  }
+});
+
 module.exports = router;
 

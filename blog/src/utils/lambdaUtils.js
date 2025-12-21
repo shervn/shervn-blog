@@ -98,4 +98,21 @@ export const getPlaylist = async () => {
   }
 };
 
+/**
+ * Get song details by track ID
+ * @param {string} trackId - Spotify track ID
+ */
+export const getSong = async (trackId) => {
+  try {
+    const response = await fetch(`${BASE_API}/get-song?id=${trackId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch song');
+    }
+    return await response.json();
+  } catch (err) {
+    console.error('Error fetching song:', err);
+    return null;
+  }
+};
+
 

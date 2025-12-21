@@ -25,7 +25,7 @@ async function listPosts(type = 'blog', limit = 10) {
 }
 
 // Add new post
-async function addPost(type, title, body, date = null, description = '', className = 'farsiPost', imagePath = null) {
+async function addPost(type, title, body, date = null, description = '', className = 'farsiPost', imagePath = null, soundCloudLink = null, playlist = false, songId = null) {
   // Validate required fields - don't add anything if any are empty
   if (!title || title.trim().length === 0) {
     throw new Error('Title is required');
@@ -58,6 +58,17 @@ async function addPost(type, title, body, date = null, description = '', classNa
     createdAt: new Date().toISOString()
   };
   
+  // Add optional fields if provided
+  if (soundCloudLink) {
+    newPost.soundCloudLink = soundCloudLink;
+  }
+  if (playlist) {
+    newPost.playlist = playlist;
+  }
+  if (songId) {
+    newPost.songId = songId;
+  }
+  
   posts.push(newPost);
   await s3Service.writeJSON(type, posts);
   
@@ -67,6 +78,9 @@ async function addPost(type, title, body, date = null, description = '', classNa
   let response = `✅ Post added!\n\n*Order:* ${newPost.order}\n*UUID:* \`${newPost.uuid}\`\n*Title:* ${newPost.title}\n*ClassName:* ${newPost.className}`;
   if (imagePath) {
     response += `\n*Image:* ${imagePath}`;
+  }
+  if (songId) {
+    response += `\n*Song ID:* ${songId}`;
   }
   return response;
 }
@@ -123,6 +137,9 @@ async function getPost(type, uuid) {
   result += `UUID: \`${post.uuid}\`\n`;
   result += `Description: ${post.description || '(empty)'}\n`;
   result += `Image: ${post.image || '(none)'}\n`;
+  if (post.songId) {
+    result += `Song ID: ${post.songId}\n`;
+  }
   result += `\n*Body:*\n${post.body.substring(0, 500)}${post.body.length > 500 ? '...' : ''}`;
   
   return result;

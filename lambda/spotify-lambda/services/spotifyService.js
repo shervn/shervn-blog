@@ -90,6 +90,15 @@ async function getPlaylist(playlistId) {
   return response.data;
 }
 
+async function getTrack(trackId) {
+  const token = await getAccessToken();
+  const response = await axios.get(
+    `${config.API_BASE_URL}/tracks/${trackId}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return response.data;
+}
+
 module.exports = {
   getAccessToken,
   getRecentlyPlayed,
@@ -98,5 +107,6 @@ module.exports = {
   getCurrentlyPlaying,
   controlPlayer,
   getPlaylist,
+  getTrack,
 };
 
