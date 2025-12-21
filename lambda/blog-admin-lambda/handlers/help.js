@@ -6,6 +6,7 @@ function getHelpMessage() {
     `   Comment type: comment\n` +
     `   Example: /add blog [My Title] date=[تابستان ۰۳]\nPost body...\n` +
     `   Example: /add blog [My Title] date=[تابستان ۰۳] songId=[2QwObYJWyJTiozvs0RI7CF]\nPost body...\n` +
+    `   Example: /add blog [My Title] date=[تابستان ۰۳] soundCloudLink=[url]\nPost body...\n` +
     `   Example: /add review [My Review Title] date=[تابستان ۰۳]\nReview body...\n` +
     `   Example: /add noises [My Noise Title] date=[تابستان ۰۳] soundCloudLink=[url] playlist=[true]\nDescription...\n` +
     `   Example: Send photo with /add postbox [Barcelona] [بارسِلونا]\n` +
@@ -19,14 +20,14 @@ function getHelpMessage() {
     `*/update type uuid field=[value]* - Update post or meta\n` +
     `   Post fields: title, date, description, order, body, soundCloudLink, playlist, songId\n` +
     `   Meta fields: name, subtitle\n` +
-    `   Example: /update blog abc123 title=[فصل پنجم] date=[فصل دهم]\n` +
+    `   Example: /update blog abc123 title=[فصل پنجم] date=[فصل دهم] songId=[2QwObYJWyJTiozvs0RI7CF]\n` +
     `   Example: /update blog abc123\nNew body text here... (updates body only)\n` +
     `   Example: Send photo with /update blog abc123 (updates image only)\n` +
     `   Example: /update meta name=[New Name]\n` +
     `   Example: /update meta subtitle=[New Subtitle]\n\n` +
     `*/toggle* - Toggle state\n\n` +
     `*/help* - Show this help\n\n` +
-    `*Note:* Use [] for values with spaces. Attach photo to /add or /update to include image.`;
+    `*Note:* Always use [] brackets for field values in /add and /update commands. Attach photo to /add or /update to include image.`;
 }
 
 module.exports = {

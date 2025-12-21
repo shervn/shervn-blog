@@ -112,8 +112,8 @@ const SinglePost = ({ type, uuid }) => {
         </p>
       ))}
 
-      {/* Sound iframe (if noises type) */}
-      {type === 'noises' && post.soundCloudLink && (
+      {/* Sound iframe (if soundCloudLink is present) */}
+      {post.soundCloudLink && (
         <iframe
           title={post.title}
           width="100%"

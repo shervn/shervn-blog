@@ -32,7 +32,7 @@ async function uploadImageIfPresent(photo, type) {
 // Parse field=[value] patterns from arguments
 function parseFieldValuePairs(args) {
   const pairs = [];
-  const regex = /(\w+)=\[([^\]]+)\]/g;
+  const regex = /(\w+)=\[([^\]]*)\]/g;
   let match;
   let argsWithoutFields = args;
   
@@ -81,11 +81,14 @@ function parsePostFields(bracketArgs, fieldValuePairs, args) {
   
   // Process field=[value] pairs
   for (const pair of fieldValuePairs) {
-    if (pair.field === 'date') date = pair.value;
-    else if (pair.field === 'className') className = pair.value;
-    else if (pair.field === 'soundCloudLink') soundCloudLink = pair.value;
-    else if (pair.field === 'playlist') playlist = pair.value.toLowerCase() === 'true';
-    else if (pair.field === 'songId') songId = pair.value;
+    const trimmedValue = pair.value ? pair.value.trim() : '';
+    const normalizedValue = trimmedValue === '' ? null : trimmedValue;
+    
+    if (pair.field === 'date') date = normalizedValue;
+    else if (pair.field === 'className') className = normalizedValue || 'farsiPost';
+    else if (pair.field === 'soundCloudLink') soundCloudLink = normalizedValue;
+    else if (pair.field === 'playlist') playlist = normalizedValue ? normalizedValue.toLowerCase() === 'true' : false;
+    else if (pair.field === 'songId') songId = normalizedValue;
   }
   
   // Fallback: if no brackets, use old format
@@ -253,42 +256,23 @@ function parseUpdateCommandArgs(args) {
 function buildPostUpdates(fieldValuePairs, args, postBody) {
   const updates = {};
   
-  if (fieldValuePairs.length > 0) {
-    for (const pair of fieldValuePairs) {
-      const { field, value } = pair;
-      
-      if (field === 'title') updates.title = value;
-      else if (field === 'date') updates.date = value;
-      else if (field === 'description') updates.description = value;
-      else if (field === 'order') updates.order = parseInt(value);
-      else if (field === 'body') updates.body = postBody || value;
-      else if (field === 'soundCloudLink') updates.soundCloudLink = value;
-      else if (field === 'playlist') updates.playlist = value.toLowerCase() === 'true';
-      else if (field === 'songId') updates.songId = value || null;
-      else {
-        return { error: '❌ Invalid field. Allowed: title, date, description, order, body, soundCloudLink, playlist, songId' };
-      }
-    }
-  } else {
-    // Old format: single field=value without brackets
-    const fieldValuePart = args.split(' ').slice(2).join(' ');
-    const equalIndex = fieldValuePart.indexOf('=');
+  if (fieldValuePairs.length === 0) {
+    return { error: '❌ Invalid format. Use field=[value] with brackets. Usage: /update blog uuid field=[value]' };
+  }
+  
+  for (const pair of fieldValuePairs) {
+    const { field, value } = pair;
+    // Normalize empty strings (from empty brackets []) to null
+    const normalizedValue = (value === '' || value === undefined) ? null : value.trim();
     
-    if (equalIndex === -1) {
-      return { error: '❌ Invalid format. Use field=[value]. Usage: /update blog uuid field=[value]' };
-    }
-    
-    const field = fieldValuePart.substring(0, equalIndex);
-    const value = fieldValuePart.substring(equalIndex + 1);
-    
-    if (field === 'title') updates.title = value;
-    else if (field === 'date') updates.date = value;
-    else if (field === 'description') updates.description = value;
-    else if (field === 'order') updates.order = parseInt(value);
-    else if (field === 'body') updates.body = postBody || value;
-    else if (field === 'soundCloudLink') updates.soundCloudLink = value;
-    else if (field === 'playlist') updates.playlist = value.toLowerCase() === 'true';
-    else if (field === 'songId') updates.songId = value || null;
+    if (field === 'title') updates.title = normalizedValue;
+    else if (field === 'date') updates.date = normalizedValue;
+    else if (field === 'description') updates.description = normalizedValue;
+    else if (field === 'order') updates.order = normalizedValue ? parseInt(normalizedValue) : null;
+    else if (field === 'body') updates.body = postBody || normalizedValue;
+    else if (field === 'soundCloudLink') updates.soundCloudLink = normalizedValue;
+    else if (field === 'playlist') updates.playlist = normalizedValue ? normalizedValue.toLowerCase() === 'true' : false;
+    else if (field === 'songId') updates.songId = normalizedValue;
     else {
       return { error: '❌ Invalid field. Allowed: title, date, description, order, body, soundCloudLink, playlist, songId' };
     }
@@ -301,27 +285,12 @@ function buildPostUpdates(fieldValuePairs, args, postBody) {
 function buildMetaUpdates(fieldValuePairs, args) {
   const updates = {};
   
-  if (fieldValuePairs.length > 0) {
-    for (const pair of fieldValuePairs) {
-      const { field, value } = pair;
-      
-      if (field === 'name') updates.name = value;
-      else if (field === 'subtitle') updates.subtitle = value;
-      else {
-        return { error: '❌ Invalid field. Allowed: name, subtitle' };
-      }
-    }
-  } else {
-    // Old format: single field=value without brackets
-    const fieldValuePart = args.split(' ').slice(1).join(' ');
-    const equalIndex = fieldValuePart.indexOf('=');
-    
-    if (equalIndex === -1) {
-      return { error: '❌ Invalid format. Use field=[value]. Usage: /update meta name=[value]' };
-    }
-    
-    const field = fieldValuePart.substring(0, equalIndex);
-    const value = fieldValuePart.substring(equalIndex + 1);
+  if (fieldValuePairs.length === 0) {
+    return { error: '❌ Invalid format. Use field=[value] with brackets. Usage: /update meta name=[value]' };
+  }
+  
+  for (const pair of fieldValuePairs) {
+    const { field, value } = pair;
     
     if (field === 'name') updates.name = value;
     else if (field === 'subtitle') updates.subtitle = value;
@@ -335,8 +304,8 @@ function buildMetaUpdates(fieldValuePairs, args) {
 
 // Handle update meta command
 async function handleUpdateMeta(args, fieldValuePairs) {
-  if (fieldValuePairs.length === 0 && args.split(' ').length < 2) {
-    return '❌ Field=value required. Usage: /update meta name=[value] or /update meta subtitle=[value]';
+  if (fieldValuePairs.length === 0) {
+    return '❌ Field=[value] required with brackets. Usage: /update meta name=[value] or /update meta subtitle=[value]';
   }
   
   const result = buildMetaUpdates(fieldValuePairs, args);
@@ -359,12 +328,12 @@ async function handleUpdatePost(type, uuid, args, fieldValuePairs, postBody, pho
   }
   
   // Allow updates with: field updates, image, or body text
-  const hasFieldUpdates = fieldValuePairs.length > 0 || (args.split(' ').length >= 3 && !photo && !postBody);
+  const hasFieldUpdates = fieldValuePairs.length > 0;
   const hasImage = photo && photo.length > 0;
   const hasBodyUpdate = postBody && postBody.trim().length > 0;
   
   if (!hasFieldUpdates && !hasImage && !hasBodyUpdate) {
-    return '❌ Field=value, image, or body text required. Usage: /update blog uuid field=[value] or attach photo or add body text on new line';
+    return '❌ Field=[value] with brackets, image, or body text required. Usage: /update blog uuid field=[value] or attach photo or add body text on new line';
   }
   
   const updates = {};
