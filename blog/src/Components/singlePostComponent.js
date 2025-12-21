@@ -109,7 +109,7 @@ const SinglePost = ({ type, uuid }) => {
         <iframe
           title={post.title}
           width="100%"
-          height={post.playlist === true ? 350 : 150}
+          height="150"
           allow="autoplay"
           src={post.soundCloudLink}
           frameBorder="0"
@@ -129,7 +129,7 @@ const SinglePost = ({ type, uuid }) => {
             frameBorder="0"
             allowtransparency="true"
             allow="encrypted-media"
-            style={{ borderRadius: '8px', marginTop: '1rem', marginBottom: '1rem' }}
+            style={{ borderRadius: '8px', marginTop: '1rem', marginBottom: '-5rem' }}
             className="single-post-spotify-embed"
           />
         ) : null;
