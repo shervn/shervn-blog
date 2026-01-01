@@ -37,6 +37,25 @@ async function getRecentlyPlayed(limit = 1) {
     `${config.API_BASE_URL}/me/player/recently-played?limit=${limit}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
+  
+  // Make results unique by track ID
+  if (response.data && response.data.items) {
+    const seenTrackIds = new Set();
+    const uniqueItems = response.data.items.filter((item) => {
+      const trackId = item.track?.id;
+      if (!trackId || seenTrackIds.has(trackId)) {
+        return false;
+      }
+      seenTrackIds.add(trackId);
+      return true;
+    });
+    
+    return {
+      ...response.data,
+      items: uniqueItems
+    };
+  }
+  
   return response.data;
 }
 

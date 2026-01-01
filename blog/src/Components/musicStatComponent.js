@@ -55,42 +55,31 @@ export default function MusicStatComponent() {
           <Grid.Row>
             <Grid.Column width={16} textAlign="center">
               <Header as="h4" textAlign="center" style={{ background: 'var(--color-bg-song)' }}>
-              Selected Songs
+                Selected Songs
               </Header>
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                <Grid stackable columns={2} className="playlist-grid">
-                  {playlist.tracks.slice(0, 12).map((track, i) => {
-                    const isLeftColumn = i % 2 === 0;
-                    const textAlign = isLeftColumn ? 'right' : 'left';
-                    const flexDirection = isLeftColumn ? 'row-reverse' : 'row';
-                    
-                    return (
-                      <Grid.Column key={i} className="playlist-item">
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexDirection }}>
-                          {track.albumArt && (
-                            <Image 
-                              src={track.albumArt} 
-                              alt={track.albumName}
-                              size="tiny"
-                              style={{ width: '64px', height: '64px', objectFit: 'cover', flexShrink: 0 }}
-                            />
-                          )}
-                          <div style={{ flex: 1, textAlign }}>
-                            <a href={track.url} target="_blank" rel="noreferrer">
-                              {track.song}
-                            </a>
-                            <div className="music-stat-artist">{track.artist}</div>
-                            {track.albumName && (
-                              <div style={{ fontSize: '0.9em', opacity: 0.7, marginTop: '0.25rem' }}>
-                                {track.albumName}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </Grid.Column>
-                    );
-                  })}
-                </Grid>
+              <div className="recent-tracks-container">
+                {playlist.tracks.slice(0, 12).map((track, i) => (
+                  <div key={i} className="recent-track-item">
+                    {track.albumArt && (
+                      <Image 
+                        src={track.albumArt} 
+                        alt={track.albumName}
+                      />
+                    )}
+                    <div>
+                      <a 
+                        href={track.url} 
+                        target="_blank" 
+                        rel="noreferrer"
+                      >
+                        {track.song}
+                      </a>
+                      <div className="music-stat-artist">
+                        {track.artist}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </Grid.Column>
           </Grid.Row>
@@ -102,40 +91,29 @@ export default function MusicStatComponent() {
               <Header as="h4" textAlign="center" style={{ background: 'var(--color-bg-song)' }}>
                 Recently Played Songs
               </Header>
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                <Grid stackable columns={2} className="playlist-grid">
-                  {recentTracks.map((track, i) => {
-                    const isLeftColumn = i % 2 === 0;
-                    const textAlign = isLeftColumn ? 'right' : 'left';
-                    const flexDirection = isLeftColumn ? 'row-reverse' : 'row';
-                    
-                    return (
-                      <Grid.Column key={i} className="playlist-item">
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexDirection }}>
-                          {track.albumArt && (
-                            <Image 
-                              src={track.albumArt} 
-                              alt={track.albumName}
-                              size="tiny"
-                              style={{ width: '64px', height: '64px', objectFit: 'cover', flexShrink: 0 }}
-                            />
-                          )}
-                          <div style={{ flex: 1, textAlign }}>
-                            <a href={track.url} target="_blank" rel="noreferrer">
-                              {track.song}
-                            </a>
-                            <div className="music-stat-artist">{track.band || track.artist}</div>
-                            {track.albumName && (
-                              <div style={{ fontSize: '0.9em', opacity: 0.7, marginTop: '0.25rem' }}>
-                                {track.albumName}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </Grid.Column>
-                    );
-                  })}
-                </Grid>
+              <div className="recent-tracks-container">
+                {recentTracks.map((track, i) => (
+                  <div key={i} className="recent-track-item">
+                    {track.albumArt && (
+                      <Image 
+                        src={track.albumArt} 
+                        alt={track.albumName}
+                      />
+                    )}
+                    <div>
+                      <a 
+                        href={track.url} 
+                        target="_blank" 
+                        rel="noreferrer"
+                      >
+                        {track.song}
+                      </a>
+                      <div className="music-stat-artist">
+                        {track.band || track.artist}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </Grid.Column>
           </Grid.Row>

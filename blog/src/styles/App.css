@@ -477,6 +477,95 @@ p.farsiPost,
 }
 
 /* ============================================
+   RECENT TRACKS COMPONENT
+   ============================================ */
+.recent-tracks-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  overflow-x: auto;
+  padding: var(--spacing-md) 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.recent-track-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  max-width: 160px;
+  flex: 0 0 auto;
+  padding: var(--spacing-sm);
+}
+
+.recent-track-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.recent-track-item > div {
+  text-align: center;
+  width: 100%;
+}
+
+.recent-track-item a {
+  display: block;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  word-break: break-word;
+}
+
+.recent-track-item .music-stat-artist {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+  .recent-tracks-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    padding: var(--spacing-md);
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+  }
+  
+  .recent-tracks-container::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .recent-tracks-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .recent-tracks-container::-webkit-scrollbar-thumb {
+    background: var(--color-gray);
+    border-radius: 2px;
+  }
+  
+  .recent-track-item {
+    min-width: 100px;
+    max-width: 130px;
+    flex-shrink: 0;
+  }
+  
+  .recent-track-item img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* ============================================
    POSTBOX COMPONENT
    ============================================ */
 .instaContainer {
