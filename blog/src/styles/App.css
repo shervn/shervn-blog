@@ -700,6 +700,42 @@ p.farsiPost,
   top: calc(2px + 4.2em);
 }
 
+.fading-word-outer {
+  display: inline-grid;
+  direction: inherit;
+  unicode-bidi: inherit;
+}
+
+.fading-word-outer > span {
+  grid-area: 1 / 1;
+  direction: inherit;
+  unicode-bidi: inherit;
+}
+
+.fading-word-inactive {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fading-word-active.blur-out {
+  animation: wordBlurOut 0.75s ease-in forwards;
+}
+
+.fading-word-active.blur-in {
+  animation: wordBlurIn 0.75s ease-out forwards;
+}
+
+@keyframes wordBlurOut {
+  from { filter: blur(0px); opacity: 1; }
+  to   { filter: blur(14px); opacity: 0; }
+}
+
+@keyframes wordBlurIn {
+  from { filter: blur(14px); opacity: 0; }
+  to   { filter: blur(0px); opacity: 1; }
+}
+
 .overlayCityName {
   position: absolute;
   top: 8px;
