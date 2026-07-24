@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import { Divider, Menu } from 'semantic-ui-react';
+import { Divider, Icon, Menu } from 'semantic-ui-react';
 import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
@@ -15,10 +15,28 @@ import SinglePost from './Components/singlePostComponent.js';
 import RouteTransition from './Components/routeTransition.js';
 
 
+const THEME_STORAGE_KEY = 'blog-theme';
+
 function validatePathName(t) {
   return ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'spotify'].includes(t.split('/')[1])
     ? t.split('/')[1]
     : 'postboxes';
+}
+
+const DAY_START_HOUR = 7;
+const DAY_END_HOUR = 19;
+
+function isDaytime() {
+  const hour = new Date().getHours();
+  return hour >= DAY_START_HOUR && hour < DAY_END_HOUR;
+}
+
+function getInitialTheme() {
+  const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (stored === 'light' || stored === 'dark') {
+    return stored;
+  }
+  return isDaytime() ? 'light' : 'dark';
 }
 
 const SingleItemWrapper = () => {
@@ -44,12 +62,26 @@ export default class App extends Component {
     super(props);
     this.state = {
       activeItem: validatePathName(window.location.pathname),
+      theme: getInitialTheme(),
     };
   }
 
+  componentDidMount() {
+    document.documentElement.setAttribute('data-theme', this.state.theme);
+  }
+
   handleItemClick = (_e, { name }) => {
-    this.setState({ 
+    this.setState({
       activeItem: name
+    });
+  };
+
+  toggleTheme = () => {
+    this.setState(({ theme }) => {
+      const next = theme === 'dark' ? 'light' : 'dark';
+      window.localStorage.setItem(THEME_STORAGE_KEY, next);
+      document.documentElement.setAttribute('data-theme', next);
+      return { theme: next };
     });
   };
 
@@ -76,6 +108,15 @@ export default class App extends Component {
             })}
           </script>
         </Helmet>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={this.toggleTheme}
+          aria-label={this.state.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-pressed={this.state.theme === 'dark'}
+        >
+          <Icon name={this.state.theme === 'dark' ? 'sun' : 'moon'} />
+        </button>
         <div id="mainContainer">
           <div id="header">
             <HeaderComponent alt="Shervin cover" />

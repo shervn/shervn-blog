@@ -54,7 +54,7 @@ export default function MusicStatComponent() {
         {playlist && playlist.tracks && playlist.tracks.length > 0 && (
           <Grid.Row>
             <Grid.Column width={16} textAlign="center">
-              <Header as="h4" textAlign="center" style={{ background: 'var(--color-bg-song)' }}>
+              <Header as="h4" textAlign="center" className="chip-header" style={{ background: 'var(--color-bg-song)' }}>
                 Selected Songs
               </Header>
               <div className="recent-tracks-container">
@@ -88,7 +88,7 @@ export default function MusicStatComponent() {
         {recentTracks && recentTracks.length > 0 && (
           <Grid.Row>
             <Grid.Column width={16} textAlign="center">
-              <Header as="h4" textAlign="center" style={{ background: 'var(--color-bg-song)' }}>
+              <Header as="h4" textAlign="center" className="chip-header" style={{ background: 'var(--color-bg-song)' }}>
                 Recently Played Songs
               </Header>
               <div className="recent-tracks-container">
@@ -121,7 +121,7 @@ export default function MusicStatComponent() {
         
         <Grid.Row>
           <Grid.Column textAlign="right">
-            <Header as="h4" style={{ background: 'var(--color-bg-band)' }}>
+            <Header as="h4" className="chip-header" style={{ background: 'var(--color-bg-band)' }}>
               Top Songs (last 4 weeks)
             </Header>
             <List relaxed>
@@ -139,7 +139,7 @@ export default function MusicStatComponent() {
           </Grid.Column>
 
           <Grid.Column textAlign="left">
-          <Header as="h4" style={{ background: 'var(--color-bg-band)' }}>
+          <Header as="h4" className="chip-header" style={{ background: 'var(--color-bg-band)' }}>
               Top Artists (last 4 weeks)
             </Header>
             <List relaxed>

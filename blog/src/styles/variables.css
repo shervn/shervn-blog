@@ -16,7 +16,18 @@
   --color-selection: #e6e6cc;
   --color-cv-link: #1c5a72;
   --color-progress-bg: #ddd;
-  
+
+  /* Theme-aware surface/text tokens (redefined under [data-theme="dark"] below) */
+  --color-bg-page: var(--color-white);
+  --color-bg-surface: var(--color-white);
+  --color-text-primary: var(--color-text-dark);
+  --color-text-secondary: var(--color-dark-gray);
+  --color-border: rgba(34, 36, 38, 0.15);
+  --color-control: var(--color-black-70);
+  --color-control-hover-bg: rgba(0, 0, 0, 0.08);
+  --color-control-active-bg: rgba(0, 0, 0, 0.15);
+  --color-dot: var(--color-black);
+
   /* Spacing */
   --spacing-xs: 0.1rem;
   --spacing-sm: 0.25rem;
@@ -43,5 +54,23 @@
   --transition-fast: 0.2s ease-out;
   --transition-normal: 0.3s ease;
   --transition-slow: 2s ease-in-out;
+}
+
+/* ============================================
+   DARK THEME OVERRIDES
+   Applied when <html data-theme="dark">
+   ============================================ */
+:root[data-theme="dark"] {
+  --color-bg-page: #121212;
+  --color-bg-surface: #1e1e1e;
+  --color-text-primary: #e8e8e8;
+  --color-text-secondary: #a8a8a8;
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-control: #cfcfcf;
+  --color-control-hover-bg: rgba(255, 255, 255, 0.08);
+  --color-control-active-bg: rgba(255, 255, 255, 0.15);
+  --color-dot: #cfcfcf;
+  --color-progress-bg: #3a3a3a;
+  color-scheme: dark;
 }
 
