@@ -5,6 +5,7 @@ const postsHandler = require('./handlers/posts');
 const imagesHandler = require('./handlers/images');
 const commentsHandler = require('./handlers/comments');
 const toggleHandler = require('./handlers/toggle');
+const spotifyHandler = require('./handlers/spotify');
 const helpHandler = require('./handlers/help');
 
 // Helper function to upload image if photo is present
@@ -444,7 +445,11 @@ async function handleTelegramWebhook(body) {
     case 'toggle':
       response = await toggleHandler.toggleState();
       break;
-      
+
+    case 'spotifyauth':
+      response = spotifyHandler.getReauthLink();
+      break;
+
     default:
       response = '❌ Unknown command. Use /help for available commands.';
   }

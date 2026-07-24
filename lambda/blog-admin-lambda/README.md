@@ -148,6 +148,12 @@ New body content here...
 /delete blog abc123
 ```
 
+### Re-authorize Spotify
+```
+/spotifyauth
+```
+Replies with a link to re-authorize the `spotify-lambda` service (needed roughly every 6 months, since Spotify expires refresh tokens 6 months after authorization). Requires `SPOTIFY_LAMBDA_URL` (the deployed spotify-lambda API base URL) and `SPOTIFY_AUTH_SECRET` (must match the value configured on spotify-lambda) as env vars here.
+
 ### Help
 ```
 /help

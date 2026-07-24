@@ -29,23 +29,31 @@ A serverless Lambda function that provides Spotify API endpoints for your blog, 
    npm install -g serverless
    ```
 
-## Getting Spotify Refresh Token
+## Refresh Token Expiration (important)
 
-1. Visit this URL (replace `CLIENT_ID` and `REDIRECT_URI`):
-   ```
-   https://accounts.spotify.com/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI&scope=user-read-recently-played%20user-top-read%20user-read-currently-playing%20user-modify-playback-state
-   ```
+As of the [Spotify policy change on 2026-06-18](https://developer.spotify.com/blog/2026-06-18-refresh-token-expiration), refresh tokens now expire **6 months after the user authorizes the app**, and refreshing an access token does not reset that clock. Existing apps (like this one) were affected starting **2026-07-20**. Spotify may also silently rotate the refresh token on any `/api/token` call.
 
-2. Authorize the app and copy the `code` from the redirect URL
+To handle this:
 
-3. Exchange the code for refresh token:
-   ```bash
-   curl -X POST https://accounts.spotify.com/api/token \
-     -H "Content-Type: application/x-www-form-urlencoded" \
-     -d "grant_type=authorization_code&code=YOUR_CODE&redirect_uri=YOUR_REDIRECT_URI&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET"
-   ```
+- `spotifyService.js` persists the refresh token to S3 (`data/spotifyAuth.json`) instead of only trusting the `SPOTIFY_REFRESH_TOKEN` env var, so a rotated token survives across Lambda cold starts.
+- When the stored refresh token finally expires (Spotify returns `invalid_grant`), re-authorize via the browser flow below — no redeploy needed.
 
-4. Copy the `refresh_token` from the response
+### Initial setup / re-authorizing after expiration
+
+1. In the Spotify Developer Dashboard, add a Redirect URI matching your deployed API base URL + `/auth/callback`, e.g. `https://xxxxx.execute-api.us-east-1.amazonaws.com/dev/auth/callback`.
+2. Set `SPOTIFY_REDIRECT_URI` (that same URL) and `SPOTIFY_AUTH_SECRET` (any random string you pick) as env vars, and deploy.
+3. Visit `GET /auth/login?secret=YOUR_SPOTIFY_AUTH_SECRET` in a browser and approve the app on Spotify.
+4. You'll land on `/auth/callback`, which exchanges the code and saves the new refresh token to S3 automatically.
+
+Repeat step 3 whenever a request fails with the "refresh token is invalid or expired" error (at most every 6 months).
+
+For local development you can still bootstrap an initial token manually:
+
+```bash
+curl -X POST https://accounts.spotify.com/api/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=authorization_code&code=YOUR_CODE&redirect_uri=YOUR_REDIRECT_URI&client_id=YOUR_CLIENT_ID&client_secret=YOUR_CLIENT_SECRET"
+```
 
 ## Setup
 
@@ -59,6 +67,8 @@ A serverless Lambda function that provides Spotify API endpoints for your blog, 
    export SPOTIFY_CLIENT_ID=your_client_id
    export SPOTIFY_CLIENT_SECRET=your_client_secret
    export SPOTIFY_REFRESH_TOKEN=your_refresh_token
+   export SPOTIFY_REDIRECT_URI=https://your-api-url/auth/callback
+   export SPOTIFY_AUTH_SECRET=some_random_string
    ```
 
    Or create a `.env` file (for local development only):
@@ -66,6 +76,8 @@ A serverless Lambda function that provides Spotify API endpoints for your blog, 
    SPOTIFY_CLIENT_ID=your_client_id
    SPOTIFY_CLIENT_SECRET=your_client_secret
    SPOTIFY_REFRESH_TOKEN=your_refresh_token
+   SPOTIFY_REDIRECT_URI=https://your-api-url/auth/callback
+   SPOTIFY_AUTH_SECRET=some_random_string
    ```
 
 ## Deployment

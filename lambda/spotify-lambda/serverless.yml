@@ -11,8 +11,11 @@ provider:
     SPOTIFY_CLIENT_SECRET: ${env:SPOTIFY_CLIENT_SECRET}
     SPOTIFY_REFRESH_TOKEN: ${env:SPOTIFY_REFRESH_TOKEN}
     SPOTIFY_PLAYLIST_ID: ${env:SPOTIFY_PLAYLIST_ID}
+    SPOTIFY_REDIRECT_URI: ${env:SPOTIFY_REDIRECT_URI}
+    SPOTIFY_AUTH_SECRET: ${env:SPOTIFY_AUTH_SECRET}
   iamRoleStatements:
-    - Effect: Allow
+    - Sid: S3DataAccess
+      Effect: Allow
       Action:
         - s3:GetObject
         - s3:PutObject

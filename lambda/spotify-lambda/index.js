@@ -14,6 +14,7 @@ const topRoutes = require('./routes/top');
 const currentlyPlayingRoutes = require('./routes/currentlyPlaying');
 const toggleRoutes = require('./routes/toggle');
 const playlistRoutes = require('./routes/playlist');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/', topRoutes);
 app.use('/', currentlyPlayingRoutes);
 app.use('/', toggleRoutes);
 app.use('/', playlistRoutes);
+app.use('/', authRoutes);
 
 // Lambda Handler (for AWS deployment)
 const server = serverlessExpress({ app });
