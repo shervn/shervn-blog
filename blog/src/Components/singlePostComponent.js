@@ -53,6 +53,7 @@ const SinglePost = ({ type, uuid }) => {
       <Helmet>
         <title>{post.title} | shervn</title>
         <meta name="description" content={post.body?.substring(0, 160) || `Read ${post.title} on shervn's blog`} />
+        <meta property="og:type" content="article" />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.body?.substring(0, 160) || ''} />
         {post.image && <meta property="og:image" content={getImagePath(post.image, 'Misc')} />}

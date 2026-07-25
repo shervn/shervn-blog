@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useRef } from 'react';
 import { Divider, Icon, Menu } from 'semantic-ui-react';
 import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -46,16 +46,78 @@ const SingleItemWrapper = () => {
   return <SinglePost type={type} uuid={uuid} />;
 };
 
+const SITE_URL = 'https://shervn.com';
+
+// Dynamic canonical/og:url per route, so every page (including individual
+// posts) declares its own real URL instead of every page pointing at the
+// homepage.
+const RouteSeo = () => {
+  const location = useLocation();
+  const url = `${SITE_URL}${location.pathname}`;
+  return (
+    <Helmet>
+      <link rel="canonical" href={url} />
+      <meta property="og:url" content={url} />
+    </Helmet>
+  );
+};
+
+// Redirect-only routes that immediately navigate elsewhere - skip firing a
+// page_view for these so a visit to e.g. /blog doesn't double-count as both
+// /blog and /blog/page/1.
+const PAGE_VIEW_SKIP_PATHS = new Set(['/blog', '/reviews', '/noises']);
+
 const PageViewTracker = () => {
   const location = useLocation();
+  const currentPath = location.pathname + location.search;
+  const pathRef = useRef(currentPath);
+  const startRef = useRef(Date.now());
+
+  const reportTimeSpent = () => {
+    if (!window.gtag) return;
+    const engagementTimeMs = Date.now() - startRef.current;
+    if (engagementTimeMs <= 0) return;
+    window.gtag('event', 'page_time_spent', {
+      page_path: pathRef.current,
+      engagement_time_msec: engagementTimeMs,
+    });
+  };
+
   useEffect(() => {
+    // Transient redirect-only paths (e.g. /reviews on its way to
+    // /reviews/page/1) render for a moment mid-navigation. Ignore them
+    // entirely rather than treating that instant as its own page visit -
+    // the timer keeps running from whatever page the user was actually on.
+    if (PAGE_VIEW_SKIP_PATHS.has(location.pathname)) {
+      return;
+    }
+
+    if (pathRef.current !== currentPath) {
+      reportTimeSpent();
+      pathRef.current = currentPath;
+      startRef.current = Date.now();
+    }
+
     if (window.gtag) {
       window.gtag('event', 'page_view', {
-        page_path: location.pathname + location.search,
+        page_path: currentPath,
         page_title: document.title,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        reportTimeSpent();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return null;
 };
 
@@ -99,7 +161,7 @@ export default class App extends Component {
           <meta name="keywords" content="shervin, blog, photography, music, portfolio" />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="shervn" />
-          <link rel="canonical" href="https://shervn.com" />
+          <meta property="og:image" content="https://shervn-blog-media.s3.amazonaws.com/images/Misc/profile.png" />
           <script type="application/ld+json">
             {JSON.stringify({
               "@context": "https://schema.org",
@@ -124,6 +186,7 @@ export default class App extends Component {
             <HeaderComponent alt="Shervin cover" />
           </div>
           <Router>
+            <RouteSeo />
             <PageViewTracker />
             <nav className="mainPageWithMenu" role="navigation" aria-label="Main navigation">
               <Menu secondary widths={7} stackable>

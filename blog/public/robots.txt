@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shervn.com/sitemap.xml

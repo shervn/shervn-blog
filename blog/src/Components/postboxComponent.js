@@ -60,7 +60,17 @@ export default function PhotoGrid() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setVisibleCount((prev) => Math.min(prev + POSTBOX_LOAD_MORE_COUNT, items.length));
+          setVisibleCount((prev) => {
+            const next = Math.min(prev + POSTBOX_LOAD_MORE_COUNT, items.length);
+            if (window.gtag && next > prev) {
+              window.gtag('event', 'postbox_scroll_depth', {
+                visible_count: next,
+                total_count: items.length,
+                percent_loaded: Math.round((next / items.length) * 100)
+              });
+            }
+            return next;
+          });
         }
       },
       { rootMargin: "200px" }

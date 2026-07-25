@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "node scripts/generate-sitemap.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "predeploy": "npm run build",
