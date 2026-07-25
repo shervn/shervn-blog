@@ -1,0 +1,97 @@
+/* ============================================
+   THEME (LIGHT/DARK)
+   ============================================ */
+.ui.header {
+  color: var(--color-text-primary);
+}
+
+.ui.header .sub.header,
+.sub.header {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Fixed-color chips: pastel backgrounds that don't change with theme,
+   so their text must stay dark regardless of page theme. */
+.chip-header {
+  color: var(--color-text-dark) !important;
+}
+
+.ui.menu .item,
+.ui.secondary.menu .item {
+  color: var(--color-text-primary) !important;
+  background: transparent !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+.ui.secondary.menu .item:hover {
+  color: var(--color-text-secondary) !important;
+  background: transparent !important;
+}
+
+.ui.secondary.menu .item::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-bg-song);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.ui.secondary.menu .active.item::after,
+.ui.secondary.menu .item:hover::after {
+  opacity: 1;
+}
+
+.ui.divider {
+  border-color: var(--color-border) !important;
+}
+
+.ui.divided.grid > .column:not(.row),
+.ui.divided.grid > .row > .column {
+  box-shadow: -1px 0 0 0 var(--color-border) !important;
+}
+
+.ui.divider::before,
+.ui.divider::after {
+  border-top-color: var(--color-border) !important;
+  border-bottom-color: var(--color-border) !important;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-control);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px var(--color-shadow-md);
+  transition: background-color var(--transition-normal), color var(--transition-normal), transform var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.08);
+}
+
+.theme-toggle .icon {
+  margin: 0;
+}
+
+@media (max-width: 500px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+  }
+}

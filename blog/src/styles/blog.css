@@ -1,0 +1,34 @@
+/* ============================================
+   BLOG COMPONENT
+   ============================================ */
+.blogList {
+  list-style: none;
+  padding: 0;
+}
+
+.post {
+  padding-top: 10px;
+}
+
+.blog-preview-inline {
+  display: inline;
+}
+
+.blog-preview-ellipsis {
+  display: inline-block;
+  margin-left: var(--spacing-sm);
+}
+
+.blog-preview-link {
+  padding: 0;
+  min-width: auto;
+  color: var(--color-text-dark) !important;
+  background: var(--color-bg-song);
+  font-family: farsiBold !important;
+}
+
+.blog-date {
+  margin-top: var(--spacing-sm);
+  display: block;
+  clear: both;
+}

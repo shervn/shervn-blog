@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Container, Loader, Icon } from "semantic-ui-react";
 import { getScholarPapers } from "../utils/lambdaUtils.js";
 
 export default function ScholarComponent() {
   const [papers, setPapers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('year');
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +23,16 @@ export default function ScholarComponent() {
     fetchData();
   }, []);
 
+  const sortedPapers = useMemo(() => {
+    const sorted = [...papers];
+    if (sortBy === 'citations') {
+      sorted.sort((a, b) => b.citations - a.citations || (b.year || 0) - (a.year || 0));
+    } else {
+      sorted.sort((a, b) => (b.year || 0) - (a.year || 0) || b.citations - a.citations);
+    }
+    return sorted;
+  }, [papers, sortBy]);
+
   if (loading) {
     return (
       <div className="scholar-loading" role="status" aria-live="polite">
@@ -35,8 +46,26 @@ export default function ScholarComponent() {
 
   return (
     <Container className="scholar-container" role="main" aria-label="Publications">
+      <div className="scholar-sort" role="group" aria-label="Sort publications">
+        <span>Sort by</span>
+        <button
+          type="button"
+          className={sortBy === 'year' ? 'active' : ''}
+          onClick={() => setSortBy('year')}
+        >
+          Year
+        </button>
+        <button
+          type="button"
+          className={sortBy === 'citations' ? 'active' : ''}
+          onClick={() => setSortBy('citations')}
+        >
+          Citations
+        </button>
+      </div>
+
       <ul className="scholar-list">
-        {papers.map((paper, i) => (
+        {sortedPapers.map((paper, i) => (
           <li key={i} className="scholar-item">
             <div className="scholar-item-year">{paper.year || '—'}</div>
             <div className="scholar-item-body">

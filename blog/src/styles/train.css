@@ -1,0 +1,35 @@
+/* ============================================
+   TRAIN COMPONENT
+   ============================================ */
+.train-container {
+  margin-top: var(--spacing-lg);
+}
+
+.train-image-wrapper {
+  width: 100%;
+  aspect-ratio: 9/16;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--color-shadow-sm);
+  transition: box-shadow var(--transition-normal);
+}
+
+.train-image-wrapper:hover {
+  box-shadow: 0 8px 20px var(--color-shadow-md);
+}
+
+.train-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Reserves the same footprint as a photo tile so random gaps read as
+   deliberate empty space in the grid, not a layout glitch. */
+.train-empty-slot {
+  width: 100%;
+  aspect-ratio: 9/16;
+}

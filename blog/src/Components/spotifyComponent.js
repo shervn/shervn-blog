@@ -29,6 +29,8 @@ export function MusicPlayer() {
   const gifRef = useRef(null);
   const superGifRef = useRef(null);
 
+  const track = currentlyPlaying || spotifyTrack;
+
   const fetchData = async () => {
     try {
       const toggleRes = await getToggleState();
@@ -128,9 +130,12 @@ export function MusicPlayer() {
         superGifRef.current.pause();
       }
     };
-  }, [currentlyPlaying?.is_playing]);
+    // `track` is included so this re-fires once the <img> actually mounts:
+    // when nothing is playing, is_playing stays `undefined` across the whole
+    // loading -> loaded transition, so it alone never changes and the effect
+    // would otherwise only ever run once, before gifRef.current exists.
+  }, [currentlyPlaying?.is_playing, track]);
 
-  const track = currentlyPlaying || spotifyTrack;
   const duration = currentlyPlaying?.duration_ms ?? track?.duration_ms ?? 0;
 
   const percent = useMemo(() => {

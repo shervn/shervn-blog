@@ -1,0 +1,18 @@
+/* ============================================
+   GRID STYLES (SHARED)
+   ============================================ */
+.ui.grid {
+  margin: 0;
+}
+
+.ui.grid > .row {
+  margin: 0;
+}
+
+.ui.grid > .row > .column {
+  padding: var(--spacing-sm);
+}
+
+.ui.grid > .column {
+  padding: var(--spacing-sm);
+}

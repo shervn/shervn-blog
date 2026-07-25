@@ -1,0 +1,32 @@
+/* ============================================
+   FOOTER
+   ============================================ */
+#footer {
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#footerIcons {
+  margin: 0 auto;
+  padding: 0;
+}
+
+#footerIcons li {
+  display: inline-flex;
+}
+
+#setarPicture {
+  width: 30%;
+  max-width: 200px;
+  padding-top: 30px;
+  margin: 0 auto;
+  transition: filter var(--transition-normal);
+}
+
+:root[data-theme="dark"] #setarPicture {
+  filter: invert(1);
+}

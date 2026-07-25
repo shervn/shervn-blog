@@ -1,0 +1,52 @@
+/* ============================================
+   COMMENT PLACEHOLDER (postbox grid)
+   ============================================ */
+.commentPlaceHolder .postbox-comment-text {
+  text-align: left;
+  margin: 0;
+  line-height: 1.5;
+  white-space: normal;
+  display: block;
+}
+
+.postbox-comment-text.right {
+  text-align: right;
+}
+
+.commentPlaceHolder {
+    width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+    font-family: farsi;
+    font-size: 38px;
+    line-height: 0.5;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.commentPlaceHolder p {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  margin: 0;
+  line-height: 1.5em;
+  white-space: normal;
+  display: block;
+  visibility: visible;
+}
+
+.commentPlaceHolder p:first-child {
+  top: 2px;
+}
+
+.commentPlaceHolder p:nth-child(2) {
+  top: calc(2px + 1.4em);
+}
+
+.commentPlaceHolder p:nth-child(3) {
+  top: calc(2px + 2.8em);
+}
+
+.commentPlaceHolder p:nth-child(n+4) {
+  top: calc(2px + 4.2em);
+}

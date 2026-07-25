@@ -1,32 +1,22 @@
 import { useMemo, useState, useEffect } from "react";
 import { Container, Grid, Image } from "semantic-ui-react";
-import {
-  POSTBOX_NULL_FORCE_COUNT,
-  POSTBOX_NULL_RANDOM_CHANCE
-} from "../utils/constants.js";
-import { getS3Path, loadData, shuffleArray, insertEmptySquares, getPlaceholderIndex } from "../utils/general.js";
-import CommentPlaceholder from './commentPlaceholder.js';
+import { TRAIN_EMPTY_CHANCE } from "../utils/constants.js";
+import { getS3Path, loadData, shuffleArray, insertEmptySquares } from "../utils/general.js";
 
 export default function TrainComponent() {
   const [traindata, setTraindata] = useState([]);
-  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     loadData((jsonData) => {
       setTraindata(jsonData);
     }, 'traindata');
-    loadData((jsonData) => {
-      setComments(Array.isArray(jsonData) ? jsonData : []);
-    }, 'comments');
   }, []);
 
-  const shuffledComments = useMemo(() => shuffleArray(comments), [comments]);
-
-  // Randomly weave comment placeholders in among the photos, same as the postbox grid
+  // Randomly leave some grid slots empty, no forced interval
   const items = useMemo(() => {
     if (traindata.length === 0) return [];
     const shuffled = shuffleArray(traindata);
-    return insertEmptySquares(shuffled, POSTBOX_NULL_FORCE_COUNT, POSTBOX_NULL_RANDOM_CHANCE);
+    return insertEmptySquares(shuffled, Infinity, TRAIN_EMPTY_CHANCE);
   }, [traindata]);
 
   return (
@@ -34,7 +24,7 @@ export default function TrainComponent() {
       <Grid doubling stackable columns={3} role="grid" aria-label="Photo gallery grid">
         {items.map((item, i) => (
           <Grid.Column key={i}>
-            {item ? (
+            {item && (
               <div className="train-image-wrapper">
                 <Image
                   src={getS3Path(item.path)}
@@ -47,12 +37,8 @@ export default function TrainComponent() {
                   <div>{item.city.fa}</div>
                 </div>
               </div>
-            ) : (
-              <CommentPlaceholder
-                comment={shuffledComments[getPlaceholderIndex(items, i) % shuffledComments.length]}
-                seed={getPlaceholderIndex(items, i)}
-              />
             )}
+            {!item && <div className="train-empty-slot" />}
           </Grid.Column>
         ))}
       </Grid>

@@ -1,0 +1,84 @@
+/* ============================================
+   PAGINATION (SHARED)
+   ============================================ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--grid-gap);
+  margin-top: var(--spacing-xl);
+}
+
+.pagination-dots {
+  display: flex;
+  gap: var(--grid-gap-sm);
+}
+
+.pagination-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-dot);
+  opacity: 0.3;
+}
+
+.pagination-dot.active {
+  opacity: 1;
+}
+
+.blog-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--grid-gap);
+  margin-top: var(--spacing-xl);
+}
+
+.blog-pagination-dots {
+  display: flex;
+  gap: var(--grid-gap-sm);
+}
+
+.blog-pagination-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-dot);
+  opacity: 0.25;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.blog-pagination-dot.active {
+  width: 22px;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+
+.blog-pagination-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-control);
+  transform: scale(1.1);
+  transition: all var(--transition-normal);
+  border-radius: 2px;
+}
+
+.blog-pagination-button:hover:not(:disabled) {
+  transform: scale(1.02);
+  background-color: var(--color-control-hover-bg);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.blog-pagination-button:active:not(:disabled) {
+  transform: scale(1.02);
+  background-color: var(--color-control-active-bg);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}

@@ -29,8 +29,9 @@ functions:
           path: /
           method: ANY
           cors: true
+  # No trigger of its own: invoked directly (async) by blog-admin-lambda's
+  # Telegram bot via lambda:InvokeFunction when the /scholarrefresh command
+  # is used. Long timeout since it scrapes every paper's own detail page.
   refresh:
     handler: refresh.handler
     timeout: 300
-    events:
-      - schedule: rate(12 hours)

@@ -1,0 +1,33 @@
+/* ============================================
+   FONTS
+   ============================================ */
+@font-face {
+  font-family: farsi;
+  src: url('../assets/fonts/AriaWebFaNum-Normal.woff2');
+  font-weight: normal;
+  font-style: normal;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: farsiBold;
+  src: url('../assets/fonts/AriaWebFaNum-Black.woff2');
+  font-weight: bold;
+  font-style: normal;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: farsi;
+  src: url('../assets/fonts/Onest.ttf') format('truetype');
+  font-weight: 400;
+  font-style: Thin;
+  unicode-range: U+0000-00FF;
+}
+
+@font-face {
+  font-family: farsiBold;
+  font-weight: 400;
+  src: url('../assets/fonts/Onest.ttf') format('truetype');
+  unicode-range: U+0000-00FF;
+}

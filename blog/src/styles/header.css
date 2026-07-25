@@ -1,0 +1,130 @@
+@keyframes rotation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+}
+
+/* ============================================
+   MUSIC LISTENING
+   ============================================ */
+.musiclistening {
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-lg) 0 var(--spacing-lg) 0;
+  font-family: farsi;
+}
+
+.musiclistening p {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-xs) 0;
+}
+
+.musiclistening .song {
+  background-color: var(--color-bg-song);
+  color: var(--color-text-dark) !important;
+  padding: 0 0.25em;
+}
+
+.musiclistening .band {
+  background-color: var(--color-bg-band);
+  color: var(--color-text-dark) !important;
+  padding: 0 0.25em;
+}
+
+/* ============================================
+   HEADER COMPONENT
+   ============================================ */
+.header-container-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 909;
+  overflow: hidden;
+}
+
+.header-container-wrapper .header-image-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0.65;
+  transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+  will-change: opacity, transform;
+}
+
+.header-container-wrapper .header-image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.header-image-item.active {
+  opacity: 1;
+  transform: scale(1.003);
+}
+
+.headerImage {
+  pointer-events: none;
+}
+
+.headerImage:last-of-type {
+  width: 100%;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.profile-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--spacing-lg);
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
+}
+
+.profile-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.asterisk-trigger {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: filter var(--transition-normal);
+}
+
+:root[data-theme="dark"] .asterisk-trigger {
+  filter: invert(1);
+}
+
+.rotate {
+  width: 2em;
+  animation: rotation 20000ms infinite linear;
+}
+
+.header-modal {
+  padding: 0;
+  text-align: center;
+}
+
+.header-modal-image {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.ui.header.headerText {
+  margin-top: 0 !important;
+}

@@ -1,0 +1,62 @@
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+.farsiPost {
+  text-align: right;
+  direction: rtl;
+  font-family: farsi;
+  line-height: var(--line-height-base);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-spacing: normal;
+  letter-spacing: normal;
+  hyphens: none;
+}
+
+h3.ui.header.farsiPost,
+h3.farsiPost {
+  font-family: farsiBold !important;
+}
+
+.ui.header.farsiPost,
+p.farsiPost,
+.farsiPost p {
+  line-height: var(--line-height-base);
+}
+
+*::selection,
+.farsiPost::selection {
+  background: var(--color-bg-band);
+}
+
+.ui.header.farsiPost {
+  font-family: farsiBold;
+  margin-top: 0 !important;
+}
+
+.englishPost {
+  font-family: farsi;
+}
+
+.farsiPost {
+  font-family: farsi;
+}
+
+
+/* .header.farsiPost {
+  font-family: farsiBold;
+  color: var(--color-text-dark);
+} */
+
+.ui.big.header.farsiTitleWhite {
+  direction: rtl;
+  font-family: farsi;
+  color: var(--color-white);
+  font-size: 5em;
+}
+
+
+.textRef {
+  text-decoration: underline;
+}

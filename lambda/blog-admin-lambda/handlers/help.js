@@ -27,6 +27,7 @@ function getHelpMessage() {
     `   Example: /update meta subtitle=[New Subtitle]\n\n` +
     `*/toggle* - Toggle state\n\n` +
     `*/spotifyauth* - Get link to re-authorize Spotify (needed every ~6 months when the refresh token expires)\n\n` +
+    `*/scholarrefresh* - Re-scrape Google Scholar and update the publications list\n\n` +
     `*/help* - Show this help\n\n` +
     `*Note:* Always use [] brackets for field values in /add and /update commands. Attach photo to /add or /update to include image.`;
 }

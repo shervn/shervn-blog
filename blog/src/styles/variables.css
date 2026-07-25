@@ -27,6 +27,8 @@
   --color-control-hover-bg: rgba(0, 0, 0, 0.08);
   --color-control-active-bg: rgba(0, 0, 0, 0.15);
   --color-dot: var(--color-black);
+  --color-shadow-sm: rgba(0, 0, 0, 0.12);
+  --color-shadow-md: rgba(0, 0, 0, 0.18);
 
   /* Spacing */
   --spacing-xs: 0.1rem;
@@ -71,6 +73,9 @@
   --color-control-active-bg: rgba(255, 255, 255, 0.15);
   --color-dot: #cfcfcf;
   --color-progress-bg: #3a3a3a;
+  /* A black shadow is invisible against a dark page, so use a light glow instead */
+  --color-shadow-sm: rgba(255, 255, 255, 0.08);
+  --color-shadow-md: rgba(255, 255, 255, 0.16);
   color-scheme: dark;
 }
 

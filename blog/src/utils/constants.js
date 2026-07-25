@@ -5,6 +5,9 @@ export const POSTBOX_NULL_FORCE_COUNT = 5;
 export const POSTBOX_NULL_RANDOM_CHANCE = 0.25;
 export const POSTBOX_MAX_COMMENT_LINES = 4;
 
+// Train constants
+export const TRAIN_EMPTY_CHANCE = 0.2;
+
 // Blog constants
 export const BLOG_POSTS_PER_PAGE = 8;
 export const REVIEW_POSTS_PER_PAGE = 4;

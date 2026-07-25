@@ -1,0 +1,115 @@
+/* ============================================
+   SCHOLAR COMPONENT
+   ============================================ */
+.scholar-loading {
+  text-align: center;
+}
+
+.scholar-container {
+  width: 75% !important;
+  max-width: 700px !important;
+  margin: var(--spacing-lg) auto var(--spacing-xxl);
+}
+
+.scholar-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.scholar-sort button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.scholar-sort button.active {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.scholar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.scholar-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.scholar-item:last-child {
+  border-bottom: none;
+}
+
+.scholar-item-year {
+  flex: 0 0 3.5em;
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.scholar-item-body {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.scholar-item-title {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.scholar-item-title:hover {
+  color: var(--color-text-secondary);
+}
+
+.scholar-item-authors,
+.scholar-item-venue {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.scholar-item-venue {
+  font-style: italic;
+}
+
+.scholar-item-citations {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .scholar-item-year {
+    flex: 0 0 auto;
+    order: 1;
+  }
+
+  .scholar-item-citations {
+    order: 2;
+  }
+
+  .scholar-item-body {
+    order: 3;
+    flex: 1 1 100%;
+  }
+}
