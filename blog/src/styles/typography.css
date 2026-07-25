@@ -30,6 +30,11 @@ p.farsiPost,
   background: var(--color-bg-band);
 }
 
+.farsiPost li::marker,
+.englishPost li::marker {
+  font-weight: bold;
+}
+
 .ui.header.farsiPost {
   font-family: farsiBold;
   margin-top: 0 !important;

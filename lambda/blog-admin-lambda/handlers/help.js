@@ -5,7 +5,7 @@ function getHelpMessage() {
     `   Image types: postbox, train (send photo)\n` +
     `   Comment type: comment\n` +
     `   Example: /add blog [My Title] date=[تابستان ۰۳]\nPost body...\n` +
-    `   Example: /add blog [My Title] date=[تابستان ۰۳] songId=[2QwObYJWyJTiozvs0RI7CF]\nPost body...\n` +
+    `   Example: /add blog [My Title] date=[تابستان ۰۳] spotifySongId=[2QwObYJWyJTiozvs0RI7CF]\nPost body...\n` +
     `   Example: /add blog [My Title] date=[تابستان ۰۳] soundCloudLink=[url]\nPost body...\n` +
     `   Example: /add review [My Review Title] date=[تابستان ۰۳]\nReview body...\n` +
     `   Example: /add noises [My Noise Title] date=[تابستان ۰۳] soundCloudLink=[url] playlist=[true]\nDescription...\n` +
@@ -18,9 +18,9 @@ function getHelpMessage() {
     `   Example: /delete blog abc123\n` +
     `   Example: /delete postbox xyz789\n\n` +
     `*/update type uuid field=[value]* - Update post or meta\n` +
-    `   Post fields: title, date, description, order, body, soundCloudLink, playlist, songId\n` +
+    `   Post fields: title, date, description, order, body, soundCloudLink, playlist, spotifySongId\n` +
     `   Meta fields: name, subtitle\n` +
-    `   Example: /update blog abc123 title=[فصل پنجم] date=[فصل دهم] songId=[2QwObYJWyJTiozvs0RI7CF]\n` +
+    `   Example: /update blog abc123 title=[فصل پنجم] date=[فصل دهم] spotifySongId=[2QwObYJWyJTiozvs0RI7CF]\n` +
     `   Example: /update blog abc123\nNew body text here... (updates body only)\n` +
     `   Example: Send photo with /update blog abc123 (updates image only)\n` +
     `   Example: /update meta name=[New Name]\n` +

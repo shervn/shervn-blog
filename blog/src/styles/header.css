@@ -125,6 +125,16 @@
   border-radius: 6px;
 }
 
+.header-modal-caption {
+  color: var(--color-white);
+  font-family: farsi;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin: var(--spacing-lg) auto 0;
+  max-width: 32em;
+  padding: 0 var(--spacing-md);
+}
+
 .ui.header.headerText {
   margin-top: 0 !important;
 }

@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const config = require('../config/s3');
 
-const s3 = new AWS.S3({ 
+const s3 = new AWS.S3({
   region: config.REGION,
   httpOptions: {
     timeout: 3000 // 3 second timeout for S3 operations
@@ -62,9 +62,41 @@ async function uploadImageToS3(buffer, folder, fileName) {
   return folder === 'Misc' ? fileName : `/${key}`;
 }
 
+// Read a plain-text file from S3 (post body markdown, no frontmatter)
+async function readText(key, defaultValue = null) {
+  try {
+    const data = await s3.getObject({ Bucket: config.BUCKET, Key: key }).promise();
+    return data.Body.toString('utf-8');
+  } catch (err) {
+    if (err.code === 'NoSuchKey' || err.code === 'AccessDenied') {
+      return defaultValue;
+    }
+    throw err;
+  }
+}
+
+// Write a plain-text file to S3 (post body markdown, no frontmatter)
+async function writeText(key, text) {
+  const params = {
+    Bucket: config.BUCKET,
+    Key: key,
+    Body: text || '',
+    ContentType: 'text/markdown'
+  };
+  await s3.putObject(params).promise();
+}
+
+// Delete an object from S3
+async function deleteObject(key) {
+  await s3.deleteObject({ Bucket: config.BUCKET, Key: key }).promise();
+}
+
 module.exports = {
   readJSON,
   writeJSON,
-  uploadImageToS3
+  uploadImageToS3,
+  readText,
+  writeText,
+  deleteObject
 };
 

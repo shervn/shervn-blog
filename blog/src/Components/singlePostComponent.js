@@ -2,20 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Container, Header, Image, Divider, Loader, Placeholder } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { getImagePath, renderBoldQuotes, loadData } from '../utils/general.js';
-
-// Extract Spotify track ID from URL or use directly
-const getSpotifyTrackId = (songId) => {
-  if (!songId) return null;
-  
-  // If it's a full URL, extract the track ID
-  const urlMatch = songId.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
-  if (urlMatch) {
-    return urlMatch[1];
-  }
-  
-  return songId;
-};
+import PostMarkdown from './postMarkdown.js';
+import PostEmbeds from './postEmbeds.js';
+import { getImagePath, loadData, loadPostBody } from '../utils/general.js';
 
 // Skeleton loader component
 const PostSkeleton = () => (
@@ -44,10 +33,11 @@ const SinglePost = ({ type, uuid }) => {
   useEffect(() => {
     if (!type || !uuid) return;
 
-    loadData((data) => {
+    loadData(async (data) => {
       const foundPost = data.find((item) => item.uuid === uuid);
       if (foundPost) {
-        setPost(foundPost);
+        const body = await loadPostBody(type, uuid);
+        setPost({ ...foundPost, body });
       } else {
         navigate('/');
       }
@@ -98,42 +88,15 @@ const SinglePost = ({ type, uuid }) => {
       )}
 
       {/* Body */}
-      {post.body.split('\n').map((line, idx) => (
-        <p key={idx} className={`${post.className} single-post-paragraph`}>
-          {renderBoldQuotes(line)}
-        </p>
-      ))}
+      <PostMarkdown body={post.body} className={`${post.className} single-post-paragraph`} />
 
-      {/* Sound iframe (if soundCloudLink is present) */}
-      {post.soundCloudLink && (
-        <iframe
-          title={post.title}
-          width="100%"
-          height="150"
-          allow="autoplay"
-          src={post.soundCloudLink}
-          frameBorder="0"
-          className="single-post-iframe"
-        />
-      )}
-
-      {/* Spotify embed (if songId is present) */}
-      {(() => {
-        const trackId = post.songId ? getSpotifyTrackId(post.songId) : null;
-        return trackId ? (
-          <iframe
-            title={`Spotify: ${post.title}`}
-            src={`https://open.spotify.com/embed/track/${trackId}`}
-            width="100%"
-            height="150"
-            frameBorder="0"
-            allowtransparency="true"
-            allow="encrypted-media"
-            style={{ borderRadius: '8px', marginTop: '1rem', marginBottom: '-5rem' }}
-            className="single-post-spotify-embed"
-          />
-        ) : null;
-      })()}
+      {/* SoundCloud / Spotify embeds (if present) */}
+      <PostEmbeds
+        title={post.title}
+        soundCloudLink={post.soundCloudLink}
+        spotifySongId={post.spotifySongId}
+        playlist={post.playlist}
+      />
 
       <Divider />
     </Container>

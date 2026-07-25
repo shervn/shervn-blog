@@ -63,10 +63,48 @@ function parseTildes(text, isBold, key) {
 }
 
 export function renderBoldQuotes(text) {
-  return text.split("|").flatMap((part, idx) => {
+  return text.split("**").flatMap((part, idx) => {
     const result = parseTildes(part, idx % 2 === 1, idx);
     return Array.isArray(result) ? result : [result];
   });
+}
+
+// Extract a Spotify track ID from a full track URL, or pass through a bare ID.
+export function getSpotifyTrackId(spotifySongId) {
+  if (!spotifySongId) return null;
+  const urlMatch = spotifySongId.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+  return urlMatch ? urlMatch[1] : spotifySongId;
+}
+
+export const loadPostBody = async (type, uuid) => {
+  try {
+    const url = `${BASE_URL}/data/${type}/${uuid}.md`;
+    const response = await fetch(url);
+    if (response.ok) {
+      return await response.text();
+    }
+    console.error('Failed to load post body:', response.status, response.statusText);
+    return '';
+  } catch (error) {
+    console.error('Error loading post body:', error);
+    return '';
+  }
+}
+
+export const loadComments = async () => {
+  try {
+    const url = `${BASE_URL}/data/comments.txt`;
+    const response = await fetch(url);
+    if (response.ok) {
+      const text = await response.text();
+      return text.split(/\n\s*\n/).map((c) => c.trim()).filter(Boolean);
+    }
+    console.error('Failed to load comments:', response.status, response.statusText);
+    return [];
+  } catch (error) {
+    console.error('Error loading comments:', error);
+    return [];
+  }
 }
 
 export const loadData = async (func, path) => {

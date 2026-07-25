@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
-import { Container, Loader, Icon } from "semantic-ui-react";
+import { Container, Loader } from "semantic-ui-react";
 import { getScholarPapers } from "../utils/lambdaUtils.js";
 
 export default function ScholarComponent() {
   const [papers, setPapers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState('year');
 
   useEffect(() => {
     async function fetchData() {
@@ -25,13 +24,9 @@ export default function ScholarComponent() {
 
   const sortedPapers = useMemo(() => {
     const sorted = [...papers];
-    if (sortBy === 'citations') {
-      sorted.sort((a, b) => b.citations - a.citations || (b.year || 0) - (a.year || 0));
-    } else {
-      sorted.sort((a, b) => (b.year || 0) - (a.year || 0) || b.citations - a.citations);
-    }
+    sorted.sort((a, b) => (b.year || 0) - (a.year || 0));
     return sorted;
-  }, [papers, sortBy]);
+  }, [papers]);
 
   if (loading) {
     return (
@@ -46,24 +41,6 @@ export default function ScholarComponent() {
 
   return (
     <Container className="scholar-container" role="main" aria-label="Publications">
-      <div className="scholar-sort" role="group" aria-label="Sort publications">
-        <span>Sort by</span>
-        <button
-          type="button"
-          className={sortBy === 'year' ? 'active' : ''}
-          onClick={() => setSortBy('year')}
-        >
-          Year
-        </button>
-        <button
-          type="button"
-          className={sortBy === 'citations' ? 'active' : ''}
-          onClick={() => setSortBy('citations')}
-        >
-          Citations
-        </button>
-      </div>
-
       <ul className="scholar-list">
         {sortedPapers.map((paper, i) => (
           <li key={i} className="scholar-item">
@@ -79,10 +56,6 @@ export default function ScholarComponent() {
               </a>
               {paper.authors && <div className="scholar-item-authors">{paper.authors}</div>}
               {paper.venue && <div className="scholar-item-venue">{paper.venue}</div>}
-            </div>
-            <div className="scholar-item-citations" title="Citations">
-              <Icon name="quote right" />
-              {paper.citations}
             </div>
           </li>
         ))}

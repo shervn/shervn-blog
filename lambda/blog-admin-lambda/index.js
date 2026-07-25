@@ -72,7 +72,7 @@ function parsePostFields(bracketArgs, fieldValuePairs, args) {
   let className = 'farsiPost';
   let soundCloudLink = null;
   let playlist = false;
-  let songId = null;
+  let spotifySongId = null;
   
   // Process brackets - first bracket without = is title
   for (const bracket of bracketArgs) {
@@ -90,12 +90,12 @@ function parsePostFields(bracketArgs, fieldValuePairs, args) {
     else if (pair.field === 'className') className = normalizedValue || 'farsiPost';
     else if (pair.field === 'soundCloudLink') soundCloudLink = normalizedValue;
     else if (pair.field === 'playlist') playlist = normalizedValue ? normalizedValue.toLowerCase() === 'true' : false;
-    else if (pair.field === 'songId') songId = normalizedValue;
+    else if (pair.field === 'spotifySongId') spotifySongId = normalizedValue;
   }
   
   // Fallback: if no brackets, use old format
   if (bracketArgs.length === 0 && fieldValuePairs.length === 0) {
-    const dateMatch = args.match(/date=([^\s]+(?:\s+[^\s]+)*?)(?=\s+className=|soundCloudLink=|playlist=|songId=|$)/);
+    const dateMatch = args.match(/date=([^\s]+(?:\s+[^\s]+)*?)(?=\s+className=|soundCloudLink=|playlist=|spotifySongId=|$)/);
     if (dateMatch) date = dateMatch[1].trim();
     
     const classNameMatch = args.match(/className=([^\s]+)/);
@@ -107,21 +107,21 @@ function parsePostFields(bracketArgs, fieldValuePairs, args) {
     const playlistMatch = args.match(/playlist=([^\s]+)/);
     if (playlistMatch) playlist = playlistMatch[1].toLowerCase() === 'true';
     
-    const songIdMatch = args.match(/songId=([^\s]+)/);
-    if (songIdMatch) songId = songIdMatch[1];
+    const spotifySongIdMatch = args.match(/spotifySongId=([^\s]+)/);
+    if (spotifySongIdMatch) spotifySongId = spotifySongIdMatch[1];
     
     let titleArgs = args;
-    if (dateMatch) titleArgs = titleArgs.replace(/date=[^\s]+(?:\s+[^\s]+)*?(?=\s+className=|soundCloudLink=|playlist=|songId=|$)/, '').trim();
+    if (dateMatch) titleArgs = titleArgs.replace(/date=[^\s]+(?:\s+[^\s]+)*?(?=\s+className=|soundCloudLink=|playlist=|spotifySongId=|$)/, '').trim();
     if (classNameMatch) titleArgs = titleArgs.replace(/\s*className=[^\s]+/, '').trim();
     if (soundCloudMatch) titleArgs = titleArgs.replace(/\s*soundCloudLink=[^\s]+/, '').trim();
     if (playlistMatch) titleArgs = titleArgs.replace(/\s*playlist=[^\s]+/, '').trim();
-    if (songIdMatch) titleArgs = titleArgs.replace(/\s*songId=[^\s]+/, '').trim();
+    if (spotifySongIdMatch) titleArgs = titleArgs.replace(/\s*spotifySongId=[^\s]+/, '').trim();
     
     const titleParts = titleArgs.split(' ').slice(1);
     title = titleParts.join(' ').trim() || null;
   }
   
-  return { title, date, className, soundCloudLink, playlist, songId };
+  return { title, date, className, soundCloudLink, playlist, spotifySongId };
 }
 
 // Handle add comment command
@@ -156,7 +156,7 @@ async function handleAddImage(type, args, bracketArgs, photo) {
 }
 
 // Handle add post command
-async function handleAddPost(type, title, date, className, soundCloudLink, playlist, songId, postBody, photo) {
+async function handleAddPost(type, title, date, className, soundCloudLink, playlist, spotifySongId, postBody, photo) {
   if (!title) {
     return '❌ Title is required. Use format: /add blog [My Title] date=[تابستان ۰۳]\nPost body here...';
   }
@@ -175,7 +175,7 @@ async function handleAddPost(type, title, date, className, soundCloudLink, playl
       imagePath = await uploadImageIfPresent(photo, type);
     }
     
-    return await postsHandler.addPost(type, title, postBody.trim(), date, '', className, imagePath, soundCloudLink, playlist, songId);
+    return await postsHandler.addPost(type, title, postBody.trim(), date, '', className, imagePath, soundCloudLink, playlist, spotifySongId);
   } catch (err) {
     console.error('Error adding post:', err.message);
     return `❌ Error: ${err.message}`;
@@ -195,8 +195,8 @@ async function handleAddCommand(args, bracketArgs, postBody, photo) {
   }
   
   // Handle post types (blog, review, noises)
-  const { title, date, className, soundCloudLink, playlist, songId } = parsePostFields(bracketArgs, fieldValuePairs, args);
-  return await handleAddPost(type, title, date, className, soundCloudLink, playlist, songId, postBody, photo);
+  const { title, date, className, soundCloudLink, playlist, spotifySongId } = parsePostFields(bracketArgs, fieldValuePairs, args);
+  return await handleAddPost(type, title, date, className, soundCloudLink, playlist, spotifySongId, postBody, photo);
 }
 
 // Handle get command
@@ -274,9 +274,9 @@ function buildPostUpdates(fieldValuePairs, args, postBody) {
     else if (field === 'body') updates.body = postBody || normalizedValue;
     else if (field === 'soundCloudLink') updates.soundCloudLink = normalizedValue;
     else if (field === 'playlist') updates.playlist = normalizedValue ? normalizedValue.toLowerCase() === 'true' : false;
-    else if (field === 'songId') updates.songId = normalizedValue;
+    else if (field === 'spotifySongId') updates.spotifySongId = normalizedValue;
     else {
-      return { error: '❌ Invalid field. Allowed: title, date, description, order, body, soundCloudLink, playlist, songId' };
+      return { error: '❌ Invalid field. Allowed: title, date, description, order, body, soundCloudLink, playlist, spotifySongId' };
     }
   }
   

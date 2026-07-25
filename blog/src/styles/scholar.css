@@ -11,31 +11,6 @@
   margin: var(--spacing-lg) auto var(--spacing-xxl);
 }
 
-.scholar-sort {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-}
-
-.scholar-sort button {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: inherit;
-  font-family: inherit;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-}
-
-.scholar-sort button.active {
-  color: var(--color-text-primary);
-  font-weight: 600;
-  text-decoration: underline;
-}
-
 .scholar-list {
   list-style: none;
   padding: 0;
@@ -88,28 +63,14 @@
   font-style: italic;
 }
 
-.scholar-item-citations {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  white-space: nowrap;
-}
-
 @media (max-width: 767px) {
   .scholar-item-year {
     flex: 0 0 auto;
     order: 1;
   }
 
-  .scholar-item-citations {
-    order: 2;
-  }
-
   .scholar-item-body {
-    order: 3;
+    order: 2;
     flex: 1 1 100%;
   }
 }

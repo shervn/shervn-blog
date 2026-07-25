@@ -1,7 +1,7 @@
 
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Grid, Image, Container, Loader } from "semantic-ui-react";
-import { getS3Path, loadData, shuffleArray, insertEmptySquares, getPlaceholderIndex } from '../utils/general.js';
+import { getS3Path, loadData, loadComments, shuffleArray, insertEmptySquares, getPlaceholderIndex } from '../utils/general.js';
 import {
   POSTBOX_INITIAL_VISIBLE,
   POSTBOX_LOAD_MORE_COUNT,
@@ -24,7 +24,7 @@ export default function PhotoGrid() {
         setLoading(true);
         const [dataJson, commentsJson] = await Promise.all([
           new Promise((resolve) => loadData((data) => resolve(data), 'postboxdata')),
-          new Promise((resolve) => loadData((data) => resolve(data), 'comments'))
+          loadComments()
         ]);
         setData(dataJson);
         setAllComments(commentsJson);
@@ -107,7 +107,6 @@ export default function PhotoGrid() {
             ) : (
               <CommentPlaceholder
                 comment={shuffledComments[getPlaceholderIndex(items, i) % shuffledComments.length]}
-                seed={getPlaceholderIndex(items, i)}
               />
             )}
           </Grid.Column>

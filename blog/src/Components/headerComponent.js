@@ -68,6 +68,9 @@ export default function HeaderComponent() {
       >
         <Modal.Content onClick={() => setModalOpen(false)}>
           <img src={getImagePath('fozouni.jpg', 'header')} className="header-modal-image" alt="Fozouni" />
+          {metadata.fozouniCaption && (
+            <p dir="rtl" className="header-modal-caption">{metadata.fozouniCaption}</p>
+          )}
         </Modal.Content>
       </Modal>
 

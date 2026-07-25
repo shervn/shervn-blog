@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Container, Header, Divider, Image, Icon } from 'semantic-ui-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { loadData, getImagePath, renderBoldQuotes  } from '../utils/general.js';
+import PostMarkdown from './postMarkdown.js';
+import PostEmbeds from './postEmbeds.js';
+import { loadData, loadPostBody, getImagePath } from '../utils/general.js';
 import { BLOG_POSTS_PER_PAGE, REVIEW_POSTS_PER_PAGE, BLOG_PREVIEW_MAX_LENGTH, SOUND_POSTS_PER_PAGE } from '../utils/constants.js';
 
 const Blog = ({ type = "blog" }) => {
@@ -23,8 +25,11 @@ const Blog = ({ type = "blog" }) => {
   
   useEffect(() => {
     setIsLoading(true);
-    loadData((data) => {
-      setBlogData(data);
+    loadData(async (data) => {
+      const withBodies = await Promise.all(
+        data.map(async (post) => ({ ...post, body: await loadPostBody(type, post.uuid) }))
+      );
+      setBlogData(withBodies);
       setIsLoading(false);
     }, type);
   }, [type]);
@@ -75,58 +80,27 @@ const Blog = ({ type = "blog" }) => {
     <Container text>
       <ul className="blogList">
         {blogData.slice(currentPage * count, (currentPage + 1) * count).map(element => {
-          const shouldTruncate = element.body.length > maxPreviewLength;
-          let previewText = element.body;
-          if (shouldTruncate) {
-            previewText = element.body.slice(0, maxPreviewLength);
-          }
-
-          const lines = previewText.split('\n');
-          const lastLineIndex = lines.length - 1;
-
           return (
             <li key={element.order + element.date}>
-             
+
               <Container text className={element.className}>
                 <Header as="h3" content={element.title} className={element.className} />
                 {element.image && <Image src={getImagePath(element.image, 'Misc')} floated="left" size="small" />}
 
-                {lines.map((line, idx) => {
-                  const renderedLine = renderBoldQuotes(line);
-                  if (idx === lastLineIndex && shouldTruncate) {
-                    return (
-                      <p className={`${element.className} blog-preview-inline`} key={idx}>
-                        {renderedLine} 
-                        <span className="blog-preview-ellipsis">
-                          ...{' '}
-                          <Header
-                            as={Link}
-                            to={`/${type}/${element.uuid}`}
-                            size="tiny"
-                            className="blog-preview-link"
-                          >
-                            {'/ادامه/'}
-                          </Header>
-                        </span>
-                      </p>
-                    );
-                  } else {
-                    return <p className={element.className} key={idx}>{renderedLine}</p>;
-                  }
-                })}
+                <PostMarkdown
+                  body={element.body}
+                  className={element.className}
+                  maxLength={maxPreviewLength}
+                  continueTo={`/${type}/${element.uuid}`}
+                />
 
-                {/* Sound iframe (if noises type) */}
-                {type === 'noises' && element.soundCloudLink && (
-                  <iframe
-                    title={element.title}
-                    width="100%"
-                    height={element.playlist === true ? 350 : 150}
-                    allow="autoplay"
-                    src={element.soundCloudLink}
-                    frameBorder="0"
-                    className="single-post-iframe"
-                  />
-                )}
+                {/* SoundCloud / Spotify embeds (if present) */}
+                <PostEmbeds
+                  title={element.title}
+                  soundCloudLink={element.soundCloudLink}
+                  spotifySongId={element.spotifySongId}
+                  playlist={element.playlist}
+                />
 
                 <Header 
                   as={Link}
