@@ -1,16 +1,14 @@
 
-import { useMemo, useCallback, useState, useEffect, useRef } from "react";
-import { Grid, Image, Container, Loader, Divider } from "semantic-ui-react";
-import { renderBoldQuotes, getS3Path, loadData } from '../utils/general.js';
+import { useMemo, useState, useEffect, useRef } from "react";
+import { Grid, Image, Container, Loader } from "semantic-ui-react";
+import { getS3Path, loadData, shuffleArray, insertEmptySquares, getPlaceholderIndex } from '../utils/general.js';
 import {
   POSTBOX_INITIAL_VISIBLE,
   POSTBOX_LOAD_MORE_COUNT,
   POSTBOX_NULL_FORCE_COUNT,
   POSTBOX_NULL_RANDOM_CHANCE,
-  POSTBOX_MAX_COMMENT_LINES
 } from '../utils/constants.js';
-
-import AnimatedStat from "./animatedStat.js";
+import CommentPlaceholder from './commentPlaceholder.js';
 
 export default function PhotoGrid() {
   const [items, setItems] = useState([]);
@@ -40,46 +38,7 @@ export default function PhotoGrid() {
   }, []);
 
   // Pre-shuffle comments once
-  const shuffledComments = useMemo(() => {
-    if (allComments.length === 0) return [];
-    const arr = [...allComments];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }, [allComments]);
-
-  const shuffleArray = useCallback((array) => {
-    const newArr = [...array];
-    for (let i = newArr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-    }
-    return newArr;
-  }, []);
-
-  const insertEmptySquares = useCallback((items, startingWindowCount = 0) => {
-    const result = [];
-    let count = startingWindowCount;
-
-    items.forEach((item, index) => {
-      result.push(item);
-      count++;
-
-      // force a null if threshold items have passed without one
-      if (count >= POSTBOX_NULL_FORCE_COUNT) {
-        result.push(null);
-        count = 0;
-      } else if (index < items.length - 1 && Math.random() < POSTBOX_NULL_RANDOM_CHANCE) {
-        // random null insertion
-        result.push(null);
-        count = 0;
-      }
-    });
-
-    return { result, windowCount: count };
-  }, []);
+  const shuffledComments = useMemo(() => shuffleArray(allComments), [allComments]);
 
   // Process data when it's loaded
   useEffect(() => {
@@ -91,14 +50,9 @@ export default function PhotoGrid() {
       cityFa: item.city?.fa || "",
     }));
 
-    const shuffledNewItems = shuffleArray(flat);
-    const { result: processedNewItems } = insertEmptySquares(
-      shuffledNewItems,
-      0
-    );
-
-    setItems(processedNewItems);
-  }, [data, shuffleArray, insertEmptySquares]);
+    const shuffled = shuffleArray(flat);
+    setItems(insertEmptySquares(shuffled, POSTBOX_NULL_FORCE_COUNT, POSTBOX_NULL_RANDOM_CHANCE));
+  }, [data]);
 
   // Infinite scroll
   useEffect(() => {
@@ -151,87 +105,15 @@ export default function PhotoGrid() {
                 </div>
               </div>
             ) : (
-              <div className="commentPlaceHolder">
-                {(() => {
-                  const placeholderIndex =
-                    items.slice(0, i + 1).filter((x) => x === null).length - 1;
-                  const comment =
-                    shuffledComments[placeholderIndex % shuffledComments.length];
-
-                  const words = comment.split(" ");
-                  const lines =
-                    words.length <= POSTBOX_MAX_COMMENT_LINES
-                      ? words
-                      : [words[0], words[1], words.slice(2).join(" ")];
-
-                  // Use placeholderIndex as seed for consistent alignment
-                  const seed = placeholderIndex;
-                  return lines.map((line, idx) => {
-                    const textAlign = (seed + idx) % 2 === 0 ? "right" : "left";
-                    return (
-                      <p
-                        key={idx}
-                        className={`postbox-comment-text ${textAlign === "right" ? "right" : ""}`}
-                      >
-                        {renderBoldQuotes(line)}
-                      </p>
-                    );
-                  });
-                })()}
-              </div>
+              <CommentPlaceholder
+                comment={shuffledComments[getPlaceholderIndex(items, i) % shuffledComments.length]}
+                seed={getPlaceholderIndex(items, i)}
+              />
             )}
           </Grid.Column>
         ))}
       </Grid>
       {visibleCount < items.length && <div ref={loadMoreRef} className="postbox-load-more" />}
-      <Grid columns={3} divided >
-        <Grid.Column textAlign="center">
-          <AnimatedStat
-            value={new Set(items.filter(Boolean).map(item => item.cityEn)).size}
-            text="Cities"
-            isFarsi={false}
-          />
-        </Grid.Column>
-        <Grid.Column textAlign="center">
-          <AnimatedStat
-            value={items.filter(Boolean).length}
-            text="Postboxes"
-            isFarsi={false}
-          />
-        </Grid.Column>
-        <Grid.Column textAlign="center">
-          <AnimatedStat
-            value={-1}
-            text="Stories"
-            isFarsi={false}
-          />
-        </Grid.Column>
-      </Grid>
-      <Divider />
-
-      <Grid columns={3} divided >
-        <Grid.Column textAlign="center">
-          <AnimatedStat
-            value={-1}
-            text="روایت"
-            isFarsi={true}
-          />
-        </Grid.Column>
-        <Grid.Column textAlign="center">
-          <AnimatedStat
-            value={items.filter(Boolean).length}
-            text="صندوق"
-            isFarsi={true}
-          />
-        </Grid.Column>
-        <Grid.Column textAlign="center">
-          <AnimatedStat
-            value={new Set(items.filter(Boolean).map(item => item.cityEn)).size}
-            text="شهر"
-            isFarsi={true}
-          />
-        </Grid.Column>
-      </Grid>
     </Container>
   );
 }

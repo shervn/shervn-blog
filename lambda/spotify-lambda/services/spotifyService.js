@@ -154,6 +154,32 @@ async function getPlaylist(playlistId) {
   return response.data;
 }
 
+async function getUserPlaylists() {
+  const token = await getAccessToken();
+  let items = [];
+  let url = `${config.API_BASE_URL}/me/playlists?limit=50`;
+
+  while (url) {
+    const response = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } });
+    items = items.concat(response.data.items);
+    url = response.data.next;
+  }
+
+  return items;
+}
+
+function mapPlaylistTracks(playlistData) {
+  return playlistData.tracks.items
+    .filter((item) => item.track)
+    .map((item) => ({
+      song: item.track.name,
+      artist: item.track.artists.map((a) => a.name).join('⨯'),
+      url: item.track.external_urls.spotify,
+      albumArt: item.track.album.images[0]?.url || null,
+      albumName: item.track.album.name,
+    }));
+}
+
 async function getTrack(trackId) {
   const token = await getAccessToken();
   const response = await axios.get(
@@ -172,6 +198,8 @@ module.exports = {
   getCurrentlyPlaying,
   controlPlayer,
   getPlaylist,
+  getUserPlaylists,
+  mapPlaylistTracks,
   getTrack,
 };
 

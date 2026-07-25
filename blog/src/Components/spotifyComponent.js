@@ -130,10 +130,13 @@ export function MusicPlayer() {
     };
   }, [currentlyPlaying?.is_playing]);
 
+  const track = currentlyPlaying || spotifyTrack;
+  const duration = currentlyPlaying?.duration_ms ?? track?.duration_ms ?? 0;
+
   const percent = useMemo(() => {
-    if (!currentlyPlaying?.duration_ms) return 0;
-    return (progress / currentlyPlaying.duration_ms) * 100;
-  }, [progress, currentlyPlaying]);
+    if (!duration) return 0;
+    return (progress / duration) * 100;
+  }, [progress, duration]);
 
   const formatTime = (ms) => {
     if (!ms && ms !== 0) return "0:00";
@@ -162,8 +165,6 @@ export function MusicPlayer() {
     }
   }
 
-  const track = currentlyPlaying || spotifyTrack;
-
   if (loading) {
     return (
       <div className="spotify-loading">
@@ -185,12 +186,12 @@ export function MusicPlayer() {
         </a>{' '}
         by <span className='band'>{track.artist || track.band}</span>
       </p>
-      {currentlyPlaying && (
+      {track && (
         <div className="spotify-wave-gif-container">
-          <img 
+          <img
             ref={gifRef}
-            src="/wave.gif" 
-            alt="" 
+            src="/wave.gif"
+            alt=""
             className="spotify-wave-gif"
             rel="animated_src"
           />
@@ -209,14 +210,15 @@ export function MusicPlayer() {
             : ''}
       </p>
 
-      {/* Only show player controls if toggle is true */}
-      {currentlyPlaying && (
+      {/* Show the player bar for any known track; controls disable themselves
+          when there's no live, controllable playback session. */}
+      {track && (
         <Segment basic className="spotify-player-segment" role="region" aria-label="Spotify player">
           <Grid verticalAlign='middle'>
             <Grid.Row columns={3} textAlign='center' className="spotify-player-row">
               <Grid.Column className="spotify-start-stop-time" width={2} textAlign='right' aria-label={`Current time: ${formatTime(progress)}`}>{formatTime(progress)}</Grid.Column>
               <Grid.Column width={12}>
-                <div 
+                <div
                   className="spotify-progress-container"
                   role="progressbar"
                   aria-valuenow={percent}
@@ -224,13 +226,13 @@ export function MusicPlayer() {
                   aria-valuemax="100"
                   aria-label={`Progress: ${percent}%`}
                 >
-                  <div 
+                  <div
                     className="spotify-progress-bar"
                     style={{ width: `${percent}%` }}
                   />
                 </div>
               </Grid.Column>
-              <Grid.Column className="spotify-start-stop-time" width={2} textAlign='left' aria-label={`Total duration: ${formatTime(currentlyPlaying.duration_ms)}`}>{formatTime(currentlyPlaying.duration_ms)}</Grid.Column>
+              <Grid.Column className="spotify-start-stop-time" width={2} textAlign='left' aria-label={`Total duration: ${formatTime(duration)}`}>{formatTime(duration)}</Grid.Column>
             </Grid.Row>
           </Grid>
           {showButtons ? (

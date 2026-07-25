@@ -89,6 +89,44 @@ export const loadData = async (func, path) => {
   }
 }
 
+export function shuffleArray(array) {
+  const newArr = [...array];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+}
+
+// Weaves `null` placeholders into a list of items: forced every `forceCount`
+// items, and with `randomChance` probability otherwise. Used to intersperse
+// comment cards among photo grids.
+export function insertEmptySquares(items, forceCount, randomChance) {
+  const result = [];
+  let count = 0;
+
+  items.forEach((item, index) => {
+    result.push(item);
+    count++;
+
+    if (count >= forceCount) {
+      result.push(null);
+      count = 0;
+    } else if (index < items.length - 1 && Math.random() < randomChance) {
+      result.push(null);
+      count = 0;
+    }
+  });
+
+  return result;
+}
+
+// Index of the null placeholder at position `i` among all placeholders seen so
+// far in `items` (i.e. which shuffled comment it should show).
+export function getPlaceholderIndex(items, i) {
+  return items.slice(0, i + 1).filter((x) => x === null).length - 1;
+}
+
 export function timeAgo(isoDate) {
   const now = new Date();
   const past = new Date(isoDate);

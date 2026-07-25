@@ -1,0 +1,36 @@
+service: scholar-lambda
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  environment:
+    SCHOLAR_USER_ID: ${env:SCHOLAR_USER_ID}
+  iamRoleStatements:
+    - Sid: S3DataAccess
+      Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: arn:aws:s3:::shervn-blog-media/*
+
+functions:
+  api:
+    handler: index.handler
+    timeout: 10
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+      - http:
+          path: /
+          method: ANY
+          cors: true
+  refresh:
+    handler: refresh.handler
+    timeout: 300
+    events:
+      - schedule: rate(12 hours)

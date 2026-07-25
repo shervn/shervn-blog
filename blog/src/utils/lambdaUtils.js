@@ -1,5 +1,6 @@
 // Base API URL for all Lambda functions
 export const BASE_API = 'https://68hlb8id96.execute-api.us-east-1.amazonaws.com/dev';
+export const SCHOLAR_API = 'https://a6gh1zs0ej.execute-api.us-east-1.amazonaws.com/dev';
 
 /**
  * Get toggle state
@@ -95,6 +96,32 @@ export const getPlaylist = async () => {
   } catch (err) {
     console.error('Error fetching playlist:', err);
     return null;
+  }
+};
+
+/**
+ * Get all "shervn-" prefixed Spotify playlists (prefix stripped), each with its tracks
+ */
+export const getMyPlaylists = async () => {
+  try {
+    const response = await fetch(`${BASE_API}/playlists`);
+    return await response.json();
+  } catch (err) {
+    console.error('Error fetching playlists:', err);
+    return [];
+  }
+};
+
+/**
+ * Get Google Scholar publications, sorted by year then citation count
+ */
+export const getScholarPapers = async () => {
+  try {
+    const response = await fetch(`${SCHOLAR_API}/papers`);
+    return await response.json();
+  } catch (err) {
+    console.error('Error fetching scholar papers:', err);
+    return { stats: null, papers: [] };
   }
 };
 

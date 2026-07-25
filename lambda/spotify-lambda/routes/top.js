@@ -13,6 +13,7 @@ router.get('/top-artists', async (req, res) => {
     const simplified = data.items.map((artist) => ({
       band: artist.name,
       url: artist.external_urls.spotify,
+      image: artist.images[0]?.url || null,
       since: timeRange,
     }));
 
@@ -33,6 +34,7 @@ router.get('/top-songs', async (req, res) => {
       song: track.name,
       artist: track.artists.map((a) => a.name).join('⨯'),
       url: track.external_urls.spotify,
+      albumArt: track.album?.images[0]?.url || null,
       since: timeRange,
     }));
 

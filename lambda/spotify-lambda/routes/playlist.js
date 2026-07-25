@@ -6,28 +6,46 @@ const config = require('../config/spotify');
 router.get('/playlist', async (req, res) => {
   try {
     const playlistId = config.PLAYLIST_ID;
-    
+
     if (!playlistId) {
       return res.status(500).json({ error: 'Playlist ID not configured' });
     }
 
     const data = await spotifyService.getPlaylist(playlistId);
 
-    const tracks = data.tracks.items
-      .filter(item => item.track) // Filter out null tracks
-      .map((item) => ({
-        song: item.track.name,
-        artist: item.track.artists.map((a) => a.name).join('⨯'),
-        url: item.track.external_urls.spotify,
-        albumArt: item.track.album.images[0]?.url || null, // Get the largest image (first in array)
-        albumName: item.track.album.name,
-      }));
-
     res.json({
       name: data.name,
       description: data.description,
-      tracks: tracks,
+      tracks: spotifyService.mapPlaylistTracks(data),
     });
+  } catch (err) {
+    res.status(500).json({ error: err.response?.data || err.message });
+  }
+});
+
+const PLAYLIST_PREFIX = 'shervn-';
+
+// All of the user's playlists whose name starts with "shervn-", with that
+// prefix stripped, each with its full track list.
+router.get('/playlists', async (req, res) => {
+  try {
+    const allPlaylists = await spotifyService.getUserPlaylists();
+    const matching = allPlaylists.filter(
+      (p) => p.name && p.name.toLowerCase().startsWith(PLAYLIST_PREFIX)
+    );
+
+    const results = await Promise.all(
+      matching.map(async (p) => {
+        const data = await spotifyService.getPlaylist(p.id);
+        return {
+          id: p.id,
+          name: p.name.slice(PLAYLIST_PREFIX.length),
+          tracks: spotifyService.mapPlaylistTracks(data),
+        };
+      })
+    );
+
+    res.json(results);
   } catch (err) {
     res.status(500).json({ error: err.response?.data || err.message });
   }

@@ -11,14 +11,16 @@ import Blog from './Components/blogComponent.js';
 import TrainComponent from './Components/trainComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
 import MusicStatComponent from "./Components/musicStatComponent.js";
+import ScholarComponent from "./Components/scholarComponent.js";
 import SinglePost from './Components/singlePostComponent.js';
 import RouteTransition from './Components/routeTransition.js';
 
 
+const NAV_ITEMS = ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'spotify', 'scholar'];
 const THEME_STORAGE_KEY = 'blog-theme';
 
 function validatePathName(t) {
-  return ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'spotify'].includes(t.split('/')[1])
+  return NAV_ITEMS.includes(t.split('/')[1])
     ? t.split('/')[1]
     : 'postboxes';
 }
@@ -124,8 +126,8 @@ export default class App extends Component {
           <Router>
             <PageViewTracker />
             <nav className="mainPageWithMenu" role="navigation" aria-label="Main navigation">
-              <Menu secondary widths={6} stackable>
-                {['blog','reviews','postboxes','metro','noises','spotify'].map((item) => (
+              <Menu secondary widths={7} stackable>
+                {NAV_ITEMS.map((item) => (
                   <Menu.Item
                     key={item}
                     as={Link}
@@ -152,6 +154,7 @@ export default class App extends Component {
                 <Route path="/noises" element={<Navigate to="/noises/page/1" replace />} />
                 <Route path="/noises/page/:page" element={<Blog type="noises" />} />
                 <Route path="/spotify" element={<MusicStatComponent />} />
+                <Route path="/scholar" element={<ScholarComponent />} />
 
                 <Route path="/:type/:uuid" element={<SingleItemWrapper />} />
 
