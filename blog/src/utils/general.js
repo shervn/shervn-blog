@@ -1,7 +1,5 @@
 import FadingWords from "../Components/FadingWords";
 
-export const uid = () => (Math.random() + 1).toString(36).substring(2);
-
 const S3_BASE_URL = 'https://shervn-blog-media.s3.amazonaws.com';
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 const BASE_URL = isLocalhost ? '' : S3_BASE_URL;
@@ -17,6 +15,37 @@ export function getS3Path(path) {
   if (!path) return '';
   const cleanPath = path.startsWith('/') ? path.substring(1) : path;
   return `${BASE_URL}/${cleanPath}`;
+}
+
+// Muted pastels in the same dusty, desaturated family as the existing
+// --color-bg-song / --color-bg-band / --color-selection chip colors.
+const PASTEL_PALETTE = [
+  '#deefd9', // mint
+  '#a7b5d5', // dusty blue
+  '#e6e6cc', // khaki
+  '#f0d9c9', // dusty peach
+  '#d9c9e6', // dusty lavender
+  '#e6c9d1', // dusty rose
+  '#c9e6e0', // dusty teal
+  '#ecdcc0', // dusty tan
+];
+
+// Deterministically picks a pastel from PASTEL_PALETTE based on a name, so a
+// given group (playlist, "Top Artists", ...) keeps the same color across
+// re-renders and reloads instead of flickering to a new one each time.
+export function pastelColorFor(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  }
+  return PASTEL_PALETTE[Math.abs(hash) % PASTEL_PALETTE.length];
+}
+
+// For a small, fixed, known list (e.g. nav tabs) - cycles the palette by
+// position instead of by name hash, so items can't collide onto the same
+// color the way two hashes occasionally do.
+export function pastelColorForIndex(index) {
+  return PASTEL_PALETTE[index % PASTEL_PALETTE.length];
 }
 
 function parseTildes(text, isBold, key) {
@@ -74,6 +103,23 @@ export function getSpotifyTrackId(spotifySongId) {
   if (!spotifySongId) return null;
   const urlMatch = spotifySongId.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
   return urlMatch ? urlMatch[1] : spotifySongId;
+}
+
+// Turn a YouTube watch/share/shorts URL into an embeddable iframe src, or
+// null if the URL isn't a recognizable YouTube link.
+export function getYoutubeEmbedUrl(url) {
+  if (!url) return null;
+  const patterns = [
+    /youtu\.be\/([a-zA-Z0-9_-]{6,})/,
+    /youtube\.com\/watch\?[^#]*\bv=([a-zA-Z0-9_-]{6,})/,
+    /youtube\.com\/embed\/([a-zA-Z0-9_-]{6,})/,
+    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{6,})/
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return `https://www.youtube.com/embed/${match[1]}`;
+  }
+  return null;
 }
 
 export const loadPostBody = async (type, uuid) => {

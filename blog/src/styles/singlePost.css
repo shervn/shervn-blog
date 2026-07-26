@@ -1,7 +1,9 @@
 /* ============================================
    SINGLE POST COMPONENT
    ============================================ */
-.single-post-container {
+.single-post-container.ui.container {
+  width: 75%;
+  max-width: 75%;
   margin-top: var(--spacing-xl);
 }
 
@@ -9,19 +11,64 @@
   margin-bottom: var(--spacing-lg);
 }
 
-.single-post-image {
-  margin-right: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  margin-top: 0;
-  border-radius: 6px;
-}
-
-.ui.small.left.floated.image {
-  border-radius: 6px;
-}
-
 .single-post-paragraph {
   line-height: var(--line-height-base);
+}
+
+.single-post-layout {
+  display: flex;
+  align-items: stretch;
+}
+
+.single-post-body-column {
+  width: 80%;
+  padding-right: var(--spacing-xl);
+}
+
+.single-post-meta-column {
+  width: 20%;
+  text-align: left;
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--spacing-lg);
+}
+
+.single-post-meta-column .ui.header {
+  text-align: left;
+}
+
+.single-post-meta-image {
+  margin-top: var(--spacing-lg);
+  border-radius: 6px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .single-post-layout {
+    flex-direction: column;
+  }
+
+  .single-post-body-column,
+  .single-post-meta-column {
+    width: 100%;
+  }
+
+  .single-post-meta-column {
+    order: -1;
+    text-align: right;
+    border-left: none;
+    border-bottom: 1px solid var(--color-border);
+    padding-left: 0;
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .single-post-meta-column .ui.header {
+    text-align: right;
+  }
+
+  .single-post-meta-image {
+    display: none !important;
+  }
 }
 
 .single-post-date {
@@ -34,4 +81,49 @@
   min-height: 150px;
   display: block;
   background: transparent;
+}
+
+/* SoundCloud's embed is a cross-origin iframe (its own domain) with no dark-mode
+   option in its widget API, so this is the only lever available - inverting
+   colors approximates a dark look. Imperfect for any colored artwork inside it. */
+:root[data-theme="dark"] .single-post-iframe {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Spotify's card widget renders its own corner slightly outside our radius
+   clip on the left/right edges, leaving a sliver of its white background
+   visible there. Clip through an overflow:hidden wrapper and oversize the
+   iframe a couple px past the left/right edges to hide it. Height=152 (in
+   postEmbeds.js) matches what the widget actually needs - going shorter
+   leaves a gap or clips the taller "now playing" state for logged-in
+   viewers, since there's no way to read Spotify's real content height from
+   outside its iframe (confirmed: no postMessage height data available). */
+.single-post-spotify-embed-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: var(--spacing-lg);
+}
+
+.single-post-spotify-embed {
+  display: block;
+  margin: 0 -3px;
+  width: calc(100% + 6px) !important;
+}
+
+.post-youtube-embed {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: var(--spacing-lg) 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.post-youtube-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }

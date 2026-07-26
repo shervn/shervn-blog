@@ -10,17 +10,26 @@
   padding-top: 10px;
 }
 
+.blog-preview-image {
+  border-radius: 6px;
+}
+
+.blog-preview-card {
+  cursor: pointer;
+}
+
 .blog-preview-ellipsis {
   display: inline-block;
   margin-left: var(--spacing-sm);
 }
 
 .blog-preview-link {
-  padding: 0;
+  padding: 0 10px !important;
   min-width: auto;
-  color: var(--color-text-dark) !important;
-  background: var(--color-bg-song);
+  color: var(--color-bg-page) !important;
+  background: var(--color-text-primary);
   font-family: farsiBold !important;
+  border-radius: 6px;
 }
 
 .blog-date {

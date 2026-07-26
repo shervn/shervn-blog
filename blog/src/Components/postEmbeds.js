@@ -22,17 +22,18 @@ export default function PostEmbeds({ title, soundCloudLink, spotifySongId, playl
       )}
 
       {trackId && (
-        <iframe
-          title={`Spotify: ${title}`}
-          src={`https://open.spotify.com/embed/track/${trackId}`}
-          width="100%"
-          height="150"
-          frameBorder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-          style={{ borderRadius: '8px', marginTop: '1rem', marginBottom: '-5rem' }}
-          className="single-post-spotify-embed"
-        />
+        <div className="single-post-spotify-embed-wrapper">
+          <iframe
+            title={`Spotify: ${title}`}
+            src={`https://open.spotify.com/embed/track/${trackId}`}
+            width="100%"
+            height="152"
+            frameBorder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+            className="single-post-spotify-embed"
+          />
+        </div>
       )}
     </>
   );

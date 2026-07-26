@@ -14,6 +14,9 @@
    so their text must stay dark regardless of page theme. */
 .chip-header {
   color: var(--color-text-dark) !important;
+  display: inline-block;
+  padding: 2px var(--spacing-md);
+  border-radius: 6px;
 }
 
 .ui.menu .item,
@@ -30,28 +33,14 @@
   background: transparent !important;
 }
 
-.ui.secondary.menu .item::after {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-bg-song);
-  opacity: 0;
-  transition: opacity var(--transition-fast);
-}
-
-.ui.secondary.menu .active.item::after,
-.ui.secondary.menu .item:hover::after {
-  opacity: 1;
+.ui.secondary.menu .active.item {
+  background: var(--nav-pastel) !important;
+  color: var(--color-text-dark) !important;
+  border-radius: 6px !important;
 }
 
 .ui.divider {
   border-color: var(--color-border) !important;
-}
-
-.ui.divided.grid > .column:not(.row),
-.ui.divided.grid > .row > .column {
-  box-shadow: -1px 0 0 0 var(--color-border) !important;
 }
 
 .ui.divider::before,

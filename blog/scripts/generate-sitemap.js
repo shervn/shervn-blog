@@ -10,7 +10,7 @@ const SITE_URL = 'https://shervn.com';
 const DATA_DIR = path.join(__dirname, '..', '..', 'media', 'data');
 const OUT_PATH = path.join(__dirname, '..', 'public', 'sitemap.xml');
 
-const STATIC_ROUTES = ['/', '/blog/page/1', '/reviews/page/1', '/postboxes', '/metro', '/noises/page/1', '/spotify', '/scholar'];
+const STATIC_ROUTES = ['/', '/blog/page/1', '/reviews/page/1', '/postboxes', '/metro', '/noises/page/1', '/listening', '/research'];
 
 // type key (matches media/data/{type}.json) -> URL segment used by SinglePost's route
 const POST_TYPES = [

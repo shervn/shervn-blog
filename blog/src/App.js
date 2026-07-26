@@ -2,6 +2,7 @@ import React, { Component, useEffect, useRef } from 'react';
 import { Divider, Icon, Menu } from 'semantic-ui-react';
 import { BrowserRouter as Router, Link, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { pastelColorForIndex } from './utils/general.js';
 
 import './styles/App.css';
 
@@ -16,8 +17,7 @@ import SinglePost from './Components/singlePostComponent.js';
 import RouteTransition from './Components/routeTransition.js';
 
 
-const NAV_ITEMS = ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'spotify', 'scholar'];
-const THEME_STORAGE_KEY = 'blog-theme';
+const NAV_ITEMS = ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'listening', 'research'];
 
 function validatePathName(t) {
   return NAV_ITEMS.includes(t.split('/')[1])
@@ -34,10 +34,6 @@ function isDaytime() {
 }
 
 function getInitialTheme() {
-  const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
-  if (stored === 'light' || stored === 'dark') {
-    return stored;
-  }
   return isDaytime() ? 'light' : 'dark';
 }
 
@@ -143,7 +139,6 @@ export default class App extends Component {
   toggleTheme = () => {
     this.setState(({ theme }) => {
       const next = theme === 'dark' ? 'light' : 'dark';
-      window.localStorage.setItem(THEME_STORAGE_KEY, next);
       document.documentElement.setAttribute('data-theme', next);
       return { theme: next };
     });
@@ -190,7 +185,7 @@ export default class App extends Component {
             <PageViewTracker />
             <nav className="mainPageWithMenu" role="navigation" aria-label="Main navigation">
               <Menu secondary widths={7} stackable>
-                {NAV_ITEMS.map((item) => (
+                {NAV_ITEMS.map((item, index) => (
                   <Menu.Item
                     key={item}
                     as={Link}
@@ -201,6 +196,7 @@ export default class App extends Component {
                     active={this.state.activeItem === item}
                     onClick={this.handleItemClick}
                     aria-label={`Navigate to ${item}`}
+                    style={{ '--nav-pastel': pastelColorForIndex(index) }}
                   />
                 ))}
               </Menu>
@@ -216,8 +212,8 @@ export default class App extends Component {
                 <Route path="/metro" element={<TrainComponent/>} />
                 <Route path="/noises" element={<Navigate to="/noises/page/1" replace />} />
                 <Route path="/noises/page/:page" element={<Blog type="noises" />} />
-                <Route path="/spotify" element={<MusicStatComponent />} />
-                <Route path="/scholar" element={<ScholarComponent />} />
+                <Route path="/listening" element={<MusicStatComponent />} />
+                <Route path="/research" element={<ScholarComponent />} />
 
                 <Route path="/:type/:uuid" element={<SingleItemWrapper />} />
 

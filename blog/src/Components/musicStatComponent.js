@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { Grid, Container, Header, Loader, Image } from "semantic-ui-react";
 import { getTopSongs, getTopArtists, getMyPlaylists, getRecentTracks } from "../utils/lambdaUtils.js";
 import { MUSIC_STAT_LIMIT, MUSIC_STAT_TIME_RANGE } from "../utils/constants.js";
+import { pastelColorFor } from "../utils/general.js";
 
-function SectionHeader({ children, band }) {
+function SectionHeader({ children }) {
   return (
     <Header
       as="h4"
       textAlign="left"
       className="chip-header"
-      style={{ background: band ? 'var(--color-bg-band)' : 'var(--color-bg-song)' }}
+      style={{ background: pastelColorFor(String(children)) }}
     >
       {children}
     </Header>
@@ -98,7 +99,7 @@ export default function MusicStatComponent() {
 
   return (
     <Container className="stats music-stat-container">
-      <Grid stackable columns={2} divided>
+      <Grid stackable columns={2}>
         {recentTracks.length > 0 && (
           <Grid.Row>
             <Grid.Column width={16} textAlign="left">
@@ -119,12 +120,12 @@ export default function MusicStatComponent() {
 
         <Grid.Row>
           <Grid.Column>
-            <SectionHeader band>Top Songs (last 4 weeks)</SectionHeader>
+            <SectionHeader>Top Songs (last 4 weeks)</SectionHeader>
             <TrackGrid tracks={songs} />
           </Grid.Column>
 
-          <Grid.Column>
-            <SectionHeader band>Top Artists (last 4 weeks)</SectionHeader>
+          <Grid.Column className="music-stat-artists-column">
+            <SectionHeader>Top Artists (last 4 weeks)</SectionHeader>
             <ArtistGrid artists={artists} />
           </Grid.Column>
         </Grid.Row>

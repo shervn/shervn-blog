@@ -22,13 +22,6 @@
     padding-left: var(--spacing-lg) !important;
   }
 
-  .single-post-image {
-    max-width: 150px !important;
-    width: 150px !important;
-    height: auto !important;
-  }
-
-
   .instaContainer .ui.grid {
     align-items: flex-start;
   }

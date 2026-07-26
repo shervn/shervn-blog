@@ -83,9 +83,17 @@ const Blog = ({ type = "blog" }) => {
           return (
             <li key={element.order + element.date}>
 
-              <Container text className={element.className}>
+              <Container
+                text
+                className={`blog-preview-card ${element.className}`}
+                onClick={(e) => {
+                  if (window.getSelection().toString().length > 0) return;
+                  if (e.target.closest('a, iframe')) return;
+                  navigate(`/${type}/${element.uuid}`);
+                }}
+              >
                 <Header as="h3" content={element.title} className={element.className} />
-                {element.image && <Image src={getImagePath(element.image, 'Misc')} floated="left" size="small" />}
+                {element.image && <Image src={getImagePath(element.image, 'Misc')} floated="left" size="small" className="blog-preview-image" />}
 
                 <PostMarkdown
                   body={element.body}

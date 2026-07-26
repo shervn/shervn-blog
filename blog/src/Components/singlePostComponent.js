@@ -70,37 +70,41 @@ const SinglePost = ({ type, uuid }) => {
           })}
         </script>
       </Helmet>
-      <Container text className={`single-post-container ${post.className}`} role="article">
-        {/* Title */}
-        <Header as="h2" content={post.title} className={post.className} />
-      {/* Date */}
-      {post.date && (
-        <Header as="h4" content={post.date} className="dateField single-post-date" />
-      )}
-      {/* Image */}
-      {post.image && (
-        <Image
-          src={getImagePath(post.image, 'Misc')}
-          floated="left"
-          size="medium"
-          className="single-post-image"
-          alt={post.title || 'Post image'}
-        />
-      )}
+      <Container className="single-post-container" role="article">
+        <div className="single-post-layout">
+          <div className="single-post-body-column">
+            {/* Body */}
+            <PostMarkdown body={post.body} className={`${post.className} single-post-paragraph`} />
 
-      {/* Body */}
-      <PostMarkdown body={post.body} className={`${post.className} single-post-paragraph`} />
+            {/* SoundCloud / Spotify embeds (if present) */}
+            <PostEmbeds
+              title={post.title}
+              soundCloudLink={post.soundCloudLink}
+              spotifySongId={post.spotifySongId}
+              playlist={post.playlist}
+            />
+          </div>
 
-      {/* SoundCloud / Spotify embeds (if present) */}
-      <PostEmbeds
-        title={post.title}
-        soundCloudLink={post.soundCloudLink}
-        spotifySongId={post.spotifySongId}
-        playlist={post.playlist}
-      />
+          <div className="single-post-meta-column">
+            {/* Title */}
+            <Header as="h2" content={post.title} className={post.className} />
+            {/* Date */}
+            {post.date && (
+              <Header as="h4" content={post.date} className="dateField single-post-date" />
+            )}
+            {/* Image (desktop only) */}
+            {post.image && (
+              <Image
+                src={getImagePath(post.image, 'Misc')}
+                className="single-post-meta-image"
+                alt={post.title || 'Post image'}
+              />
+            )}
+          </div>
+        </div>
 
-      <Divider />
-    </Container>
+        <Divider />
+      </Container>
     </>
   );
 };

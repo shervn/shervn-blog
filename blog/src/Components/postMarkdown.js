@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import { Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { visit } from 'unist-util-visit';
+import { getYoutubeEmbedUrl } from '../utils/general.js';
 
 // Lines starting with "* " would otherwise be parsed as a bullet (CommonMark
 // treats "-", "*", and "+" as equivalent list markers). Escaping the asterisk
@@ -29,12 +30,38 @@ function remarkBoldMarkedLines() {
   };
 }
 
+// A paragraph consisting of nothing but a single link - "[label](url)" alone
+// on its own line - is a post author's markup for "embed this", not a link
+// to render. Returns that link's href, or null for an ordinary paragraph.
+function soleLinkHref(node) {
+  const onlyChild = node?.children?.length === 1 ? node.children[0] : null;
+  return onlyChild?.type === 'element' && onlyChild.tagName === 'a' ? onlyChild.properties?.href : null;
+}
+
+function YoutubeEmbed({ url }) {
+  return (
+    <span className="post-youtube-embed">
+      <iframe
+        src={url}
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+    </span>
+  );
+}
+
 // Block-level elements need the same className as <p> or they fall back to
 // the default font/direction instead of the post's Farsi styling.
 function blockComponents(className) {
   const styled = (Tag) => ({ node, ...props }) => <Tag className={className} {...props} />;
   return {
-    p: styled('p'),
+    p: ({ node, children, ...props }) => {
+      const embedUrl = getYoutubeEmbedUrl(soleLinkHref(node));
+      if (embedUrl) return <YoutubeEmbed url={embedUrl} />;
+      return <p className={className} {...props}>{children}</p>;
+    },
     li: styled('li'),
     ul: styled('ul'),
     ol: styled('ol'),
@@ -73,7 +100,7 @@ export default function PostMarkdown({ body, className, maxLength, continueTo })
     <span className="blog-preview-ellipsis">
       ...{' '}
       <Header as={Link} to={continueTo} size="tiny" className="blog-preview-link">
-        {'/ادامه/'}
+        {' ادامه '}
       </Header>
     </span>
   );
@@ -85,6 +112,8 @@ export default function PostMarkdown({ body, className, maxLength, continueTo })
         components={{
           ...blockComponents(className),
           p: ({ node, children, ...props }) => {
+            const embedUrl = getYoutubeEmbedUrl(soleLinkHref(node));
+            if (embedUrl) return <YoutubeEmbed url={embedUrl} />;
             const isLastParagraph = lastBlockIsPlainParagraph && node?.position?.end?.offset >= text.length - 2;
             return (
               <p className={className} {...props}>

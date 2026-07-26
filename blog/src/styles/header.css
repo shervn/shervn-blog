@@ -23,12 +23,14 @@
   background-color: var(--color-bg-song);
   color: var(--color-text-dark) !important;
   padding: 0 0.25em;
+  border-radius: 6px;
 }
 
 .musiclistening .band {
   background-color: var(--color-bg-band);
   color: var(--color-text-dark) !important;
   padding: 0 0.25em;
+  border-radius: 6px;
 }
 
 /* ============================================
