@@ -65,7 +65,7 @@ const SinglePost = ({ type, uuid }) => {
             "datePublished": post.date,
             "author": {
               "@type": "Person",
-              "name": "Shervin Dehghani"
+              "name": "Shervin *"
             }
           })}
         </script>

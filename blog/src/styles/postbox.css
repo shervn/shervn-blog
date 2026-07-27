@@ -25,10 +25,16 @@
 
 .postbox-image-wrapper {
   position: relative;
+  aspect-ratio: 1 / 1;
   border-radius: 8px;
   overflow: hidden !important;
   box-shadow: 0 1px 3px var(--color-shadow-sm);
   transition: box-shadow var(--transition-normal);
+  /* Safari sometimes fails to clip child content to overflow:hidden +
+     border-radius (visible as a hard black sliver at the rounded corner).
+     Forcing the clip through a mask instead is the standard, reliable fix. */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
 
 .postbox-image-wrapper:hover {
@@ -37,18 +43,20 @@
 
 .postbox-image {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   pointer-events: none;
   user-select: none;
   display: block;
+  border-radius: 8px;
 }
 
 .postbox-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 8px;
 }
 
 .postbox-load-more {

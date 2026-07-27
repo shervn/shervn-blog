@@ -25,8 +25,8 @@ function validatePathName(t) {
     : 'postboxes';
 }
 
-const DAY_START_HOUR = 7;
-const DAY_END_HOUR = 19;
+const DAY_START_HOUR = 6;
+const DAY_END_HOUR = 20;
 
 function isDaytime() {
   const hour = new Date().getHours();
@@ -151,7 +151,7 @@ export default class App extends Component {
           <title>shervn - Personal Blog</title>
           <meta
             name="description"
-            content="Personal webpage of Shervin Dehghani. Blog posts, reviews, photography, and music. شروین . صفحه شخصی."
+            content="Personal webpage of Shervin *. Blog posts, reviews, photography, and music. شروین . صفحه شخصی."
           />
           <meta name="keywords" content="shervin, blog, photography, music, portfolio" />
           <meta property="og:type" content="website" />
@@ -161,7 +161,7 @@ export default class App extends Component {
             {JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": "Shervin Dehghani",
+              "name": "Shervin *",
               "url": "https://shervn.com",
               "sameAs": []
             })}
