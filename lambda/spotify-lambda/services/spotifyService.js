@@ -124,8 +124,11 @@ async function getTopTracks(limit = 1, timeRange = 'short_term') {
 
 async function getCurrentlyPlaying() {
   const token = await getAccessToken();
+  // additional_types is required to get episode data back at all - without
+  // it, Spotify only ever considers "track" and returns an empty item while
+  // a podcast is playing, regardless of what's actually playing.
   const response = await axios.get(
-    `${config.API_BASE_URL}/me/player/currently-playing`,
+    `${config.API_BASE_URL}/me/player/currently-playing?additional_types=track,episode`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   return response.data;
