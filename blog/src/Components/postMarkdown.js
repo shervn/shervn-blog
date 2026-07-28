@@ -54,12 +54,14 @@ function YoutubeEmbed({ url }) {
 
 // Block-level elements need the same className as <p> or they fall back to
 // the default font/direction instead of the post's Farsi styling.
-function blockComponents(className) {
+// skipEmbeds drops the video entirely (used for the truncated preview) -
+// the embed only belongs on the full, selected-post page.
+function blockComponents(className, { skipEmbeds = false } = {}) {
   const styled = (Tag) => ({ node, ...props }) => <Tag className={className} {...props} />;
   return {
     p: ({ node, children, ...props }) => {
       const embedUrl = getYoutubeEmbedUrl(soleLinkHref(node));
-      if (embedUrl) return <YoutubeEmbed url={embedUrl} />;
+      if (embedUrl) return skipEmbeds ? null : <YoutubeEmbed url={embedUrl} />;
       return <p className={className} {...props}>{children}</p>;
     },
     li: styled('li'),
@@ -110,10 +112,10 @@ export default function PostMarkdown({ body, className, maxLength, continueTo })
       <ReactMarkdown
         remarkPlugins={[remarkBoldMarkedLines]}
         components={{
-          ...blockComponents(className),
+          ...blockComponents(className, { skipEmbeds: true }),
           p: ({ node, children, ...props }) => {
             const embedUrl = getYoutubeEmbedUrl(soleLinkHref(node));
-            if (embedUrl) return <YoutubeEmbed url={embedUrl} />;
+            if (embedUrl) return null;
             const isLastParagraph = lastBlockIsPlainParagraph && node?.position?.end?.offset >= text.length - 2;
             return (
               <p className={className} {...props}>

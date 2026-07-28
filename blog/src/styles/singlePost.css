@@ -113,10 +113,10 @@
 .post-youtube-embed {
   display: block;
   position: relative;
-  width: 100%;
+  width: 85%;
+  margin: var(--spacing-xxl) auto;
   aspect-ratio: 16 / 9;
-  margin: var(--spacing-lg) 0;
-  border-radius: 6px;
+  border-radius: 16px;
   overflow: hidden;
 }
 
