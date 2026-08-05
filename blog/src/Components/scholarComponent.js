@@ -1,17 +1,31 @@
 import { useState, useEffect, useMemo } from "react";
-import { Container, Loader } from "semantic-ui-react";
+import { Container, Loader, Header, Divider } from "semantic-ui-react";
 import { getScholarPapers } from "../utils/lambdaUtils.js";
+import { loadPostBody } from "../utils/general.js";
+import { BLOG_PREVIEW_MAX_LENGTH } from "../utils/constants.js";
+import PostMarkdown from "./postMarkdown.js";
+
+// Not a scraped Scholar entry (dissertations rarely show up there) and not a
+// blog post either - pinned as its own featured writeup above the paper list.
+const FEATURED_POST_TYPE = 'research';
+const FEATURED_POST_UUID = '2j8q6emk';
+const FEATURED_POST_TITLE = 'Giving Sight and Intelligence to Sight-Giving Surgical Robots';
 
 export default function ScholarComponent() {
   const [papers, setPapers] = useState([]);
+  const [featuredBody, setFeaturedBody] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
         setLoading(true);
-        const data = await getScholarPapers();
+        const [data, body] = await Promise.all([
+          getScholarPapers(),
+          loadPostBody(FEATURED_POST_TYPE, FEATURED_POST_UUID),
+        ]);
         setPapers(Array.isArray(data?.papers) ? data.papers : []);
+        setFeaturedBody(body);
       } catch (err) {
         console.error(err);
       } finally {
@@ -37,10 +51,23 @@ export default function ScholarComponent() {
     );
   }
 
-  if (!papers.length) return null;
+  if (!papers.length && !featuredBody) return null;
 
   return (
     <Container className="scholar-container" role="main" aria-label="Publications">
+      {featuredBody && (
+        <>
+          <Header as="h2" content={FEATURED_POST_TITLE} className="englishPost" />
+          <PostMarkdown
+            body={featuredBody}
+            className="englishPost"
+            maxLength={BLOG_PREVIEW_MAX_LENGTH}
+            continueTo={`/${FEATURED_POST_TYPE}/${FEATURED_POST_UUID}`}
+            continueLabel=" Continue "
+          />
+          <Divider />
+        </>
+      )}
       <ul className="scholar-list">
         {sortedPapers.map((paper, i) => (
           <li key={i} className="scholar-item">

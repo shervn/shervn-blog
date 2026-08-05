@@ -72,15 +72,23 @@ function blockComponents(className, { skipEmbeds = false } = {}) {
     h3: styled('h3'),
     h4: styled('h4'),
     h5: styled('h5'),
-    h6: styled('h6')
+    h6: styled('h6'),
+    blockquote: styled('blockquote'),
+    // Inline links otherwise just inherit the surrounding text color (see
+    // global.css `a { color: inherit }`) and blend in - highlight them as a
+    // pill, same treatment as the artist-name chip in the "Listening to" bar.
+    a: ({ node, children, ...props }) => (
+      <a className="post-inline-link" {...props}>{children}</a>
+    )
   };
 }
 
-// Renders a post's raw markdown body. Shared by the preview list (blogComponent)
-// and the full single-post page (singlePostComponent) across blog/review/noises.
-// Pass maxLength + continueTo to get a truncated preview with an inline "/ادامه/" link;
-// omit them to render the full body untruncated.
-export default function PostMarkdown({ body, className, maxLength, continueTo }) {
+// Renders a post's raw markdown body. Shared by the preview list (blogComponent,
+// scholarComponent) and the full single-post page (singlePostComponent) across
+// blog/review/noises/research. Pass maxLength + continueTo to get a truncated
+// preview with an inline "/ادامه/" link to the full post's route; omit them to
+// render the full body untruncated.
+export default function PostMarkdown({ body, className, maxLength, continueTo, continueLabel = ' ادامه ' }) {
   const shouldTruncate = maxLength != null && body.length > maxLength;
   const rawText = shouldTruncate ? body.slice(0, maxLength) : body;
   const text = escapeAsteriskBullets(rawText);
@@ -102,7 +110,7 @@ export default function PostMarkdown({ body, className, maxLength, continueTo })
     <span className="blog-preview-ellipsis">
       ...{' '}
       <Header as={Link} to={continueTo} size="tiny" className="blog-preview-link">
-        {' ادامه '}
+        {continueLabel}
       </Header>
     </span>
   );

@@ -65,3 +65,47 @@ p.farsiPost,
 .textRef {
   text-decoration: underline;
 }
+
+/* Matches the look of a LaTeX \begin{quote} block: indented, with a vertical
+   rule along the block. Farsi posts are RTL, so the rule/indent sit on the
+   right (the reading-start side there) instead of the left.
+   PostMarkdown puts the post's className directly on the <blockquote> tag
+   itself (not on a wrapping ancestor), so these must match the element
+   directly rather than as a descendant selector. */
+blockquote.farsiPost,
+blockquote.englishPost {
+  margin: var(--spacing-lg) var(--spacing-xl);
+  padding-left: var(--spacing-lg);
+  border-left: 2px solid var(--color-border);
+  font-style: italic;
+}
+
+blockquote.farsiPost {
+  padding-left: 0;
+  padding-right: var(--spacing-lg);
+  border-left: none;
+  border-right: 2px solid var(--color-border);
+}
+
+/* Inline post links - same pill treatment as the artist-name chip in the
+   "Listening to" bar (see .musiclistening .band in header.css). */
+.post-inline-link {
+  background-color: var(--color-bg-band);
+  color: var(--color-text-dark) !important;
+  padding: 0 0.35em;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.post-inline-link:hover {
+  opacity: 0.85;
+}
+
+/* .blog-preview-link normally uses the Farsi bold webfont (farsiBold), which
+   has poor Latin glyph coverage/kerning - swap back to the site's normal
+   sans-serif stack for the "Continue" button on English posts. */
+.englishPost .blog-preview-link {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+}

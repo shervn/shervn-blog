@@ -71,7 +71,7 @@ const SinglePost = ({ type, uuid }) => {
         </script>
       </Helmet>
       <Container className="single-post-container" role="article">
-        <div className="single-post-layout">
+        <div className={`single-post-layout ${post.className === 'englishPost' ? 'single-post-layout-ltr' : ''}`}>
           <div className="single-post-body-column">
             {/* Body */}
             <PostMarkdown body={post.body} className={`${post.className} single-post-paragraph`} />
