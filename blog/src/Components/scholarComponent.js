@@ -68,6 +68,7 @@ export default function ScholarComponent() {
           <Divider />
         </>
       )}
+      <Header as="h2" content="Publications" className="englishPost" />
       <ul className="scholar-list">
         {sortedPapers.map((paper, i) => (
           <li key={i} className="scholar-item">

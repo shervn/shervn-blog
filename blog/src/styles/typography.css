@@ -25,6 +25,17 @@ p.farsiPost,
   line-height: var(--line-height-base);
 }
 
+/* Justified body text - every line (but the last) reaches the same edge,
+   instead of the ragged wrap you get from plain left/right alignment.
+   PostMarkdown puts the className directly on the <p> element itself in
+   most places, but on an ancestor in a few others - covering both. */
+p.farsiPost,
+.farsiPost p,
+p.englishPost,
+.englishPost p {
+  text-align: justify;
+}
+
 *::selection,
 .farsiPost::selection {
   background: var(--color-bg-band);

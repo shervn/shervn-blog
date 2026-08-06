@@ -5,10 +5,21 @@
   text-align: center;
 }
 
-.scholar-container {
-  width: 75% !important;
-  max-width: 700px !important;
+.ui.container.scholar-container {
   margin: var(--spacing-lg) auto var(--spacing-xxl);
+}
+
+/* Semantic UI's own .ui.container rule (0,2,0 specificity) was beating a
+   plain .scholar-container (0,1,0) at equal !important - matching its
+   compound selector here so the cap actually applies. Desktop-only: forcing
+   width:100% here also fights Semantic's own mobile-breakpoint margins
+   (they assume a narrower width to leave room for themselves), which was
+   pushing the container off-center on phone sizes. */
+@media (min-width: 769px) {
+  .ui.container.scholar-container {
+    width: 100% !important;
+    max-width: 700px !important;
+  }
 }
 
 .scholar-list {

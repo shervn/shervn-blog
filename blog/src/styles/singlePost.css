@@ -2,9 +2,22 @@
    SINGLE POST COMPONENT
    ============================================ */
 .single-post-container.ui.container {
-  width: 75%;
-  max-width: 75%;
   margin-top: var(--spacing-xl);
+}
+
+/* Fixed px cap instead of a viewport percentage, so the line length here
+   stays put instead of growing unbounded on wide screens - matches the
+   700px paragraph width used by blog-preview-card/scholar-container exactly
+   (910px total, minus the 20%-width meta sidebar and its padding, works out
+   to a 700px-wide body column - verified by measuring rendered <p> width).
+   Desktop-only: forcing width:100% here also fights Semantic's own
+   mobile-breakpoint margins (they assume a narrower width to leave room for
+   themselves), which was pushing the container off-center on phone sizes. */
+@media (min-width: 769px) {
+  .single-post-container.ui.container {
+    width: 100% !important;
+    max-width: 910px !important;
+  }
 }
 
 .single-post-container .ui.header {
@@ -44,18 +57,23 @@
 
 /* English (LTR) posts: the title/date/image column reads naturally on the
    left there, so mirror the layout - meta column moves first (left), body
-   column follows (right) - and flip the separator border/padding to match. */
-.single-post-layout-ltr .single-post-meta-column {
-  order: -1;
-  border-left: none;
-  border-right: 1px solid var(--color-border);
-  padding-left: 0;
-  padding-right: var(--spacing-lg);
-}
+   column follows (right) - and flip the separator border/padding to match.
+   Desktop-only (matches the two-column breakpoint below): on mobile the
+   columns stack full-width, so this side-swap has nothing to mirror against
+   and was instead just leaving lopsided left/right padding on the body text. */
+@media (min-width: 769px) {
+  .single-post-layout-ltr .single-post-meta-column {
+    order: -1;
+    border-left: none;
+    border-right: 1px solid var(--color-border);
+    padding-left: 0;
+    padding-right: var(--spacing-lg);
+  }
 
-.single-post-layout-ltr .single-post-body-column {
-  padding-right: 0;
-  padding-left: var(--spacing-xl);
+  .single-post-layout-ltr .single-post-body-column {
+    padding-right: 0;
+    padding-left: var(--spacing-xl);
+  }
 }
 
 @media (max-width: 768px) {
@@ -66,6 +84,11 @@
   .single-post-body-column,
   .single-post-meta-column {
     width: 100%;
+  }
+
+  .single-post-body-column {
+    padding-right: 0;
+    padding-left: 0;
   }
 
   .single-post-meta-column {
