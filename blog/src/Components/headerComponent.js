@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Header, Modal } from 'semantic-ui-react';
 import { loadData, getImagePath } from '../utils/general.js';
 import { MusicPlayer } from './spotifyComponent.js';
-import { HEADER_IMAGE_INTERVAL } from '../utils/constants.js';
 
 const images = [
   "a.png",
@@ -13,39 +12,44 @@ const images = [
   "f.png",
 ];
 
-const HeaderImages = () => {
-  const [activeIndices, setActiveIndices] = useState(new Set([0]));
+// t.png (the Tehran plate) is the one piece that stays fully visible and
+// heartbeats - the rest sit static and nearly invisible.
+const HEARTBEAT_IMAGE = "t.png";
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Randomly select 1-3 images to be active
-      const numActive = Math.floor(Math.random() * 3) + 1; // 1, 2, or 3 active images
-      const newActiveIndices = new Set();
-      
-      // Randomly select indices
-      while (newActiveIndices.size < numActive) {
-        const randomIndex = Math.floor(Math.random() * images.length);
-        newActiveIndices.add(randomIndex);
-      }
-      
-      setActiveIndices(newActiveIndices);
-    }, HEADER_IMAGE_INTERVAL);
-    return () => clearInterval(interval);
-  }, []);
+// TEMPORARY - remove after 2026-09-13. The non-heartbeat images start at 70%
+// opacity and fade linearly, day by day, down to 0 by the 13th, then stay there.
+const TEMP_FADE_START = new Date('2026-09-05T00:00:00');
+const TEMP_FADE_END = new Date('2026-09-13T00:00:00');
+const TEMP_START_OPACITY = 0.7;
 
-  return (
-      <div className="headerContainer header-container-wrapper">
-        {images.map((src, index) => (
-          <img
-            key={index}
-            className={`headerImage header-image-item ${activeIndices.has(index) ? 'active' : ''}`}
-            src={getImagePath(src, 'header')}
-            alt={`Header ${index + 1}`}
-          />
-        ))}
-      </div>
-  );
-};
+function tempFadingOpacity() {
+  const now = new Date();
+  if (now <= TEMP_FADE_START) return TEMP_START_OPACITY;
+  if (now >= TEMP_FADE_END) return 0;
+  const progress = (now - TEMP_FADE_START) / (TEMP_FADE_END - TEMP_FADE_START);
+  return TEMP_START_OPACITY * (1 - progress);
+}
+
+const tempOtherImagesOpacity = tempFadingOpacity();
+
+const HeaderImages = () => (
+  <div className="headerContainer header-container-wrapper">
+    {images.map((src, index) => (
+      <img
+        key={index}
+        className="headerImage header-image-item"
+        style={{ opacity: tempOtherImagesOpacity }}
+        src={getImagePath(src, 'header')}
+        alt={`Header ${index + 1}`}
+      />
+    ))}
+    <img
+      className="headerImage header-image-item active"
+      src={getImagePath(HEARTBEAT_IMAGE, 'header')}
+      alt="Header Tehran"
+    />
+  </div>
+);
 
 export default function HeaderComponent() {
   const [metadata, setMetadata] = useState({});

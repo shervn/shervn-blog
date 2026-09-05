@@ -77,3 +77,112 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 55%, rgba(0, 0, 0, 0) 100%);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
+
+.postbox-image-wrapper {
+  cursor: zoom-in;
+}
+
+/* ============================================
+   POSTBOX FULLSCREEN LIGHTBOX
+   ============================================ */
+.postbox-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+  animation: postbox-lightbox-fade-in var(--transition-fast);
+}
+
+@keyframes postbox-lightbox-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.postbox-lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+/* Source photos range from 512px to 1280px square, so without a fixed box
+   here each one would render at its own intrinsic size (tiny for low-res
+   shots, huge for high-res ones) instead of a consistent on-screen size. */
+.postbox-lightbox-image {
+  width: min(70vh, 70vw, 800px);
+  height: min(70vh, 70vw, 800px);
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.postbox-lightbox-caption {
+  margin-top: var(--spacing-lg);
+  text-align: left;
+  font-size: var(--font-size-lg);
+  font-family: farsi;
+  color: var(--color-white);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.postbox-lightbox-close,
+.postbox-lightbox-arrow {
+  position: fixed;
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  opacity: 0.75;
+  transition: opacity var(--transition-fast);
+}
+
+.postbox-lightbox-close:hover,
+.postbox-lightbox-arrow:hover {
+  opacity: 1;
+}
+
+.postbox-lightbox-close {
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
+}
+
+.postbox-lightbox-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 36px;
+  width: 60px;
+  height: 60px;
+}
+
+.postbox-lightbox-arrow-left {
+  left: 8px;
+}
+
+.postbox-lightbox-arrow-right {
+  right: 8px;
+}
+
+@media (max-width: 600px) {
+  .postbox-lightbox-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 26px;
+  }
+  .postbox-lightbox-close {
+    top: 10px;
+    right: 10px;
+  }
+}

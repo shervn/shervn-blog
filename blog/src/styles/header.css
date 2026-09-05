@@ -43,6 +43,17 @@
   overflow: hidden;
 }
 
+/* Timing pattern mirrors a real heartbeat's double-beat ("lub-dub") rhythm:
+   a strong pulse, a quick second pulse, then a longer rest. Only the active
+   image beats - inactive ones sit static and nearly invisible. */
+@keyframes header-heartbeat-active {
+  0%, 100% { opacity: 0.92; }
+  14% { opacity: 1; }
+  28% { opacity: 0.92; }
+  42% { opacity: 1; }
+  70% { opacity: 0.92; }
+}
+
 .header-container-wrapper .header-image-item {
   position: absolute;
   top: 0;
@@ -51,7 +62,7 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  opacity: 0.65;
+  opacity: 0.05;
   transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1);
   will-change: opacity, transform;
@@ -65,8 +76,8 @@
 }
 
 .header-image-item.active {
-  opacity: 1;
   transform: scale(1.003);
+  animation: header-heartbeat-active 1.3s ease-in-out infinite;
 }
 
 .headerImage {

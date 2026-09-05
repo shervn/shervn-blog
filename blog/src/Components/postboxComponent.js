@@ -1,6 +1,7 @@
 
-import { useMemo, useState, useEffect, useRef } from "react";
-import { Grid, Image, Container, Loader } from "semantic-ui-react";
+import { useMemo, useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
+import { Grid, Image, Container, Loader, Icon } from "semantic-ui-react";
 import { getS3Path, loadData, loadComments, shuffleArray, insertEmptySquares, getPlaceholderIndex } from '../utils/general.js';
 import {
   POSTBOX_INITIAL_VISIBLE,
@@ -16,7 +17,49 @@ export default function PhotoGrid() {
   const [data, setData] = useState([]);
   const [allComments, setAllComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
   const loadMoreRef = useRef(null);
+
+  // Only real photos (skipping placeholder slots) are navigable in the lightbox
+  const photoIndices = useMemo(
+    () => items.reduce((acc, item, i) => { if (item) acc.push(i); return acc; }, []),
+    [items]
+  );
+
+  const showNext = useCallback(() => {
+    setLightboxIndex((current) => {
+      if (current === null) return current;
+      const pos = photoIndices.indexOf(current);
+      return photoIndices[(pos + 1) % photoIndices.length];
+    });
+  }, [photoIndices]);
+
+  const showPrev = useCallback(() => {
+    setLightboxIndex((current) => {
+      if (current === null) return current;
+      const pos = photoIndices.indexOf(current);
+      return photoIndices[(pos - 1 + photoIndices.length) % photoIndices.length];
+    });
+  }, [photoIndices]);
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+
+  // Keyboard navigation + body scroll lock while the lightbox is open
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowRight") showNext();
+      else if (e.key === "ArrowLeft") showPrev();
+      else if (e.key === "Escape") closeLightbox();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxIndex, showNext, showPrev, closeLightbox]);
 
   useEffect(() => {
     async function fetchData() {
@@ -101,7 +144,14 @@ export default function PhotoGrid() {
         {items.slice(0, visibleCount).map((item, i) => (
           <Grid.Column key={i}>
             {item ? (
-              <div className="postbox-image-wrapper">
+              <div
+                className="postbox-image-wrapper"
+                onClick={() => setLightboxIndex(i)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${item.cityEn} photo in fullscreen`}
+                onKeyDown={(e) => { if (e.key === "Enter") setLightboxIndex(i); }}
+              >
                 <Image
                   src={item.src}
                   className="postbox-image"
@@ -123,6 +173,40 @@ export default function PhotoGrid() {
         ))}
       </Grid>
       {visibleCount < items.length && <div ref={loadMoreRef} className="postbox-load-more" />}
+      {lightboxIndex !== null && createPortal(
+        <div className="postbox-lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Photo fullscreen viewer">
+          <button className="postbox-lightbox-close" onClick={closeLightbox} aria-label="Close fullscreen view">
+            <Icon name="close" />
+          </button>
+          <button
+            className="postbox-lightbox-arrow postbox-lightbox-arrow-left"
+            onClick={(e) => { e.stopPropagation(); showPrev(); }}
+            aria-label="Previous photo"
+          >
+            <Icon name="chevron left" />
+          </button>
+          <div className="postbox-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={items[lightboxIndex].src}
+              alt={`${items[lightboxIndex].cityEn} ${items[lightboxIndex].cityFa}`}
+              className="postbox-lightbox-image"
+              draggable={false}
+            />
+            <div className="postbox-lightbox-caption">
+              <div>{items[lightboxIndex].cityEn}</div>
+              <div>{items[lightboxIndex].cityFa}</div>
+            </div>
+          </div>
+          <button
+            className="postbox-lightbox-arrow postbox-lightbox-arrow-right"
+            onClick={(e) => { e.stopPropagation(); showNext(); }}
+            aria-label="Next photo"
+          >
+            <Icon name="chevron right" />
+          </button>
+        </div>,
+        document.body
+      )}
     </Container>
   );
 }
