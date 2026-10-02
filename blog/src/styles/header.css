@@ -62,7 +62,7 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  opacity: 0.05;
+  opacity: 0.15;
   transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(1);
   will-change: opacity, transform;

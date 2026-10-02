@@ -13,24 +13,8 @@ const images = [
 ];
 
 // t.png (the Tehran plate) is the one piece that stays fully visible and
-// heartbeats - the rest sit static and nearly invisible.
+// heartbeats - the rest sit static at a low, constant opacity.
 const HEARTBEAT_IMAGE = "t.png";
-
-// TEMPORARY - remove after 2026-09-13. The non-heartbeat images start at 70%
-// opacity and fade linearly, day by day, down to 0 by the 13th, then stay there.
-const TEMP_FADE_START = new Date('2026-09-05T00:00:00');
-const TEMP_FADE_END = new Date('2026-09-13T00:00:00');
-const TEMP_START_OPACITY = 0.7;
-
-function tempFadingOpacity() {
-  const now = new Date();
-  if (now <= TEMP_FADE_START) return TEMP_START_OPACITY;
-  if (now >= TEMP_FADE_END) return 0;
-  const progress = (now - TEMP_FADE_START) / (TEMP_FADE_END - TEMP_FADE_START);
-  return TEMP_START_OPACITY * (1 - progress);
-}
-
-const tempOtherImagesOpacity = tempFadingOpacity();
 
 const HeaderImages = () => (
   <div className="headerContainer header-container-wrapper">
@@ -38,7 +22,6 @@ const HeaderImages = () => (
       <img
         key={index}
         className="headerImage header-image-item"
-        style={{ opacity: tempOtherImagesOpacity }}
         src={getImagePath(src, 'header')}
         alt={`Header ${index + 1}`}
       />
