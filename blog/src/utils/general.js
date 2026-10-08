@@ -158,8 +158,9 @@ export const loadData = async (func, path) => {
     const url = `${BASE_URL}/data/${path}.json`;
     const response = await fetch(url);
     if (response.ok) {
-      const jsonData = await response.json();
+      let jsonData = await response.json();
       if (Array.isArray(jsonData)) {
+        jsonData = jsonData.filter((item) => !item.hidden);
         jsonData.sort((a, b) => b.order - a.order);
       }
       func(jsonData);
