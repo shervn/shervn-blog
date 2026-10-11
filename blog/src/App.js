@@ -10,6 +10,7 @@ import HeaderComponent from './Components/headerComponent.js';
 import Footer from './Components/footerComponent.js';
 import Blog from './Components/blogComponent.js';
 import TrainComponent from './Components/trainComponent.js';
+import PlacesComponent from './Components/placesComponent.js';
 import PhotoGrid from "./Components/postboxComponent.js";
 import MusicStatComponent from "./Components/musicStatComponent.js";
 import ScholarComponent from "./Components/scholarComponent.js";
@@ -17,7 +18,7 @@ import SinglePost from './Components/singlePostComponent.js';
 import RouteTransition from './Components/routeTransition.js';
 
 
-const NAV_ITEMS = ['blog', 'reviews', 'postboxes', 'metro', 'noises', 'listening', 'research'];
+const NAV_ITEMS = ['blog', 'reviews', 'postboxes', 'metro', 'places', 'noises', 'listening', 'research'];
 
 function validatePathName(t) {
   return NAV_ITEMS.includes(t.split('/')[1])
@@ -184,7 +185,7 @@ export default class App extends Component {
             <RouteSeo />
             <PageViewTracker />
             <nav className="mainPageWithMenu" role="navigation" aria-label="Main navigation">
-              <Menu secondary widths={7} stackable>
+              <Menu secondary widths={8} stackable>
                 {NAV_ITEMS.map((item, index) => (
                   <Menu.Item
                     key={item}
@@ -210,6 +211,7 @@ export default class App extends Component {
                 <Route path="/reviews/page/:page" element={<Blog type="review" />} />
                 <Route path="/postboxes" element={<PhotoGrid/>} />
                 <Route path="/metro" element={<TrainComponent/>} />
+                <Route path="/places" element={<PlacesComponent/>} />
                 <Route path="/noises" element={<Navigate to="/noises/page/1" replace />} />
                 <Route path="/noises/page/:page" element={<Blog type="noises" />} />
                 <Route path="/listening" element={<MusicStatComponent />} />

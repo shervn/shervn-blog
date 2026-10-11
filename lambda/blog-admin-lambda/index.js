@@ -3,6 +3,7 @@ const s3Service = require('./services/s3Service');
 const { parseCommand } = require('./utils/commandParser');
 const postsHandler = require('./handlers/posts');
 const imagesHandler = require('./handlers/images');
+const placesHandler = require('./handlers/places');
 const commentsHandler = require('./handlers/comments');
 const toggleHandler = require('./handlers/toggle');
 const spotifyHandler = require('./handlers/spotify');
@@ -155,6 +156,60 @@ async function handleAddImage(type, args, bracketArgs, photo) {
   }
 }
 
+// Parse place fields from add/update command
+function parsePlaceFields(bracketArgs, fieldValuePairs) {
+  let name = null;
+  for (const bracket of bracketArgs) {
+    if (!bracket.includes('=') && name === null) {
+      name = bracket;
+    }
+  }
+
+  const fields = {};
+  for (const pair of fieldValuePairs) {
+    const trimmedValue = pair.value ? pair.value.trim() : '';
+    fields[pair.field] = trimmedValue === '' ? null : trimmedValue;
+  }
+
+  return {
+    name,
+    city: fields.city || null,
+    cityFa: fields.cityFa || null,
+    country: fields.country || null,
+    countryFa: fields.countryFa || null,
+    continent: fields.continent || null,
+    year: fields.year ? parseInt(fields.year, 10) : null,
+    love: fields.love ? parseInt(fields.love, 10) : null,
+    lat: fields.lat ? parseFloat(fields.lat) : null,
+    lng: fields.lng ? parseFloat(fields.lng) : null,
+    mapsQuery: fields.mapsQuery || null,
+    note: fields.note || null
+  };
+}
+
+// Handle add place command
+async function handleAddPlace(bracketArgs, fieldValuePairs, photo) {
+  const fields = parsePlaceFields(bracketArgs, fieldValuePairs);
+
+  if (!fields.name) {
+    return '❌ Name is required. Use format: /add place [Venue Name] city=[City] country=[Country]';
+  }
+  if (!fields.city) {
+    return '❌ City is required. Use format: /add place [Venue Name] city=[City] country=[Country]';
+  }
+  if (!fields.country) {
+    return '❌ Country is required. Use format: /add place [Venue Name] city=[City] country=[Country]';
+  }
+
+  try {
+    const fileId = photo && photo.length > 0 ? photo[photo.length - 1].file_id : null;
+    return await placesHandler.addPlace(fields, fileId);
+  } catch (err) {
+    console.error('Error adding place:', err.message);
+    return `❌ Error: ${err.message}`;
+  }
+}
+
 // Handle add post command
 async function handleAddPost(type, title, date, className, soundCloudLink, playlist, spotifySongId, postBody, photo) {
   if (!title) {
@@ -193,7 +248,11 @@ async function handleAddCommand(args, bracketArgs, postBody, photo) {
   if (type === 'postbox' || type === 'train') {
     return await handleAddImage(type, args, bracketArgs, photo);
   }
-  
+
+  if (type === 'place') {
+    return await handleAddPlace(bracketArgs, fieldValuePairs, photo);
+  }
+
   // Handle post types (blog, review, noises)
   const { title, date, className, soundCloudLink, playlist, spotifySongId } = parsePostFields(bracketArgs, fieldValuePairs, args);
   return await handleAddPost(type, title, date, className, soundCloudLink, playlist, spotifySongId, postBody, photo);
@@ -208,7 +267,11 @@ async function handleGetCommand(args) {
   if (!type || !uuid) {
     return '❌ Type and UUID are required. Usage: /get type uuid';
   }
-  
+
+  if (type === 'place') {
+    return await placesHandler.getPlace(uuid);
+  }
+
   return await postsHandler.getPost(type, uuid);
 }
 
@@ -227,6 +290,8 @@ async function handleDeleteCommand(args) {
       return await imagesHandler.deletePostboxImage(uuid);
     } else if (type === 'train') {
       return await imagesHandler.deleteTrainImage(uuid);
+    } else if (type === 'place') {
+      return await placesHandler.deletePlace(uuid);
     } else {
       return await postsHandler.deletePost(type, uuid);
     }
@@ -323,6 +388,60 @@ async function handleUpdateMeta(args, fieldValuePairs) {
   }
 }
 
+// Build updates object from field-value pairs for places
+function buildPlaceUpdates(fieldValuePairs) {
+  const updates = {};
+  const allowed = ['name', 'city', 'cityFa', 'country', 'countryFa', 'continent', 'year', 'love', 'lat', 'lng', 'mapsQuery', 'note'];
+
+  for (const pair of fieldValuePairs) {
+    const { field, value } = pair;
+    if (!allowed.includes(field)) {
+      return { error: `❌ Invalid field. Allowed: ${allowed.join(', ')}` };
+    }
+    const normalizedValue = (value === '' || value === undefined) ? null : value.trim();
+    if (field === 'year' || field === 'love') {
+      updates[field] = normalizedValue ? parseInt(normalizedValue, 10) : null;
+    } else if (field === 'lat' || field === 'lng') {
+      updates[field] = normalizedValue ? parseFloat(normalizedValue) : null;
+    } else {
+      updates[field] = normalizedValue;
+    }
+  }
+
+  return { updates };
+}
+
+// Handle update place command
+async function handleUpdatePlace(uuid, fieldValuePairs, photo) {
+  if (!uuid) {
+    return '❌ UUID required. Usage: /update place uuid field=[value]';
+  }
+
+  const hasFieldUpdates = fieldValuePairs.length > 0;
+  const hasImage = photo && photo.length > 0;
+
+  if (!hasFieldUpdates && !hasImage) {
+    return '❌ Field=[value] or an attached image is required. Usage: /update place uuid field=[value]';
+  }
+
+  let updates = {};
+  if (hasFieldUpdates) {
+    const result = buildPlaceUpdates(fieldValuePairs);
+    if (result.error) {
+      return result.error;
+    }
+    updates = result.updates;
+  }
+
+  try {
+    const fileId = hasImage ? photo[photo.length - 1].file_id : null;
+    return await placesHandler.updatePlace(uuid, updates, fileId);
+  } catch (err) {
+    console.error('Error updating place:', err.message);
+    return `❌ Error: ${err.message}`;
+  }
+}
+
 // Handle update post command
 async function handleUpdatePost(type, uuid, args, fieldValuePairs, postBody, photo) {
   if (!uuid) {
@@ -374,7 +493,11 @@ async function handleUpdateCommand(args, postBody, photo) {
   if (type === 'meta') {
     return await handleUpdateMeta(args, fieldValuePairs);
   }
-  
+
+  if (type === 'place') {
+    return await handleUpdatePlace(uuid, fieldValuePairs, photo);
+  }
+
   return await handleUpdatePost(type, uuid, args, fieldValuePairs, postBody, photo);
 }
 

@@ -1,0 +1,129 @@
+/* ============================================
+   PLACES
+   ============================================ */
+.places-loading {
+  text-align: center;
+}
+
+.places-no-data {
+  padding: 20px;
+  text-align: center;
+}
+
+.places-intro {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.places-subtitle {
+  color: var(--color-text-secondary);
+  max-width: 36em;
+  margin: var(--spacing-sm) auto 0;
+}
+
+/* Columns fill top-to-bottom independently (masonry-style), so cards sit at
+   whatever height their own content needs instead of being stretched to
+   match the tallest card in a row. */
+.places-masonry {
+  column-count: 3;
+  column-gap: var(--spacing-xl);
+}
+
+@media (max-width: 991px) {
+  .places-masonry {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .places-masonry {
+    column-count: 1;
+  }
+}
+
+.places-masonry-item {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  margin-bottom: var(--spacing-xxl);
+}
+
+.place-card-photo-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--color-shadow-sm);
+}
+
+.place-card-photo,
+.place-card-photo-fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.place-card-photo-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.place-card-fallback-initial {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-white);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.place-card-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 55%, rgba(0, 0, 0, 0) 100%);
+  color: var(--color-white);
+}
+
+.place-card-caption-name {
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.place-card-caption-location {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.place-card-caption-location.farsi {
+  font-family: farsi;
+  opacity: 0.75;
+}
+
+.place-card-caption-year {
+  font-size: var(--font-size-sm);
+  opacity: 0.75;
+  margin-top: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.place-card-details {
+  padding: var(--spacing-lg) 0;
+}
+
+.place-card-note {
+  margin: 0;
+  line-height: var(--line-height-loose);
+}
+
+.place-card-map {
+  width: 100%;
+  height: 160px;
+  margin-top: var(--spacing-lg);
+  border: 0;
+  border-radius: 6px;
+}
