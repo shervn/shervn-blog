@@ -33,44 +33,55 @@
   border-left: 1px solid var(--color-border);
 }
 
-/* Animated wavy GIF above "currently playing" text */
-.spotify-wave-gif-container {
+/* Animated "now playing" equalizer bars (CSS-only, no GIF) - bars bounce
+   while playing and settle to a low static height while paused. */
+.spotify-wave-bars {
   width: 340px;
-  height: 64px;
-  display: block;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  transition: filter var(--transition-normal);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  height: 25.6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: var(--spacing-sm) auto;
+  padding-top: var(--spacing-md);
 }
 
-:root[data-theme="light"] .spotify-wave-gif-container {
-  filter: brightness(0) saturate(0);
+.spotify-wave-bar {
+  width: 5px;
+  height: 100%;
+  border-radius: 3px;
+  background-color: var(--color-control);
+  animation: spotify-wave-bounce 1.1s ease-in-out infinite;
+  animation-delay: calc(var(--bar-index) * 0.12s);
 }
 
-:root[data-theme="dark"] .spotify-wave-gif-container {
-  filter: brightness(0) invert(1);
+/* Slightly different durations per bar so the bounce reads as organic
+   rather than a mechanically synchronized blink. */
+.spotify-wave-bar:nth-child(1) { animation-duration: 1.1s; }
+.spotify-wave-bar:nth-child(2) { animation-duration: 0.85s; }
+.spotify-wave-bar:nth-child(3) { animation-duration: 1.3s; }
+.spotify-wave-bar:nth-child(4) { animation-duration: 0.95s; }
+.spotify-wave-bar:nth-child(5) { animation-duration: 1.2s; }
+.spotify-wave-bar:nth-child(6) { animation-duration: 1.0s; }
+.spotify-wave-bar:nth-child(7) { animation-duration: 1.25s; }
+.spotify-wave-bar:nth-child(8) { animation-duration: 0.9s; }
+.spotify-wave-bar:nth-child(9) { animation-duration: 1.15s; }
+
+.spotify-wave-bars[data-playing="false"] .spotify-wave-bar {
+  animation-play-state: paused;
+  height: 25%;
 }
 
-.spotify-wave-gif-container img,
-.spotify-wave-gif-container .jsgif,
-.spotify-wave-gif-container .jsgif canvas {
-  width: 340px !important;
-  height: 64px !important;
-  max-width: 340px !important;
-  max-height: 64px !important;
-  object-fit: contain;
-  display: block;
-  margin: 0;
+@keyframes spotify-wave-bounce {
+  0%, 100% { height: 20%; }
+  50% { height: 100%; }
 }
 
-/* Hide libgif.js progress bar (red loading indicator) */
-.spotify-wave-gif-container .jsgif canvas + div,
-.spotify-wave-gif-container .jsgif > div[style*="background"],
-.spotify-wave-gif-container .jsgif > div[style*="rgba(255,0,22"] {
-  display: none !important;
+@media (prefers-reduced-motion: reduce) {
+  .spotify-wave-bar {
+    animation: none;
+    height: 55%;
+  }
 }
 
 .spotify-player-row .spotify-start-stop-time {

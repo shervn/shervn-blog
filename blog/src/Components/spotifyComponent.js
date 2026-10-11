@@ -10,7 +10,8 @@ import {
 import {
   SPOTIFY_REFRESH_INTERVAL,
   SPOTIFY_PROGRESS_UPDATE_INTERVAL,
-  SPOTIFY_NEW_TRACK_CHECK_DELAY
+  SPOTIFY_NEW_TRACK_CHECK_DELAY,
+  SPOTIFY_WAVE_BAR_COUNT
 } from '../utils/constants.js';
 
 export function MusicPlayer() {
@@ -26,8 +27,6 @@ export function MusicPlayer() {
   const playPauseButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
   const isInitialLoad = useRef(true);
-  const gifRef = useRef(null);
-  const superGifRef = useRef(null);
 
   const track = currentlyPlaying || spotifyTrack;
 
@@ -93,49 +92,6 @@ export function MusicPlayer() {
     return () => clearInterval(intervalRef.current);
   }, [currentlyPlaying]);
 
-  // Initialize and control GIF with libgif.js
-  useEffect(() => {
-    if (!gifRef.current || !window.SuperGif) return;
-
-    // Initialize SuperGif if not already initialized
-    if (!superGifRef.current) {
-      superGifRef.current = new window.SuperGif({ 
-        gif: gifRef.current,
-        auto_play: false,
-        draw_while_loading: false,
-        show_progress_bar: false,
-        max_width: 200,
-
-      });
-      superGifRef.current.load(() => {
-        // GIF loaded, control based on playing state
-        if (currentlyPlaying?.is_playing) {
-          superGifRef.current.play();
-        } else {
-          superGifRef.current.pause();
-        }
-      });
-    } else {
-      // Control play/pause based on state
-      if (currentlyPlaying?.is_playing) {
-        superGifRef.current.play();
-      } else {
-        superGifRef.current.pause();
-      }
-    }
-
-    return () => {
-      // Cleanup if needed
-      if (superGifRef.current) {
-        superGifRef.current.pause();
-      }
-    };
-    // `track` is included so this re-fires once the <img> actually mounts:
-    // when nothing is playing, is_playing stays `undefined` across the whole
-    // loading -> loaded transition, so it alone never changes and the effect
-    // would otherwise only ever run once, before gifRef.current exists.
-  }, [currentlyPlaying?.is_playing, track]);
-
   const duration = currentlyPlaying?.duration_ms ?? track?.duration_ms ?? 0;
 
   const percent = useMemo(() => {
@@ -192,14 +148,14 @@ export function MusicPlayer() {
         by <span className='band'>{track.artist || track.band}</span>
       </p>
       {track && (
-        <div className="spotify-wave-gif-container">
-          <img
-            ref={gifRef}
-            src="/wave.gif"
-            alt=""
-            className="spotify-wave-gif"
-            rel="animated_src"
-          />
+        <div
+          className="spotify-wave-bars"
+          data-playing={currentlyPlaying?.is_playing ? 'true' : 'false'}
+          aria-hidden="true"
+        >
+          {Array.from({ length: SPOTIFY_WAVE_BAR_COUNT }).map((_, i) => (
+            <span key={i} className="spotify-wave-bar" style={{ '--bar-index': i }} />
+          ))}
         </div>
       )}
       <p 
