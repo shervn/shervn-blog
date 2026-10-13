@@ -10,6 +10,7 @@ A serverless Lambda function that allows you to manage blog posts stored in S3 v
 - ✅ Update post fields (title, date, description, order, body)
 - ✅ Delete posts
 - ✅ Supports multiple post types (blog, review, noises)
+- ✅ Add/update/delete places (venues visited), with photo upload and map coordinates
 
 ## Setup Instructions
 
@@ -146,6 +147,20 @@ New body content here...
 ### Delete Post
 ```
 /delete blog abc123
+```
+
+### Add New Place
+```
+Send photo with /add place [Man Versus Machine Coffee Roasters] city=[Munich] cityFa=[مونیخ] country=[Germany] countryFa=[آلمان] year=[2022] love=[5] lat=[48.1309601] lng=[11.5711858] note=[A short note about the place...]
+```
+Only `city` and `country` are required besides the name. Give either `lat`/`lng` (pinned coordinates, preferred - resolve a shared Google Maps link to get these) or `mapsQuery` (free-text search fallback); the photo is optional too.
+
+### Get / Update / Delete Place
+```
+/get place abc123
+/update place abc123 note=[Updated note] love=[5]
+Send photo with /update place abc123   (updates image only)
+/delete place abc123
 ```
 
 ### Re-authorize Spotify
