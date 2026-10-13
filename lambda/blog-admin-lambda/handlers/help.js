@@ -3,7 +3,7 @@ function getHelpMessage() {
     `*/add type [title] date=[value] className=[value]* - Add post, image, place, or comment\n` +
     `   Post types: blog, review, noises\n` +
     `   Image types: postbox, train (send photo)\n` +
-    `   Place type: place (city/country required, photo optional)\n` +
+    `   Place type: place (see dedicated /add place section below)\n` +
     `   Comment type: comment\n` +
     `   Example: /add blog [My Title] date=[تابستان ۰۳]\nPost body...\n` +
     `   Example: /add blog [My Title] date=[تابستان ۰۳] spotifySongId=[2QwObYJWyJTiozvs0RI7CF]\nPost body...\n` +
@@ -12,8 +12,13 @@ function getHelpMessage() {
     `   Example: /add noises [My Noise Title] date=[تابستان ۰۳] soundCloudLink=[url] playlist=[true]\nDescription...\n` +
     `   Example: Send photo with /add postbox [Barcelona] [بارسِلونا]\n` +
     `   Example: Send photo with /add train [Tokyo] [توکیو]\n` +
-    `   Example: /add comment\nComment text here...\n` +
-    `   Example: Send photo with /add place [Venue Name] city=[City] cityFa=[شهر] country=[Country] countryFa=[کشور] year=[2024] love=[5] lat=[48.13] lng=[11.57] note=[A few lines...]\n\n` +
+    `   Example: /add comment\nComment text here...\n\n` +
+    `*/add place [Venue Name] city=[City] cityFa=[شهر] country=[Country] countryFa=[کشور] mapsQuery=[Google Maps link]* - Add a place, with a photo and note text attached\n` +
+    `   What you give it: name of the place, city + country in English and Farsi, a photo, a short note, and a Google Maps link\n` +
+    `   Required: Venue Name (in brackets), city, country — everything else is optional but recommended\n` +
+    `   Note text goes on a new line after the command, just like a post body (no note=[...] tag needed)\n` +
+    `   Example: Send photo with /add place [Café de Flore] city=[Paris] cityFa=[پاریس] country=[France] countryFa=[فرانسه] mapsQuery=[https://maps.app.goo.gl/xyz]\nGreat coffee, quiet corner table\n` +
+    `   Advanced, rarely needed: year, love, continent, lat, lng (precise coordinates override mapsQuery)\n\n` +
     `*/get type uuid* - Get post or place details\n` +
     `   Example: /get blog abc123\n` +
     `   Example: /get place abc123\n\n` +
@@ -28,7 +33,8 @@ function getHelpMessage() {
     `   Example: /update blog abc123 title=[فصل پنجم] date=[فصل دهم] spotifySongId=[2QwObYJWyJTiozvs0RI7CF]\n` +
     `   Example: /update blog abc123\nNew body text here... (updates body only)\n` +
     `   Example: Send photo with /update blog abc123 (updates image only)\n` +
-    `   Example: /update place abc123 note=[Updated note] love=[5]\n` +
+    `   Example: /update place abc123 love=[5]\n` +
+    `   Example: /update place abc123\nUpdated note text (updates note only)\n` +
     `   Example: Send photo with /update place abc123 (updates image only)\n` +
     `   Example: /update meta name=[New Name]\n` +
     `   Example: /update meta subtitle=[New Subtitle]\n\n` +

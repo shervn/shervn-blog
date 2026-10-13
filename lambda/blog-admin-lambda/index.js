@@ -188,8 +188,11 @@ function parsePlaceFields(bracketArgs, fieldValuePairs) {
 }
 
 // Handle add place command
-async function handleAddPlace(bracketArgs, fieldValuePairs, photo) {
+async function handleAddPlace(bracketArgs, fieldValuePairs, photo, postBody) {
   const fields = parsePlaceFields(bracketArgs, fieldValuePairs);
+  if (!fields.note && postBody && postBody.trim().length > 0) {
+    fields.note = postBody.trim();
+  }
 
   if (!fields.name) {
     return '❌ Name is required. Use format: /add place [Venue Name] city=[City] country=[Country]';
@@ -250,7 +253,7 @@ async function handleAddCommand(args, bracketArgs, postBody, photo) {
   }
 
   if (type === 'place') {
-    return await handleAddPlace(bracketArgs, fieldValuePairs, photo);
+    return await handleAddPlace(bracketArgs, fieldValuePairs, photo, postBody);
   }
 
   // Handle post types (blog, review, noises)
@@ -412,16 +415,17 @@ function buildPlaceUpdates(fieldValuePairs) {
 }
 
 // Handle update place command
-async function handleUpdatePlace(uuid, fieldValuePairs, photo) {
+async function handleUpdatePlace(uuid, fieldValuePairs, photo, postBody) {
   if (!uuid) {
     return '❌ UUID required. Usage: /update place uuid field=[value]';
   }
 
   const hasFieldUpdates = fieldValuePairs.length > 0;
   const hasImage = photo && photo.length > 0;
+  const hasBodyUpdate = postBody && postBody.trim().length > 0;
 
-  if (!hasFieldUpdates && !hasImage) {
-    return '❌ Field=[value] or an attached image is required. Usage: /update place uuid field=[value]';
+  if (!hasFieldUpdates && !hasImage && !hasBodyUpdate) {
+    return '❌ Field=[value], an attached image, or note text on a new line is required. Usage: /update place uuid field=[value]';
   }
 
   let updates = {};
@@ -431,6 +435,10 @@ async function handleUpdatePlace(uuid, fieldValuePairs, photo) {
       return result.error;
     }
     updates = result.updates;
+  }
+
+  if (hasBodyUpdate && !updates.note) {
+    updates.note = postBody.trim();
   }
 
   try {
@@ -495,7 +503,7 @@ async function handleUpdateCommand(args, postBody, photo) {
   }
 
   if (type === 'place') {
-    return await handleUpdatePlace(uuid, fieldValuePairs, photo);
+    return await handleUpdatePlace(uuid, fieldValuePairs, photo, postBody);
   }
 
   return await handleUpdatePost(type, uuid, args, fieldValuePairs, postBody, photo);
